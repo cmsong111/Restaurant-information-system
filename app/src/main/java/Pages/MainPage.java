@@ -35,27 +35,27 @@ public class MainPage extends JFrame{
     JTextField tx_mainSerach = new JTextField("상호명 검색");
     JButton quickSearch=new JButton(">");
 
-    JButton mainButton_kr = new JButton("한식", new ImageIcon("app/bibimbap.png"));
+    JButton mainButton_kr = new JButton("한식", new ImageIcon("app/res/bibimbap.png"));
     mainButton_kr.setVerticalTextPosition(JButton.BOTTOM);
     mainButton_kr.setHorizontalTextPosition(JButton.CENTER);
 
-    JButton mainButton_ch = new JButton("중식",new ImageIcon("app/dimsum.png"));
+    JButton mainButton_ch = new JButton("중식",new ImageIcon("app/res/dimsum.png"));
     mainButton_ch.setVerticalTextPosition(JButton.BOTTOM);
     mainButton_ch.setHorizontalTextPosition(JButton.CENTER);
 
-    JButton mainButton_jp = new JButton("일식",new ImageIcon("app/sushi.png"));
+    JButton mainButton_jp = new JButton("일식",new ImageIcon("app/res/sushi.png"));
     mainButton_jp.setVerticalTextPosition(JButton.BOTTOM);
     mainButton_jp.setHorizontalTextPosition(JButton.CENTER);
 
-    JButton mainButton_DS = new JButton("디저트",new ImageIcon("app/cake.png"));
+    JButton mainButton_DS = new JButton("디저트",new ImageIcon("app/res/cake.png"));
     mainButton_DS.setVerticalTextPosition(JButton.BOTTOM);
     mainButton_DS.setHorizontalTextPosition(JButton.CENTER);
 
-    JButton mainButton_FD = new JButton("패스트푸드",new ImageIcon("app/fastfood.png"));
+    JButton mainButton_FD = new JButton("패스트푸드",new ImageIcon("app/res/fastfood.png"));
     mainButton_FD.setVerticalTextPosition(JButton.BOTTOM);
     mainButton_FD.setHorizontalTextPosition(JButton.CENTER);
 
-    JButton mainButton_SB = new JButton("분식",new ImageIcon("app/ramen.png"));
+    JButton mainButton_SB = new JButton("분식",new ImageIcon("app/res/ramen.png"));
     mainButton_SB.setVerticalTextPosition(JButton.BOTTOM);
     mainButton_SB.setHorizontalTextPosition(JButton.CENTER);
 
