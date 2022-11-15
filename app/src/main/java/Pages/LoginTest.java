@@ -3,9 +3,22 @@ package Pages;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class LoginTest extends JFrame{
+public class LoginTest extends JFrame implements ActionListener {
+    JLabel mainlabel1;
+    JTextField tx_ID;
+    JTextField tx_PassWord;
+    JButton LoginButton;
+    JButton RegisterButton;
     LoginTest(){
+        try{
+            init();
+        }catch (Exception e){}
+
+    }
+    void init(){
         setTitle("LoginTest Screen");
         setSize(1280,720);
 
@@ -31,16 +44,16 @@ public class LoginTest extends JFrame{
         Color gray1 = new Color(192,192,192);
 
 
-        JLabel mainlabel1 = new JLabel("오점뭐 (오늘 점심 뭐 먹지)");
+        mainlabel1 = new JLabel("오점뭐 (오늘 점심 뭐 먹지)");
         mainlabel1.setBounds(140,56,619,61);
         mainlabel1.setFont(mainFont40);
 
-        JTextField tx_ID = new JTextField("아이디");
+        tx_ID = new JTextField("아이디");
         tx_ID.setBounds(200,280,300,43);
         tx_ID.setFont(mainFont20);
         tx_ID.setForeground(gray1);
 
-        JTextField tx_PassWord = new JTextField("비밀번호");
+        tx_PassWord = new JTextField("비밀번호");
         tx_PassWord.setBounds(200,380,300,43);
         tx_PassWord.setFont(mainFont20);
         tx_PassWord.setForeground(gray1);
@@ -48,15 +61,16 @@ public class LoginTest extends JFrame{
         tx_ID.setBorder(javax.swing.BorderFactory.createEmptyBorder());
         tx_PassWord.setBorder(javax.swing.BorderFactory.createEmptyBorder());
 
-        JButton LoginButton = new JButton("로그인");
+        LoginButton = new JButton("로그인");
         LoginButton.setBounds(290,490,115,34);
         LoginButton.setFont(mainFont20);
 
         LoginButton.setBorderPainted(false);      //버튼 테두리 없에기
         LoginButton.setContentAreaFilled(false);
         //LoginButton.setFocusPainted(false);
+        LoginButton.addActionListener(this);
 
-        JButton RegisterButton = new JButton("회원가입");
+        RegisterButton = new JButton("회원가입");
         RegisterButton.setBounds(285,540,130,34);
         RegisterButton.setFont(mainFont20);
 
@@ -75,7 +89,6 @@ public class LoginTest extends JFrame{
         getContentPane().add(mainlabel1);
         getContentPane().add(tx_ID);
         getContentPane().add(tx_PassWord);
-
         getContentPane().add(lineID);
         getContentPane().add(linePW);
         getContentPane().add(LoginButton);
@@ -86,7 +99,11 @@ public class LoginTest extends JFrame{
 
         setResizable(false);
         setVisible(true);
+    };
 
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        MainPage MT=new MainPage();
     }
 }
 
