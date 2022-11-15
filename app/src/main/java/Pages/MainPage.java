@@ -1,161 +1,157 @@
 package Pages;
 
-import java.util.*;
-import java.awt.*;
 import javax.swing.*;
-import  java.awt.event.*;
-import java.io.*;
+import java.awt.*;
+
+public class MainPage extends JFrame{
+    MainPage(){
+        setTitle("TestMain Screen");
+        setSize(1280, 720);
+
+        setLocationRelativeTo(null);
+        getContentPane().setLayout(null);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        JPanel panelMain = new JPanel();            //배경 만들기
+        JPanel panelMain2 = new JPanel();
+        JPanel panelSearch = new JPanel();
+
+        panelMain.setBounds(30,30,1204,614);        //배경 만들기
+        panelMain2.setBounds(281, 30, 593,170);
+        panelSearch.setBounds(315,125,524,43);
+
+        Font mainFont40 = new Font("배달의민족 도현",Font.PLAIN,40);   //폰트 설정
+        Font mainFont20 = new Font("배달의민족 도현",Font.PLAIN,22);
+        Font mainFont30 = new Font("배달의민족 도현",Font.PLAIN,30);
 
 
-public class MainPage extends Frame implements ActionListener {
+        JLabel mainlabel1 = new JLabel("오점뭐 (오늘 점심 뭐 먹지)");
+        JTextField tx_mainSerach = new JTextField("상호명 검색");
+        JButton mainButton_kr = new JButton("한식");
+        JButton mainButton_ch = new JButton("중식");
+        JButton mainButton_jp = new JButton("일식");
+        JButton mainButton_DS = new JButton("디저트");
+        JButton mainButton_FD = new JButton("패스트푸드");
+        JButton mainButton_SB = new JButton("분식");
 
-    // Title, Search_bar
-    private JLabel title=new JLabel();
-    private TextField search_bar;
-    private String input;
+        JButton mainButton_DC = new JButton("동백전");
+        JButton mainButton_CC = new JButton("아동급식카드");
+        JButton mainButton_ZC = new JButton("제로페이");
 
-    //MenuButtons & RadioGroup
-    private ButtonGroup foodSelect=new ButtonGroup();
-    private JRadioButton korean=new JRadioButton("한식");
-    private JRadioButton chinese=new JRadioButton("중식");
-    private JRadioButton japanese=new JRadioButton("일식");
-    private JRadioButton dessert=new JRadioButton("디저트");
-    private JRadioButton fastFood=new JRadioButton("패스트푸드");
-    private JRadioButton snackFood=new JRadioButton("분식");
+        JButton mainButton_Search = new JButton("식당 찾기");
+        JButton mainButton_Random = new JButton("오늘의 추천 메뉴");
 
-    // additional search options
-    private JCheckBox dongBaek=new JCheckBox("동백전");
-    private JCheckBox forChild=new JCheckBox("아동급식카드");
-    private JCheckBox zeroPay=new JCheckBox("제로페이");
+        tx_mainSerach.setBorder(javax.swing.BorderFactory.createEmptyBorder());
 
-    // SearchButton and Menu_recommendation
-    private Button search=new Button();
-    private Button todayMenu= new Button();
+        mainlabel1.setBounds(344,34,500,100);
+        tx_mainSerach.setBounds(327,125,504,43);
+        mainButton_kr.setBounds(360,246,107,34);
+        mainButton_ch.setBounds(524,246,107,34);
+        mainButton_jp.setBounds(670,246,107,34);
+        mainButton_DS.setBounds(355,307,115,34);
+        mainButton_FD.setBounds(507,307,140,34);
+        mainButton_SB.setBounds(670,307,107,34);
 
-    private Font f=new Font("맑은 고딕", Font.BOLD, 50);
-    /*private  Font f;*/
-    private InputStream fontSet;
+        mainButton_DC.setBounds(355,400,107,34);
+        mainButton_CC.setBounds(492,400,170,34);
+        mainButton_ZC.setBounds(658,400,130,34);
 
-    public MainPage(){
-        try{
-            Init();
-           /* fontSet = new BufferedInputStream(
-                    new FileInputStream("BMJUA.ttf"));*/
-        }catch (Exception e){e.printStackTrace();}
+        mainButton_Search.setBounds(508,473,138,43);
+        mainButton_Random.setBounds(457,540,241,53);
 
 
-    }
-    public void Init() throws Exception{
-
-        /*f=Font.createFont(Font.TRUETYPE_FONT,fontSet);*/
-        this.setResizable(false);
-        this.setTitle("오늘점심뭐먹지?");
-        this.setBackground(Color.white);
-        this.setBounds(0,0,1300,700);
-        this.setVisible(true); // 창을 보여줄떄 true, 숨길때 false
-
-        Container pane=new Container();
-        pane.setLayout(null);
-
-        title.setText("오늘 점심 뭐먹지?");
-        title.setFont(f);
-        title.setSize(500,50);
-        title.setLocation(1300/2-250,50);
+        mainlabel1.setFont(mainFont40);         //폰트 설정
+        tx_mainSerach.setFont(mainFont20);
+        mainButton_kr.setFont(mainFont20);
+        mainButton_ch.setFont(mainFont20);
+        mainButton_jp.setFont(mainFont20);
+        mainButton_DS.setFont(mainFont20);
+        mainButton_FD.setFont(mainFont20);
+        mainButton_SB.setFont(mainFont20);
+        mainButton_DC.setFont(mainFont20);
+        mainButton_CC.setFont(mainFont20);
+        mainButton_ZC.setFont(mainFont20);
+        mainButton_Search.setFont(mainFont20);
+        mainButton_Random.setFont(mainFont30);
 
 
-        search_bar=new TextField();
-        search_bar.setSize(500,30);
-        search_bar.setLocation(1300/2-300,150);
-        pane.add(search_bar);
+        mainButton_kr.setBorderPainted(false);      //버튼 테두리 없에기
+        mainButton_kr.setContentAreaFilled(false);
+        //mainButton_kr.setFocusPainted(false);
 
-        korean.setActionCommand("kFood");
-        korean.addActionListener(this);
-        korean.setBackground(Color.cyan);
-        korean.setSize(100,60);
-        korean.setLocation(1300/2-250,250);
-        foodSelect.add(korean);
-        pane.add(korean);
+        mainButton_ch.setBorderPainted(false);      //버튼 테두리 없에기
+        mainButton_ch.setContentAreaFilled(false);
+        // mainButton_ch.setFocusPainted(false);
 
-        chinese.setActionCommand("cFood");
-        chinese.addActionListener(this);
-        chinese.setBackground(Color.cyan);
-        chinese.setSize(100,60);
-        chinese.setLocation(1300/2-100,250);
-        foodSelect.add(chinese);
-        pane.add(chinese);
+        mainButton_jp.setBorderPainted(false);      //버튼 테두리 없에기
+        mainButton_jp.setContentAreaFilled(false);
+        //mainButton_jp.setFocusPainted(false);
 
-        japanese.setActionCommand("jFood");
-        japanese.addActionListener(this);
-        japanese.setBackground(Color.cyan);
-        japanese.setSize(100,60);
-        japanese.setLocation(1300/2+50,250);
-        foodSelect.add(japanese);
-        pane.add(japanese);
+        mainButton_DS.setBorderPainted(false);      //버튼 테두리 없에기
+        mainButton_DS.setContentAreaFilled(false);
+        //mainButton_DS.setFocusPainted(false);
 
-        dessert.setActionCommand("dessert");
-        dessert.addActionListener(this);
-        dessert.setBackground(Color.cyan);
-        dessert.setSize(100,60);
-        dessert.setLocation(1300/2-250,350);
-        foodSelect.add(dessert);
-        pane.add(dessert);
+        mainButton_FD.setBorderPainted(false);      //버튼 테두리 없에기
+        mainButton_FD.setContentAreaFilled(false);
+        //mainButton_FD.setFocusPainted(false);
 
-        fastFood.setActionCommand("fastFood");
-        fastFood.addActionListener(this);
-        fastFood.setBackground(Color.cyan);
-        fastFood.setSize(100,60);
-        fastFood.setLocation(1300/2-100,350);
-        foodSelect.add(fastFood);
-        pane.add(fastFood);
+        mainButton_SB.setBorderPainted(false);      //버튼 테두리 없에기
+        mainButton_SB.setContentAreaFilled(false);
+        //mainButton_SB.setFocusPainted(false);
 
-        snackFood.setActionCommand("snackFood");
-        snackFood.addActionListener(this);
-        snackFood.setBackground(Color.cyan);
-        snackFood.setSize(100,60);
-        snackFood.setLocation(1300/2+50,350);
-        foodSelect.add(snackFood);
-        pane.add(snackFood);
+        mainButton_DC.setBorderPainted(false);      //버튼 테두리 없에기
+        mainButton_DC.setContentAreaFilled(false);
+        //mainButton_DC.setFocusPainted(false);
 
-        dongBaek.setActionCommand("dongBaek");
-        dongBaek.addActionListener(this);
-        dongBaek.setSize(100,50);
-        dongBaek.setLocation(1300/2-250, 450);
-        pane.add(dongBaek);
+        mainButton_CC.setBorderPainted(false);      //버튼 테두리 없에기
+        mainButton_CC.setContentAreaFilled(false);
+        //mainButton_CC.setFocusPainted(false);
 
-        forChild.setActionCommand("forChild");
-        forChild.addActionListener(this);
-        forChild.setSize(100,50);
-        forChild.setLocation(1300/2-100, 450);
-        pane.add(forChild);
+        mainButton_ZC.setBorderPainted(false);      //버튼 테두리 없에기
+        mainButton_ZC.setContentAreaFilled(false);
+        //mainButton_ZC.setFocusPainted(false);
 
-        zeroPay.setActionCommand("zeroPay");
-        zeroPay.addActionListener(this);
-        zeroPay.setSize(100,50);
-        zeroPay.setLocation(1300/2+50, 450);
-        pane.add(zeroPay);
+        mainButton_Search.setBorderPainted(false);
+        mainButton_Random.setBorderPainted(false);
 
-        search.setLabel("LET'S FINDING!");
-        search.setActionCommand("search");
-        search.addActionListener(this);
-        search.setBackground(Color.cyan);
-        search.setSize(150,50);
-        search.setLocation(1300/2-120, 520);
 
-        todayMenu.setLabel("TODAY'S SPECIAL");
-        todayMenu.setActionCommand("todayMenu");
-        todayMenu.addActionListener(this);
-        todayMenu.setBackground(Color.yellow);
-        todayMenu.setSize(300,50);
-        todayMenu.setLocation(1300/2-200, 600);
+        Color mint = new Color(62,185,180); //색상 정하기
+        Color gray1 = new Color(192,192,192);
 
-        pane.add(title);  pane.add(search_bar);
-        pane.add(search);  pane.add(todayMenu);
-        this.add(pane);
+        panelMain.setBackground(Color.white);
+        panelMain2.setBackground(mint);
+        panelSearch.setBackground(Color.white);
+        tx_mainSerach.setForeground(gray1);
+        mainButton_Search.setBackground(mint);
+        mainButton_Random.setForeground(Color.YELLOW);
+        mainButton_Random.setBackground(mint);
 
-    }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
+
+        getContentPane().setBackground(mint);
+
+        getContentPane().add(mainlabel1);              //pane에 추가
+        getContentPane().add(tx_mainSerach);
+        getContentPane().add(mainButton_kr);
+        getContentPane().add(mainButton_ch);
+        getContentPane().add(mainButton_jp);
+        getContentPane().add(mainButton_DS);
+        getContentPane().add(mainButton_FD);
+        getContentPane().add(mainButton_SB);
+        getContentPane().add(mainButton_DC);
+        getContentPane().add(mainButton_CC);
+        getContentPane().add(mainButton_ZC);
+        getContentPane().add(mainButton_Search);
+        getContentPane().add(mainButton_Random);
+
+        getContentPane().add(panelSearch);
+        getContentPane().add(panelMain2);
+        getContentPane().add(panelMain);
+
+
+        setResizable(false);
+        setVisible(true);
 
     }
+
 }

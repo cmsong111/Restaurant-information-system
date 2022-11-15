@@ -1,4 +1,4 @@
-import Pages.MainPage;
+package Pages;
 
 public class App {
     public String getGreeting() {
@@ -6,6 +6,7 @@ public class App {
     }
 
     public static void main(String[] args) {
-        MainPage menuPage=new MainPage();
+        MainPage MT = new MainPage();
+        //LoginTest LT = new LoginTest();
     }
 }
