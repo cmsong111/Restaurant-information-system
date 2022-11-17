@@ -7,6 +7,8 @@ public class App {
 
     public static void main(String[] args) {
         //MainPage MT = new MainPage();
-        LoginTest LT = new LoginTest();
+        //LoginTest LT = new LoginTest();
+        ReviewPage RP = new ReviewPage();
+        //StoreList SL = new StoreList();
     }
 }

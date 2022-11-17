@@ -26,11 +26,11 @@ public class LoginTest extends JFrame implements ActionListener {
         getContentPane().setLayout(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        JPanel panelMain = new JPanel();            //배경 만들기
+        JPanel panelMainWhite = new JPanel();            //배경 만들기
         JPanel lineID = new JPanel();
         JPanel linePW = new JPanel();
 
-        panelMain.setBounds(26,28,684,612);        //배경 만들기
+        panelMainWhite.setBounds(26,28,684,612);        //배경 만들기
         lineID.setBounds(200,330,300,2);
         linePW.setBounds(200,430,300,2);
 
@@ -78,7 +78,7 @@ public class LoginTest extends JFrame implements ActionListener {
         //RegisterButton.setContentAreaFilled(false);
         //RegisterButton.setFocusPainted(false);
 
-        panelMain.setBackground(Color.white);
+        panelMainWhite.setBackground(Color.white);
         lineID.setBackground(gray1);
         linePW.setBackground(gray1);
         RegisterButton.setForeground(Color.white);
@@ -94,10 +94,10 @@ public class LoginTest extends JFrame implements ActionListener {
         getContentPane().add(LoginButton);
         getContentPane().add(RegisterButton);
 
-        getContentPane().add(panelMain);
+        getContentPane().add(panelMainWhite);
 
 
-        setResizable(false);
+        setResizable(false);    //화면 크기 고정
         setVisible(true);
     };
 

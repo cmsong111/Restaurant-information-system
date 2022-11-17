@@ -18,13 +18,13 @@ public class MainPage extends JFrame{
     getContentPane().setLayout(null);
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-    JPanel panelMain = new JPanel();            //배경 만들기
-    JPanel panelMain2 = new JPanel();
+    JPanel panelMainWhite = new JPanel();            //배경 만들기
+    JPanel panelMainMint = new JPanel();            //+51
     JPanel panelSearch = new JPanel();
 
-        panelMain.setBounds(30,30,1204,614);        //배경 만들기
-        panelMain2.setBounds(281, 30, 593,170);
-        panelSearch.setBounds(315,125,524,43);
+        panelMainWhite.setBounds(30,30,1204,614);        //배경 만들기
+        panelMainMint.setBounds(332, 30, 600,170);
+        panelSearch.setBounds(370,125,524,43);
 
     Font mainFont40 = new Font("배달의민족 도현",Font.PLAIN,40);   //폰트 설정
     Font mainFont20 = new Font("배달의민족 도현",Font.PLAIN,22);
@@ -32,6 +32,8 @@ public class MainPage extends JFrame{
 
 
     JLabel mainlabel1 = new JLabel("오점뭐 (오늘 점심 뭐 먹지)");
+    mainlabel1.setHorizontalAlignment(JLabel.CENTER);
+
     JTextField tx_mainSerach = new JTextField("상호명 검색");
     JButton quickSearch=new JButton(">");
 
@@ -69,25 +71,24 @@ public class MainPage extends JFrame{
 
         tx_mainSerach.setBorder(javax.swing.BorderFactory.createEmptyBorder());
 
-        mainlabel1.setBounds(344,34,500,100);
-        tx_mainSerach.setBounds(327,125,420,43);
-        quickSearch.setBounds(780,130,50,34);
-        mainButton_kr.setBounds(360,210,107,100);
-        mainButton_ch.setBounds(524,210,107,100);
-        mainButton_jp.setBounds(670,210,107,100);
-        mainButton_DS.setBounds(355,307,115,100);
-        mainButton_FD.setBounds(507,307,140,100);
-        mainButton_SB.setBounds(670,307,107,100);
-        mainButton_DC.setBounds(355,450,107,34);
-        mainButton_CC.setBounds(492,450,170,34);
-        mainButton_ZC.setBounds(658,450,130,34);
+        mainlabel1.setBounds(382,34,500,100);
+        tx_mainSerach.setBounds(378,125,420,43);
+        quickSearch.setBounds(831,130,50,34);
+        mainButton_kr.setBounds(411,210,107,100);
+        mainButton_ch.setBounds(575,210,107,100);
+        mainButton_jp.setBounds(721,210,107,100);
+        mainButton_DS.setBounds(406,307,115,100);
+        mainButton_FD.setBounds(558,307,140,100);
+        mainButton_SB.setBounds(721,307,107,100);
+        mainButton_DC.setBounds(406,450,107,34);
+        mainButton_CC.setBounds(543,450,170,34);
+        mainButton_ZC.setBounds(709,450,130,34);
 
-        mainButton_Search.setBounds(508,503,138,43);
-        mainButton_Random.setBounds(457,570,241,53);
-
+        mainButton_Search.setBounds(563,503,138,43);
+        mainButton_Random.setBounds(502,570,260,53);
 
         mainlabel1.setFont(mainFont40);         //폰트 설정
-        tx_mainSerach.setFont(mainFont20);
+        tx_mainSerach.setFont(mainFont30);
         mainButton_kr.setFont(mainFont20);
         mainButton_ch.setFont(mainFont20);
         mainButton_jp.setFont(mainFont20);
@@ -148,8 +149,8 @@ public class MainPage extends JFrame{
     Color mint = new Color(62,185,180); //색상 정하기
     Color gray1 = new Color(192,192,192);
 
-        panelMain.setBackground(Color.white);
-        panelMain2.setBackground(mint);
+        panelMainWhite.setBackground(Color.white);
+        panelMainMint.setBackground(mint);
         panelSearch.setBackground(Color.white);
         tx_mainSerach.setForeground(gray1);
         mainButton_Search.setBackground(mint);
@@ -175,11 +176,11 @@ public class MainPage extends JFrame{
     getContentPane().add(mainButton_Search);
     getContentPane().add(mainButton_Random);
     getContentPane().add(panelSearch);
-    getContentPane().add(panelMain2);
-    getContentPane().add(panelMain);
+    getContentPane().add(panelMainMint);
+    getContentPane().add(panelMainWhite);
 
 
-    setResizable(false);
+    setResizable(false);    //화면 크기 고정
     setVisible(true);
 
 }
