@@ -5,7 +5,7 @@ import java.awt.*;
 
 public class StoreList extends JFrame{
 
-    StoreList(){
+    public StoreList(){
         setTitle("StoreListPage");
         setSize(1280,720);
 

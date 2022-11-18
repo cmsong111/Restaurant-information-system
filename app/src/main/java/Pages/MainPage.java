@@ -5,12 +5,12 @@ import java.awt.*;
 
 public class MainPage extends JFrame{
 
-    MainPage() {
+    public MainPage() {
         try{
            init();
         }catch (Exception e){}
     }
-    void init(){
+    public void init(){
     setTitle("TestMain Screen");
     setSize(1280, 720);
 

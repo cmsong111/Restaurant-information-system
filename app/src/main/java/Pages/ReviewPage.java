@@ -3,7 +3,7 @@ package Pages;
 import javax.swing.*;
 import java.awt.*;
 public class ReviewPage extends JFrame{
-    ReviewPage(){
+    public ReviewPage(){
         setTitle("ReviewPage");
         setSize(1280,720);
 
@@ -61,7 +61,7 @@ public class ReviewPage extends JFrame{
         buttonBack.setFont(mainFont18);
         buttonBack.setBorderPainted(false);         //버튼 테두리 없에기
         buttonBack.setContentAreaFilled(false);     //버튼 내부 색 채움 여부
-        //buttonDone.setFocusPainted(false);        //버튼 포커스(클릭시 테두리)
+        //buttonBack.setFocusPainted(false);        //버튼 포커스(클릭시 테두리)
 
 
         getContentPane().add(buttonBack);

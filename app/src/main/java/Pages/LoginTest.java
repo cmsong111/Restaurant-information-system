@@ -12,13 +12,13 @@ public class LoginTest extends JFrame implements ActionListener {
     JTextField tx_PassWord;
     JButton LoginButton;
     JButton RegisterButton;
-    LoginTest(){
+    public LoginTest(){
         try{
             init();
         }catch (Exception e){}
 
     }
-    void init(){
+    public void init(){
         setTitle("LoginTest Screen");
         setSize(1280,720);
 
