@@ -21,6 +21,7 @@ public class StoreDetail extends JFrame{
         Color mint = new Color(62,185,180); //색상 정하기
         Color gray1 = new Color(192,192,192);
 
+
         JPanel panelMainWhite = new JPanel();
         panelMainWhite.setBounds(30,30,1204,614);
         panelMainWhite.setBackground(Color.white);
