@@ -1,4 +1,4 @@
 package Service;
 
-public class AdminService implements Service{
+public class AdminService {
 }

@@ -1,4 +1,4 @@
 package Service;
 
-public class ReviewService implements Service {
+public class ReviewService {
 }

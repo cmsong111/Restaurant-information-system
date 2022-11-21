@@ -1,4 +1,4 @@
 package Service;
 
-public class UserService implements Service{
+public class UserService {
 }

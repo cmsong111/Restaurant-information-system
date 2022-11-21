@@ -1,4 +1,4 @@
 package Service;
 
-public class NullService implements Service {
+public class NullService {
 }
