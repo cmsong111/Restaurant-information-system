@@ -6,13 +6,13 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class LoginTest extends JFrame implements ActionListener {
+public class LoginPage extends JFrame implements ActionListener {
     JLabel mainlabel1;
     JTextField tx_ID;
     JTextField tx_PassWord;
     JButton LoginButton;
     JButton RegisterButton;
-    public LoginTest(){
+    public LoginPage(){
         try{
             init();
         }catch (Exception e){}

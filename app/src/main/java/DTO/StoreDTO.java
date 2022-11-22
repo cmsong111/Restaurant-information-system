@@ -1,7 +1,7 @@
-package com.galaxy.Restaurantinformationsystem.DTO;
-
+//package com.galaxy.Restaurantinformationsystem.DTO;
+package DTO;
 import lombok.*;
-import org.springframework.format.annotation.DateTimeFormat;
+//import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -20,7 +20,8 @@ public class StoreDTO {
     private String location2;
     private String location3;
     private String category;
-    @DateTimeFormat(pattern = "hh:mm:ss")
+
+    //@DateTimeFormat(pattern = "hh:mm:ss")
     private LocalTime startTime;
     private LocalTime endTime;
     private boolean kids;

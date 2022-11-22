@@ -1,5 +1,5 @@
-package com.galaxy.Restaurantinformationsystem.DTO;
-
+//package com.galaxy.Restaurantinformationsystem.DTO;
+package DTO;
 import lombok.*;
 
 @Builder
