@@ -8,10 +8,10 @@ public class App {
     public static void main(String[] args) {
 
        //MainPage MT = new MainPage();
-        LoginPage LT = new LoginPage();
+        //LoginPage LT = new LoginPage();
         //ReviewPage RP = new ReviewPage();
         //StoreList SL = new StoreList();
         //StoreDetail SD = new StoreDetail();
-        //SignUpPage SP= new SignUpPage();
+        SignUpPage SP= new SignUpPage();
     }
 }

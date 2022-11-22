@@ -1,11 +1,9 @@
-package HTML;
+package HTTP;
 
 import com.google.gson.Gson;
 import DTO.UserDTO;
 import Setting.SingleTone;
-import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
-import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -13,7 +11,7 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import java.io.IOException;
 
-public class LogInHTML {
+public class LogInHTTP {
     Gson gson = new Gson();
 
     public UserDTO login(UserDTO userDTO) throws IOException {

@@ -10,6 +10,7 @@ public class LoginPage extends JFrame implements ActionListener {
     JLabel mainlabel1;
     JTextField tx_ID;
     JTextField tx_PassWord;
+
     JButton LoginButton;
     JButton RegisterButton;
     public LoginPage(){
@@ -103,6 +104,7 @@ public class LoginPage extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+
         MainPage MT=new MainPage();
     }
 }

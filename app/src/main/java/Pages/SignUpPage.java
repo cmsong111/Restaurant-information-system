@@ -1,9 +1,29 @@
 package Pages;
 
+import DTO.UserDTO;
+import Setting.SingleTone;
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
+import HTTP.LogInHTTP;
 
-public class SignUpPage extends JFrame {
+
+
+public class SignUpPage extends JFrame  {
+
+    UserDTO userDTO;
+    LogInHTTP http = new LogInHTTP();
+
+    JTextField textID;
+    JTextField textPassWord;
+    JTextField tx_Age;
+    JButton RegisterButton;
+    JTextField textName;
+
+
     public SignUpPage(){
 
 
@@ -41,26 +61,31 @@ public class SignUpPage extends JFrame {
         pageLabel.setBounds(382,120,500,70);         //나머지 페이지들도 적용
         pageLabel.setFont(mainFont30);
 
-        JTextField textName = new JTextField("이름");
+        textName = new JTextField("이름");
         textName.setBounds(482,220,300,43);
         textName.setFont(mainFont22);
         textName.setForeground(gray1);
         textName.setBorder(javax.swing.BorderFactory.createEmptyBorder());
 
-        JTextField textID = new JTextField("아이디");
+        textID = new JTextField("아이디");
         textID.setBounds(482,280,300,43);
         textID.setFont(mainFont22);
         textID.setForeground(gray1);
         textID.setBorder(javax.swing.BorderFactory.createEmptyBorder());
 
-        JTextField textPassWord = new JTextField("비밀번호");
+        textPassWord = new JTextField("비밀번호");
         textPassWord.setBounds(482,340,300,43);
         textPassWord.setFont(mainFont22);
         textPassWord.setForeground(gray1);
         textPassWord.setBorder(javax.swing.BorderFactory.createEmptyBorder());
 
+        tx_Age = new JTextField("나이");
+        tx_Age.setBounds(482,400,300,43);
+        tx_Age.setFont(mainFont22);
+        tx_Age.setForeground(gray1);
+        tx_Age.setBorder(javax.swing.BorderFactory.createEmptyBorder());
 
-        JButton RegisterButton = new JButton("회원가입");
+        RegisterButton = new JButton("회원가입");
         RegisterButton.setBounds(563,503,138,43);
         RegisterButton.setFont(mainFont22);
         RegisterButton.setBorderPainted(false);      //버튼 테두리 없에기
@@ -68,6 +93,7 @@ public class SignUpPage extends JFrame {
         //RegisterButton.setFocusPainted(false);
         RegisterButton.setForeground(Color.white);
         RegisterButton.setBackground(mint);
+        RegisterButton.addActionListener();
 
         JPanel lineName = new JPanel();
         lineName.setBounds(482,270,300,2);
@@ -75,16 +101,20 @@ public class SignUpPage extends JFrame {
         lineID.setBounds(482,330,300,2);
         JPanel linePW = new JPanel();
         linePW.setBounds(482,390,300,2);
+        JPanel lineAge = new JPanel();
+        linePW.setBounds(482,450,300,2);
 
 
         getContentPane().add(pageLabel);
         getContentPane().add(lineName);
         getContentPane().add(lineID);
         getContentPane().add(linePW);
+        getContentPane().add(lineAge);
 
         getContentPane().add(textName);
         getContentPane().add(textPassWord);
         getContentPane().add(textID);
+        getContentPane().add(tx_Age);
         getContentPane().add(RegisterButton);
         getContentPane().add(mainLabel);
 
@@ -98,5 +128,27 @@ public class SignUpPage extends JFrame {
 
     }
 
+
+    public void actionPerformed(ActionEvent e) throws IOException {
+
+        userDTO = UserDTO.builder()
+                .ID(textID.getText())
+                .password(textPassWord.getText())
+                .name(textName.getText())
+                .age(Integer.parseInt(tx_Age.getText()))
+                .build();
+        http.create(userDTO);
+
+        if (userDTO != null) {
+            System.out.print("d");
+            JOptionPane.showMessageDialog(null, "Longin Sucesses.\nhello"+userDTO.getName());
+            SingleTone.getInstance().setUser(userDTO);
+            this.setVisible(false);
+            LoginPage LP=new LoginPage();
+        } else {
+            JOptionPane.showMessageDialog(null, "fail.");
+        }
+
+    }
 
 }
