@@ -3,7 +3,7 @@ package HTTP;
 import DTO.StoreDTO;
 import com.google.gson.Gson;
 import DTO.UserDTO;
-import Setting.SingleTone;
+import Setting.SingleTon;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
@@ -20,7 +20,7 @@ public class SearchHTTP {
 
         //URL 생성
         CloseableHttpClient client = HttpClients.createDefault();
-        HttpPost httpPost = new HttpPost(SingleTone.getInstance().getBaseURL() + "/store/serch-name");
+        HttpPost httpPost = new HttpPost(SingleTon.getBaseURL() + "/store/serch-name");
 
         // BODY 담기
         String json = gson.toJson(storeName);
