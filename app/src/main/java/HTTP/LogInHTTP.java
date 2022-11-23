@@ -11,6 +11,8 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 public class LogInHTTP {
     Gson gson = new Gson();
@@ -20,6 +22,10 @@ public class LogInHTTP {
         //URL 생성
         CloseableHttpClient client = HttpClients.createDefault();
         HttpPost httpPost = new HttpPost(SingleTon.getBaseURL() + "/user/login");
+
+        //비밀번호 암호화
+        userDTO.setPassword(sha256(userDTO.getPassword()));
+
 
         // BODY 담기
         String json = gson.toJson(userDTO);
@@ -43,7 +49,8 @@ public class LogInHTTP {
         //URL 생성
         CloseableHttpClient client = HttpClients.createDefault();
         HttpPost httpPost = new HttpPost(SingleTon.getBaseURL() + "/user/create");
-
+        //비밀번호 암호화
+        userDTO.setPassword(sha256(userDTO.getPassword()));
         // BODY 담기
         String json = gson.toJson(userDTO);
         StringEntity entity = new StringEntity(json);
@@ -61,5 +68,18 @@ public class LogInHTTP {
         } else {
             return testest;
         }
+    }
+
+    private String sha256(String password) {
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            md.update(password.getBytes());
+            byte[] bytes = md.digest();
+            return bytes.toString();
+
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
