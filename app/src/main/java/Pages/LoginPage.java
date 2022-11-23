@@ -45,7 +45,6 @@ public class LoginPage extends JFrame implements ActionListener {
         lineID.setBounds(200, 330, 300, 2);
         linePW.setBounds(200, 430, 300, 2);
 
-
         Font mainFont40 = new Font("배달의민족 도현", Font.PLAIN, 40);   //폰트 설정
         Font mainFont20 = new Font("배달의민족 도현", Font.PLAIN, 22);
         Font mainFont30 = new Font("배달의민족 도현", Font.PLAIN, 30);
@@ -92,7 +91,6 @@ public class LoginPage extends JFrame implements ActionListener {
         //RegisterButton.setFocusPainted(false);
 
         panelMainWhite.setBackground(Color.white);
-        lineID.setBackground(gray1);
         linePW.setBackground(gray1);
         RegisterButton.setForeground(Color.white);
         RegisterButton.setBackground(mint);

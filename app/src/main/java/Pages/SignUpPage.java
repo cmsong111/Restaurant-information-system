@@ -95,6 +95,8 @@ public class SignUpPage extends JFrame implements ActionListener {
         RegisterButton.setBackground(mint);
         RegisterButton.addActionListener(this);
 
+
+
         JPanel lineName = new JPanel();
         lineName.setBounds(482, 270, 300, 2);
         JPanel lineID = new JPanel();
