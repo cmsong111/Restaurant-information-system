@@ -2,7 +2,7 @@ package Pages;
 
 
 import DTO.UserDTO;
-import Setting.SingleTone;
+import Setting.SingleTon;
 
 import javax.swing.*;
 import java.awt.*;
@@ -118,24 +118,24 @@ public class LoginPage extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        SingleTone instance = SingleTone.getInstance();
-
 
         String event = e.getActionCommand();
+
+
         if (event.equals("signIn")) {
             try {
                 userSingIn = UserDTO.builder()
                         .id(tx_ID.getText())
                         .password(tx_PassWord.getText())
                         .build();
-                instance.setUser(httpLogIn.login(userSingIn));
+                SingleTon.setUser(httpLogIn.login(userSingIn));
 
             } catch (IOException t) {
             }
 
-            if (instance.getUser() != null) {
+            if (SingleTon.getUser().getUpk()!=0L) {
 
-                JOptionPane.showMessageDialog(null, "Welcome. " + instance.getUser().getName());
+                JOptionPane.showMessageDialog(null, "Welcome. " + SingleTon.getUser().getName());
                 this.setVisible(false);
                 MainPage LP = new MainPage();
 
