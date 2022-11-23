@@ -1,7 +1,7 @@
 package Pages;
 
 import DTO.UserDTO;
-import Setting.SingleTone;
+import Setting.SingleTon;
 
 import javax.swing.*;
 import java.awt.*;
@@ -22,7 +22,6 @@ public class SignUpPage extends JFrame implements ActionListener {
     JTextField tx_Age;
     JButton RegisterButton;
     JTextField textName;
-    SingleTone instance = SingleTone.getInstance();
 
 
     public SignUpPage() {
@@ -131,34 +130,26 @@ public class SignUpPage extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        UserDTO LogInTryDTO = UserDTO.builder()
+        UserDTO UserInput = UserDTO.builder()
                 .id(textID.getText())
                 .password(textPassWord.getText())
                 .name(textName.getText())
                 .age(Integer.parseInt(tx_Age.getText()))
                 .build();
-        System.out.println("개체" + LogInTryDTO.toString());
+        System.out.println("유저가 입력한 값: " + UserInput.toString());
 
         try {
-            UserDTO test1 = http.create(LogInTryDTO);
-            System.out.println("리턴값:" +test1.toString());
-            // 싱글턴 삽입
-            instance.setUser(test1);
-
-            System.out.println("싱글턴" + instance.getUser().toString());
-
+            SingleTon.setUser(http.create(UserInput));
         } catch (IOException t) {
         }
-        System.out.println("싱글턴" + instance.getUser().toString());
-        if (instance.getUser() != null) {
-
-            JOptionPane.showMessageDialog(null, "SIGNUP Sucesses.\nhello" + instance.getUser().getName());
-            //SingleTone.getInstance().setUser(userDTO);
+        if (SingleTon.getUser().getUpk() != 0L) {
+            JOptionPane.showMessageDialog(null, "SIGNUP Sucesses.\nhello\n" + SingleTon.getUser().getName());
             this.setVisible(false);
+            //로그인 창 생성
             LoginPage LP = new LoginPage();
 
         } else {
-            JOptionPane.showMessageDialog(null, "fail.");
+            JOptionPane.showMessageDialog(null, "SIGNUP fail.");
         }
 
     }

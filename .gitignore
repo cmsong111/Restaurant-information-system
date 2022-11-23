@@ -227,3 +227,7 @@ gradle-app.setting
 *.hprof
 
 # End of https://www.toptal.com/developers/gitignore/api/intellij,java,windows,macos,gradle
+.idea/jpa-buddy.xml
+.idea/misc.xml
+.idea/misc.xml
+.idea/misc.xml
