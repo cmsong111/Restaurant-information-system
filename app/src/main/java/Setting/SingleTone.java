@@ -7,10 +7,12 @@ public class SingleTone {
     private static SingleTone instance = new SingleTone();
 
     private SingleTone() {
-
     }
 
     public static SingleTone getInstance() {
+        if (instance == null){
+            instance = new SingleTone();
+        }
         return instance;
     }
 
@@ -19,6 +21,6 @@ public class SingleTone {
 
     @Getter
     @Setter
-    private UserDTO user;
+    private UserDTO user = null;
 
 }

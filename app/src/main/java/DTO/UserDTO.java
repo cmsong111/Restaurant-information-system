@@ -10,12 +10,12 @@ import java.util.List;
 @ToString
 @Builder
 public class UserDTO {
-    private long UPK;
-    private String ID;
+    private long upk;
+    private String id;
     private String password;
     private String name;
     private int age;
-    private boolean isAdmin;
-    List<Long> SPK;
-    List<Long> RPK;
+    private boolean admin;
+    List<Long> spk;
+    List<Long> rpk;
 }
