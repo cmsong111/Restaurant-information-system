@@ -2,6 +2,8 @@ package Pages;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 enum HowSearch{
     SEARCH_BY_NAME,
@@ -12,7 +14,7 @@ enum HowSearch{
     SEARCH_SNACKFOOD,
     SEARCH_FASTFOOD
 }
-public class MainPage extends JFrame{
+public class MainPage extends JFrame implements ActionListener {
 
     Font mainFont40; Font mainFont30; Font mainFont20; Font searchFont;
 
@@ -26,7 +28,7 @@ public class MainPage extends JFrame{
     JButton mainButton_SB; //분식 버튼
     JButton mainButton_DC; // 동백전
     JButton mainButton_CC; // 아동급식카드
-
+    HowSearch search_State; // 검색 조건
 
     public MainPage() {
         try{
@@ -81,6 +83,7 @@ public class MainPage extends JFrame{
         quickSearch.setFont(searchFont);
         quickSearch.setBorderPainted(false);      //버튼 테두리 없에기
         quickSearch.setContentAreaFilled(false);
+        quickSearch.setActionCommand("bSearch");
         //quickSearch.setFocusPainted(false);
 
         mainButton_kr = new JButton("한식", new ImageIcon("app/res/bibimbap.png"));
@@ -90,6 +93,7 @@ public class MainPage extends JFrame{
         mainButton_kr.setFont(mainFont20);
         mainButton_kr.setBorderPainted(false);      //버튼 테두리 없에기
         mainButton_kr.setContentAreaFilled(false);
+        mainButton_kr.setActionCommand("bKorean");
         //mainButton_kr.setFocusPainted(false);
 
         mainButton_ch = new JButton("중식",new ImageIcon("app/res/dimsum.png"));
@@ -99,6 +103,7 @@ public class MainPage extends JFrame{
         mainButton_ch.setFont(mainFont20);
         mainButton_ch.setBorderPainted(false);      //버튼 테두리 없에기
         mainButton_ch.setContentAreaFilled(false);
+        mainButton_ch.setActionCommand("bChinese");
         //mainButton_ch.setFocusPainted(false);
 
         mainButton_jp = new JButton("일식",new ImageIcon("app/res/sushi.png"));
@@ -108,6 +113,7 @@ public class MainPage extends JFrame{
         mainButton_jp.setFont(mainFont20);
         mainButton_jp.setBorderPainted(false);      //버튼 테두리 없에기
         mainButton_jp.setContentAreaFilled(false);
+        mainButton_jp.setActionCommand("bJapanese");
         //mainButton_jp.setFocusPainted(false);
 
         mainButton_DS = new JButton("디저트",new ImageIcon("app/res/cake.png"));
@@ -117,6 +123,7 @@ public class MainPage extends JFrame{
         mainButton_DS.setFont(mainFont20);
         mainButton_DS.setBorderPainted(false);      //버튼 테두리 없에기
         mainButton_DS.setContentAreaFilled(false);
+        mainButton_DS.setActionCommand("bDessert");
         //mainButton_DS.setFocusPainted(false);
 
        mainButton_FD = new JButton("패스트푸드",new ImageIcon("app/res/fastfood.png"));
@@ -126,6 +133,7 @@ public class MainPage extends JFrame{
         mainButton_FD.setFont(mainFont20);
         mainButton_FD.setBorderPainted(false);      //버튼 테두리 없에기
         mainButton_FD.setContentAreaFilled(false);
+        mainButton_FD.setActionCommand("bFastfood");
         //mainButton_FD.setFocusPainted(false);
 
         mainButton_SB = new JButton("분식",new ImageIcon("app/res/ramen.png"));
@@ -135,6 +143,7 @@ public class MainPage extends JFrame{
         mainButton_SB.setFont(mainFont20);
         mainButton_SB.setBorderPainted(false);      //버튼 테두리 없에기
         mainButton_SB.setContentAreaFilled(false);
+        mainButton_SB.setActionCommand("bSnackfood");
         //mainButton_SB.setFocusPainted(false);
 
         mainButton_DC = new JButton("동백전");
@@ -196,6 +205,25 @@ public class MainPage extends JFrame{
 
         setResizable(false);    //화면 크기 고정
         setVisible(true);
+
+}
+@Override
+public void actionPerformed(ActionEvent e){
+        if(e.equals("bSearch"))
+            search_State=HowSearch.SEARCH_BY_NAME;
+        else if(e.equals("bKorean"))
+            search_State=HowSearch.SEARCH_KOREAN;
+        else if(e.equals("bChinese"))
+            search_State=HowSearch.SEARCH_CHINESE;
+        else if(e.equals("bJapanese"))
+            search_State=HowSearch.SEARCH_JAPANESE;
+        else if(e.equals("bFastfood"))
+            search_State=HowSearch.SEARCH_FASTFOOD;
+        else if(e.equals("bDessert"))
+            search_State=HowSearch.SEARCH_DESSERT;
+        else if(e.equals("bSnackfood"))
+            search_State=HowSearch.SEARCH_SNACKFOOD;
+
 
 }
 }
