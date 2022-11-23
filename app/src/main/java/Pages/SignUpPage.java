@@ -12,7 +12,7 @@ import HTTP.LogInHTTP;
 
 
 
-public class SignUpPage extends JFrame  {
+public class SignUpPage extends JFrame implements ActionListener{
 
     UserDTO userDTO;
     LogInHTTP http = new LogInHTTP();
@@ -93,7 +93,7 @@ public class SignUpPage extends JFrame  {
         //RegisterButton.setFocusPainted(false);
         RegisterButton.setForeground(Color.white);
         RegisterButton.setBackground(mint);
-        RegisterButton.addActionListener();
+        RegisterButton.addActionListener(this);
 
         JPanel lineName = new JPanel();
         lineName.setBounds(482,270,300,2);
@@ -127,10 +127,10 @@ public class SignUpPage extends JFrame  {
         setVisible(true);
 
     }
+@Override
+    public void actionPerformed(ActionEvent e)  {
 
-
-    public void actionPerformed(ActionEvent e) throws IOException {
-
+        try{
         userDTO = UserDTO.builder()
                 .ID(textID.getText())
                 .password(textPassWord.getText())
@@ -138,13 +138,15 @@ public class SignUpPage extends JFrame  {
                 .age(Integer.parseInt(tx_Age.getText()))
                 .build();
         http.create(userDTO);
+        } catch (IOException t){}
 
         if (userDTO != null) {
-            System.out.print("d");
+
             JOptionPane.showMessageDialog(null, "Longin Sucesses.\nhello"+userDTO.getName());
             SingleTone.getInstance().setUser(userDTO);
             this.setVisible(false);
             LoginPage LP=new LoginPage();
+
         } else {
             JOptionPane.showMessageDialog(null, "fail.");
         }
