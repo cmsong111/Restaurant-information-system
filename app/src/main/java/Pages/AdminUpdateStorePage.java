@@ -48,21 +48,21 @@ public class AdminUpdateStorePage extends JFrame implements ActionListener{
         labelAdmin.setForeground(darkModeText);
 
         JTextField textStoreName = new JTextField("Store Name");
-        textStoreName.setBounds(382, 220, 500, 43);
+        textStoreName.setBounds(392, 220, 500, 43);
         textStoreName.setFont(mainFont22);
         textStoreName.setForeground(gray1);
         textStoreName.setBackground(darkModeBack);
         textStoreName.setBorder(javax.swing.BorderFactory.createEmptyBorder());
 
         JTextField textStoreLocation = new JTextField("Store Location");
-        textStoreLocation.setBounds(382, 280, 500, 43);
+        textStoreLocation.setBounds(392, 280, 500, 43);
         textStoreLocation.setFont(mainFont22);
         textStoreLocation.setForeground(gray1);
         textStoreLocation.setBackground(darkModeBack);
         textStoreLocation.setBorder(javax.swing.BorderFactory.createEmptyBorder());
 
         JTextField textStoreGDNumber = new JTextField("Store General Directory Number");
-        textStoreGDNumber.setBounds(382, 340, 500, 43);
+        textStoreGDNumber.setBounds(392, 340, 500, 43);
         textStoreGDNumber.setFont(mainFont22);
         textStoreGDNumber.setForeground(gray1);
         textStoreGDNumber.setBackground(darkModeBack);
@@ -91,6 +91,19 @@ public class AdminUpdateStorePage extends JFrame implements ActionListener{
         buttonBack.setActionCommand("BackPage");
         buttonBack.addActionListener(this);
 
+
+        JPanel panelName = new JPanel();
+        panelName.setBounds(382, 220, 100, 43);
+        panelName.setBackground(darkModeBack);
+
+        JPanel panelLocation = new JPanel();
+        panelLocation.setBounds(382, 280, 100, 43);
+        panelLocation.setBackground(darkModeBack);
+
+        JPanel panelGDNumber = new JPanel();
+        panelGDNumber.setBounds(382, 340, 100, 43);
+        panelGDNumber.setBackground(darkModeBack);
+
         getContentPane().add(textStoreGDNumber);
         getContentPane().add(textStoreName);
         getContentPane().add(textStoreLocation);
@@ -98,6 +111,10 @@ public class AdminUpdateStorePage extends JFrame implements ActionListener{
         getContentPane().add(labelAdmin);
         getContentPane().add(updateStoreButton);
         getContentPane().add(buttonBack);
+
+        getContentPane().add(panelName);
+        getContentPane().add(panelLocation);
+        getContentPane().add(panelGDNumber);
 
         getContentPane().add(mainLabel);
         getContentPane().setBackground(darkMode);

@@ -99,15 +99,15 @@ public class AdminPage extends JFrame implements ActionListener{
 
         if (event.equals("CreateStore")) {
 
-            AdminCreateStorePage ASCP = new AdminCreateStorePage();
+            AdminCreateStorePage ACSP = new AdminCreateStorePage();
         }
         if (event.equals("UpdateStore")) {
 
-            AdminUpdateStorePage ASUP = new AdminUpdateStorePage();
+            AdminUpdateStorePage AUSP = new AdminUpdateStorePage();
         }
         if (event.equals("DeleteStore")) {
 
-            AdminDeleteStorePage ASDP = new AdminDeleteStorePage();
+            AdminDeleteStorePage ADSP = new AdminDeleteStorePage();
         }
     }
 }

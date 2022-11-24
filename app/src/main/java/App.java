@@ -14,8 +14,10 @@ public class App {
         //StoreDetail SD = new StoreDetail();
         //SignUpPage SP = new SignUpPage();
         AdminPage AP = new AdminPage();
-        //AdminStoreCreatePage ASCP = new AdminStoreCreatePage();
-        //AdminStoreUpdatePage ASUP = new AdminStoreUpdatePage();
-        //AdminUpdateStorePage ASUP = new AdminUpdateStorePage();
+
+
+        //AdminCreateStorePage ACSP = new AdminCreateStorePage();
+        //AdminUpdateStorePage AUSP = new AdminUpdateStorePage();
+        //AdminDeleteStorePage ADSP = new AdminDeleteStorePage();
     }
 }

@@ -93,18 +93,28 @@ public class SignUpPage extends JFrame implements ActionListener {
         //RegisterButton.setFocusPainted(false);
         RegisterButton.setForeground(Color.white);
         RegisterButton.setBackground(mint);
+        RegisterButton.setActionCommand("Register");
         RegisterButton.addActionListener(this);
+
+        JButton buttonBack = new JButton("뒤로가기");
+        buttonBack.setBounds(572,560,120,30);
+        buttonBack.setFont(mainFont18);
+        buttonBack.setBorderPainted(false);         //버튼 테두리 없에기
+        buttonBack.setContentAreaFilled(false);     //버튼 내부 색 채움 여부
+        //buttonBack.setFocusPainted(false);        //버튼 포커스(클릭시 테두리)
+        buttonBack.setActionCommand("BackPage");
+        buttonBack.addActionListener(this);
 
 
 
         JPanel lineName = new JPanel();
-        lineName.setBounds(482, 270, 300, 2);
+        lineName.setBounds(482, 265, 300, 2);
         JPanel lineID = new JPanel();
-        lineID.setBounds(482, 330, 300, 2);
+        lineID.setBounds(482, 325, 300, 2);
         JPanel linePW = new JPanel();
-        linePW.setBounds(482, 390, 300, 2);
+        linePW.setBounds(482, 385, 300, 2);
         JPanel lineAge = new JPanel();
-        linePW.setBounds(482, 450, 300, 2);
+        lineAge.setBounds(482, 445, 300, 2);
 
 
         getContentPane().add(pageLabel);
@@ -118,6 +128,7 @@ public class SignUpPage extends JFrame implements ActionListener {
         getContentPane().add(textID);
         getContentPane().add(tx_Age);
         getContentPane().add(RegisterButton);
+        getContentPane().add(buttonBack);
         getContentPane().add(mainLabel);
 
         getContentPane().add(panelMainMint);
@@ -132,28 +143,36 @@ public class SignUpPage extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        UserDTO UserInput = UserDTO.builder()
-                .id(textID.getText())
-                .password(textPassWord.getText())
-                .name(textName.getText())
-                .age(Integer.parseInt(tx_Age.getText()))
-                .build();
-        System.out.println("유저가 입력한 값: " + UserInput.toString());
 
-        try {
-            SingleTon.setUser(http.create(UserInput));
-        } catch (IOException t) {
+        String event = e.getActionCommand();
+
+        if (event.equals("Register")) {
+            UserDTO UserInput = UserDTO.builder()
+                    .id(textID.getText())
+                    .password(textPassWord.getText())
+                    .name(textName.getText())
+                    .age(Integer.parseInt(tx_Age.getText()))
+                    .build();
+            System.out.println("유저가 입력한 값: " + UserInput.toString());
+
+            try {
+                SingleTon.setUser(http.create(UserInput));
+            } catch (IOException t) {
+            }
+            if (SingleTon.getUser().getUpk() != 0L) {
+                JOptionPane.showMessageDialog(null, "SIGNUP Successes.\nhello\n" + SingleTon.getUser().getName());
+                this.setVisible(false);
+                //로그인 창 생성
+                LoginPage LP = new LoginPage();
+
+            } else {
+                JOptionPane.showMessageDialog(null, "SIGNUP fail.");
+            }
         }
-        if (SingleTon.getUser().getUpk() != 0L) {
-            JOptionPane.showMessageDialog(null, "SIGNUP Sucesses.\nhello\n" + SingleTon.getUser().getName());
+        if (event.equals("BackPage")) {
             this.setVisible(false);
-            //로그인 창 생성
             LoginPage LP = new LoginPage();
-
-        } else {
-            JOptionPane.showMessageDialog(null, "SIGNUP fail.");
         }
 
     }
-
 }
