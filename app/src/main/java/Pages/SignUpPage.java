@@ -8,6 +8,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 
 import HTTP.LogInHTTP;
 
@@ -143,7 +144,6 @@ public class SignUpPage extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
         String event = e.getActionCommand();
 
         if (event.equals("Register")) {
@@ -158,6 +158,8 @@ public class SignUpPage extends JFrame implements ActionListener {
             try {
                 SingleTon.setUser(http.create(UserInput));
             } catch (IOException t) {
+            } catch (NoSuchAlgorithmException ex) {
+                throw new RuntimeException(ex);
             }
             if (SingleTon.getUser().getUpk() != 0L) {
                 JOptionPane.showMessageDialog(null, "SIGNUP Successes.\nhello\n" + SingleTon.getUser().getName());

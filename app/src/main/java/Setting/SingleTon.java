@@ -14,6 +14,6 @@ public class SingleTon {
 
     @Getter
     @Setter
-    private static UserDTO user = new UserDTO();
+    private static UserDTO user;
 
 }

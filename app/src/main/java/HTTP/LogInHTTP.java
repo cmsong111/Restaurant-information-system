@@ -17,14 +17,14 @@ import java.security.NoSuchAlgorithmException;
 public class LogInHTTP {
     Gson gson = new Gson();
 
-    public UserDTO login(UserDTO userDTO) throws IOException {
+    public UserDTO login(UserDTO userDTO) throws IOException, NoSuchAlgorithmException {
 
         //URL 생성
         CloseableHttpClient client = HttpClients.createDefault();
         HttpPost httpPost = new HttpPost(SingleTon.getBaseURL() + "/user/login");
 
         //비밀번호 암호화
-        userDTO.setPassword(sha256(userDTO.getPassword()));
+        userDTO.setPassword(encrypt(userDTO.getPassword()));
 
 
         // BODY 담기
@@ -38,19 +38,20 @@ public class LogInHTTP {
 
 
         if (response.getStatusLine().getStatusCode() != 200) {
-            return null;
+            return UserDTO.builder().upk(0L).build();
         } else {
             String result = EntityUtils.toString(response.getEntity());
+            System.out.println(gson.fromJson(result, UserDTO.class).toString());
             return gson.fromJson(result, UserDTO.class);
         }
     }
 
-    public UserDTO create(UserDTO userDTO) throws IOException {
+    public UserDTO create(UserDTO userDTO) throws IOException, NoSuchAlgorithmException {
         //URL 생성
         CloseableHttpClient client = HttpClients.createDefault();
         HttpPost httpPost = new HttpPost(SingleTon.getBaseURL() + "/user/create");
         //비밀번호 암호화
-        userDTO.setPassword(sha256(userDTO.getPassword()));
+        userDTO.setPassword(encrypt(userDTO.getPassword()));
         // BODY 담기
         String json = gson.toJson(userDTO);
         StringEntity entity = new StringEntity(json);
@@ -62,24 +63,27 @@ public class LogInHTTP {
         String body = EntityUtils.toString(response.getEntity());
 
         UserDTO testest = gson.fromJson(body, UserDTO.class);
+        System.out.println(testest.toString());
 
         if (testest.getUpk() == 0L) {
-            return null;
+            return UserDTO.builder().upk(0L).build();
         } else {
             return testest;
         }
     }
 
-    private String sha256(String password) {
-        try {
-            MessageDigest md = MessageDigest.getInstance("SHA-256");
-            md.update(password.getBytes());
-            byte[] bytes = md.digest();
-            return bytes.toString();
+    public String encrypt(String text) throws NoSuchAlgorithmException {
+        MessageDigest md = MessageDigest.getInstance("SHA-256");
+        md.update(text.getBytes());
 
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
+        return bytesToHex(md.digest());
+    }
+
+    private String bytesToHex(byte[] bytes) {
+        StringBuilder builder = new StringBuilder();
+        for (byte b : bytes) {
+            builder.append(String.format("%02x", b));
         }
-        return null;
+        return builder.toString();
     }
 }

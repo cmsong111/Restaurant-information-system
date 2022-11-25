@@ -9,6 +9,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 
 import HTTP.LogInHTTP;
 
@@ -127,8 +128,11 @@ public class LoginPage extends JFrame implements ActionListener {
                         .password(tx_PassWord.getText())
                         .build();
                 SingleTon.setUser(httpLogIn.login(userSingIn));
+                System.out.println(SingleTon.getUser().toString());
 
             } catch (IOException t) {
+            } catch (NoSuchAlgorithmException ex) {
+                throw new RuntimeException(ex);
             }
 
             if (SingleTon.getUser().getUpk()!=0L) {
