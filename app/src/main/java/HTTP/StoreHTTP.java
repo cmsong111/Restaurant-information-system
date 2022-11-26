@@ -10,16 +10,15 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import java.io.IOException;
-import java.util.ArrayList;
 
-public class MenuHTTP {
+public class StoreHTTP {
     Gson gson = new Gson();
-    public MenuDTO createMenu(MenuDTO menu) throws IOException {
+    public StoreDTO createStore(StoreDTO store) throws IOException {
         CloseableHttpClient client = HttpClients.createDefault();
-        HttpPost httpPost = new HttpPost(SingleTon.getBaseURL() + "/menu/create");
+        HttpPost httpPost = new HttpPost(SingleTon.getBaseURL() + "/store/create");
 
         // DTO Body에 담기
-        String json = gson.toJson(menu);
+        String json = gson.toJson(store);
         StringEntity entity = new StringEntity(json);
         httpPost.setEntity(entity);
         httpPost.setHeader("Content-Type", "application/json");
@@ -29,14 +28,15 @@ public class MenuHTTP {
 
         // 결과 반환
         String result = EntityUtils.toString(response.getEntity());
-        return gson.fromJson(result, MenuDTO.class);
+        return gson.fromJson(result, StoreDTO.class);
     }
-    public MenuDTO readMenu(StoreDTO menu) throws IOException{
+
+    public StoreDTO readStore(StoreDTO store) throws IOException{
         CloseableHttpClient client = HttpClients.createDefault();
-        HttpPost httpPost = new HttpPost(SingleTon.getBaseURL() + "/menu/read");
+        HttpPost httpPost = new HttpPost(SingleTon.getBaseURL() + "/store/read");
 
         // DTO Body에 담기
-        String json = gson.toJson(menu);
+        String json = gson.toJson(store);
         StringEntity entity = new StringEntity(json);
         httpPost.setEntity(entity);
         httpPost.setHeader("Content-Type", "application/json");
@@ -46,14 +46,15 @@ public class MenuHTTP {
 
         // 결과 반환
         String result = EntityUtils.toString(response.getEntity());
-        return gson.fromJson(result, MenuDTO.class);
+        return gson.fromJson(result, StoreDTO.class);
     }
-    public MenuDTO updateMenu(MenuDTO menu) throws IOException {
+
+    public StoreDTO updateStore(StoreDTO store) throws IOException {
         CloseableHttpClient client = HttpClients.createDefault();
-        HttpPost httpPost = new HttpPost(SingleTon.getBaseURL() + "/menu/update");
+        HttpPost httpPost = new HttpPost(SingleTon.getBaseURL() + "/store/update");
 
         // DTO Body에 담기
-        String json = gson.toJson(menu);
+        String json = gson.toJson(store);
         StringEntity entity = new StringEntity(json);
         httpPost.setEntity(entity);
         httpPost.setHeader("Content-Type", "application/json");
@@ -63,14 +64,14 @@ public class MenuHTTP {
 
         // 결과 반환
         String result = EntityUtils.toString(response.getEntity());
-        return gson.fromJson(result, MenuDTO.class);
+        return gson.fromJson(result, StoreDTO.class);
     }
-    public void deleteMenu(MenuDTO menu) throws IOException {
+    public void deleteStore(StoreDTO store) throws IOException {
         CloseableHttpClient client = HttpClients.createDefault();
-        HttpPost httpPost = new HttpPost(SingleTon.getBaseURL() + "/menu/delete");
+        HttpPost httpPost = new HttpPost(SingleTon.getBaseURL() + "/store/delete");
 
         // DTO Body에 담기
-        String json = gson.toJson(menu);
+        String json = gson.toJson(store);
         StringEntity entity = new StringEntity(json);
         httpPost.setEntity(entity);
         httpPost.setHeader("Content-Type", "application/json");

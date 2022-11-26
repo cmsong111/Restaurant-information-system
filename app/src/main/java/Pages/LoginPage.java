@@ -130,7 +130,8 @@ public class LoginPage extends JFrame implements ActionListener {
                 SingleTon.setUser(httpLogIn.login(userSingIn));
                 System.out.println(SingleTon.getUser().toString());
 
-            } catch (NoSuchAlgorithmException ex) {
+            }catch (IOException t){}
+            catch (NoSuchAlgorithmException ex) {
                 throw new RuntimeException(ex);
             }
             if (SingleTon.getUser().getUpk()!=0L) {

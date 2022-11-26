@@ -37,10 +37,10 @@ public class MainPage extends JFrame implements ActionListener, ItemListener {
     JCheckBox mainButton_DC; // 지역화폐
     JCheckBox mainButton_CC; // 아동급식카드
     JCheckBox mainButton_ZC; // 모범음식점
-    HowSearch search_State; // 검색 조건
+    HowSearch search_State=HowSearch.SEARCH_BY_NAME; // 검색 조건
     StoreDTO store;
     SearchHTTP httpStore=new SearchHTTP();
-    ArrayList<StoreDTO> storeList=new ArrayList<StoreDTO>(); //스토어 목록
+    static public ArrayList<StoreDTO> storeList=new ArrayList<StoreDTO>(); //스토어 목록
     //체크박스
     public static boolean local_Currency=false;
     public static boolean forChild=false;
@@ -240,7 +240,10 @@ public void actionPerformed(ActionEvent e){
         //검색버튼 및 음식 카테고리(라디오버튼)
     switch(event){
         case "bSearch":
-            search_State = HowSearch.SEARCH_BY_NAME; break;
+            search_State = HowSearch.SEARCH_BY_NAME;
+            Set_Storelist();
+            StoreList SN=new StoreList();
+            break;
         case "bKorean":
             search_State=HowSearch.SEARCH_KOREAN; break;
         case "bChinese":
@@ -254,7 +257,9 @@ public void actionPerformed(ActionEvent e){
         case "bSnackfood":
             search_State = HowSearch.SEARCH_SNACKFOOD; break;
         case "VIEW_LIST":
-            Set_Storelist(); break;
+            Set_Storelist();
+            StoreList SL=new StoreList();
+            break;
     }
 
 }
@@ -267,18 +272,35 @@ public void itemStateChanged(ItemEvent e){
 }
 
 public void Set_Storelist(){
-        if(search_State.equals(HowSearch.SEARCH_BY_NAME)){
+        if(search_State.equals(HowSearch.SEARCH_BY_NAME)){ //이름으로 검색
             try {
                 store = StoreDTO.builder()
                         .name(textMainSearch.getText())
                         .location1("부산광역시")
                         .location1("부산진구")
                         .build();
-                storeList.add(httpStore.searchByName(store));
-                //TODO: 반환값이 여러개임
-                System.out.println(SingleTon.getUser());
-            } catch (IOException t) {
-            }
+                storeList=(httpStore.searchByName(store));
+                //반환값이 여러개임
+            } catch (IOException t) {}
+        }
+
+        else { //카테고리별 검색
+            try {
+                String temp="한식";
+                if(search_State.equals(HowSearch.SEARCH_KOREAN)) temp="한식";
+                else if(search_State.equals(HowSearch.SEARCH_CHINESE)) temp="중식";
+                else if(search_State.equals(HowSearch.SEARCH_JAPANESE)) temp="일식";
+                else if(search_State.equals(HowSearch.SEARCH_DESSERT)) temp="디저트";
+                else if(search_State.equals(HowSearch.SEARCH_FASTFOOD)) temp="패스트푸드";
+                else if(search_State.equals(HowSearch.SEARCH_SNACKFOOD)) temp="분식";
+                store = StoreDTO.builder()
+                        .category(temp)
+                        .location1("부산광역시")
+                        .location1("부산진구")
+                        .build();
+                storeList=(httpStore.search_Category(store));
+                //반환값이 여러개임
+            } catch (IOException t) {}
         }
 }
 }
