@@ -9,6 +9,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 
 import HTTP.LogInHTTP;
 
@@ -44,7 +45,6 @@ public class LoginPage extends JFrame implements ActionListener {
         panelMainWhite.setBounds(26, 28, 684, 612);        //배경 만들기
         lineID.setBounds(200, 330, 300, 2);
         linePW.setBounds(200, 430, 300, 2);
-
 
         Font mainFont40 = new Font("배달의민족 도현", Font.PLAIN, 40);   //폰트 설정
         Font mainFont20 = new Font("배달의민족 도현", Font.PLAIN, 22);
@@ -92,7 +92,6 @@ public class LoginPage extends JFrame implements ActionListener {
         //RegisterButton.setFocusPainted(false);
 
         panelMainWhite.setBackground(Color.white);
-        lineID.setBackground(gray1);
         linePW.setBackground(gray1);
         RegisterButton.setForeground(Color.white);
         RegisterButton.setBackground(mint);
@@ -129,7 +128,10 @@ public class LoginPage extends JFrame implements ActionListener {
                         .password(tx_PassWord.getText())
                         .build();
                 SingleTon.setUser(httpLogIn.login(userSingIn));
-            } catch (IOException t) {
+                System.out.println(SingleTon.getUser().toString());
+
+            } catch (NoSuchAlgorithmException ex) {
+                throw new RuntimeException(ex);
             }
             if (SingleTon.getUser().getUpk()!=0L) {
 

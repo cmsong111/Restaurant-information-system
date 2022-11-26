@@ -2,8 +2,17 @@ package Pages;
 
 import javax.swing.*;
 import java.awt.*;
-public class ReviewPage extends JFrame{
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
+public class ReviewPage extends JFrame implements ActionListener{
     public ReviewPage(){
+        try{
+            ReviewPage();
+        } catch (Exception e){
+        }
+    }
+    public void ReviewPage(){
         setTitle("ReviewPage");
         setSize(1280,720);
 
@@ -41,7 +50,7 @@ public class ReviewPage extends JFrame{
         labelStore.setFont(mainFont22);
 
         JTextArea textReview = new JTextArea("리뷰 내용");
-        textReview.setBounds(292,180,680,300);
+        textReview.setBounds(297,182,670,296);
         textReview.setFont(mainFont22);
         textReview.setForeground(gray1);
 
@@ -49,12 +58,18 @@ public class ReviewPage extends JFrame{
         panelReviewGray.setBounds(290,178,684,304);
         panelReviewGray.setBackground(gray1);
 
+        JPanel panelReviewWhite = new JPanel();
+        panelReviewWhite.setBounds(292,180,680,300);
+        panelReviewWhite.setBackground(Color.white);
+
         JButton buttonDone = new JButton("-리뷰 작성-");
         buttonDone.setBounds(532,510,200,34);
         buttonDone.setFont(mainFont22);
         buttonDone.setBorderPainted(false);         //버튼 테두리 없에기
         buttonDone.setContentAreaFilled(false);     //버튼 내부 색 채움 여부
         //buttonDone.setFocusPainted(false);        //버튼 포커스(클릭시 테두리)
+        buttonDone.setActionCommand("StoreUpdate");
+        buttonDone.addActionListener(this);
 
         JButton buttonBack = new JButton("뒤로가기");
         buttonBack.setBounds(572,560,120,30);
@@ -62,7 +77,8 @@ public class ReviewPage extends JFrame{
         buttonBack.setBorderPainted(false);         //버튼 테두리 없에기
         buttonBack.setContentAreaFilled(false);     //버튼 내부 색 채움 여부
         //buttonBack.setFocusPainted(false);        //버튼 포커스(클릭시 테두리)
-
+        buttonBack.setActionCommand("BackPage");
+        buttonBack.addActionListener(this);
 
         getContentPane().add(buttonBack);
         getContentPane().add(labelStore);
@@ -70,6 +86,7 @@ public class ReviewPage extends JFrame{
         getContentPane().add(textReview);
         getContentPane().add(mainLabel);
 
+        getContentPane().add(panelReviewWhite);
         getContentPane().add(panelReviewGray);
         getContentPane().add(panelMainMint);
         getContentPane().add(panelMainWhite);
@@ -77,6 +94,18 @@ public class ReviewPage extends JFrame{
 
         setResizable(false);    //화면 크기 고정
         setVisible(true);
+
+    }
+    public void actionPerformed(ActionEvent e) {
+
+        String event = e.getActionCommand();
+
+        if (event.equals("UpdateStore")) {
+
+        }
+        if (event.equals("BackPage")) {
+            this.setVisible(false);
+        }
 
     }
 }

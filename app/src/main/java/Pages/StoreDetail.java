@@ -2,9 +2,18 @@ package Pages;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
 
-public class StoreDetail extends JFrame{
+public class StoreDetail extends JFrame implements ActionListener{
     public StoreDetail(){
+        try{
+            StoreDetail();
+        } catch (Exception e){
+        }
+    }
+    public void StoreDetail(){
         setTitle("StoreDetailPage");
         setSize(1280,720);
 
@@ -71,7 +80,9 @@ public class StoreDetail extends JFrame{
         buttonMenu.setBackground(mint);
         buttonMenu.setBorderPainted(false);         //버튼 테두리 없에기
         //buttonMenu.setContentAreaFilled(false);     //버튼 내부 색 채움 여부
-        //buttonMenu.setFocusPainted(false);        //버튼 포커스(클릭시 테두리)
+        buttonMenu.setFocusPainted(false);        //버튼 포커스(클릭시 테두리)
+        buttonMenu.setActionCommand("MenuPage");
+        buttonMenu.addActionListener(this);
 
         JButton buttonReview = new JButton("리뷰");
         buttonReview.setBounds(762,300,70,30);
@@ -79,7 +90,9 @@ public class StoreDetail extends JFrame{
         buttonReview.setBackground(mint);
         buttonReview.setBorderPainted(false);         //버튼 테두리 없에기
         //buttonReview.setContentAreaFilled(false);     //버튼 내부 색 채움 여부
-        //buttonReview.setFocusPainted(false);        //버튼 포커스(클릭시 테두리)
+        buttonReview.setFocusPainted(false);        //버튼 포커스(클릭시 테두리)
+        buttonReview.setActionCommand("ReviewPage");
+        buttonReview.addActionListener(this);
 
         JButton buttonBack = new JButton("뒤로가기");
         buttonBack.setBounds(572,560,120,30);
@@ -87,6 +100,8 @@ public class StoreDetail extends JFrame{
         buttonBack.setBorderPainted(false);         //버튼 테두리 없에기
         buttonBack.setContentAreaFilled(false);     //버튼 내부 색 채움 여부
         //buttonBack.setFocusPainted(false);        //버튼 포커스(클릭시 테두리)
+        buttonBack.setActionCommand("BackPage");
+        buttonBack.addActionListener(this);
 
 
         getContentPane().add(buttonReview);
@@ -105,6 +120,21 @@ public class StoreDetail extends JFrame{
 
         setResizable(false);    //화면 크기 고정
         setVisible(true);
+
+    }
+    public void actionPerformed(ActionEvent e) {
+
+        String event = e.getActionCommand();
+
+        if (event.equals("MenuPage")) {
+
+        }
+        if (event.equals("ReviewPage")) {
+
+        }
+        if (event.equals("BackPage")) {
+            this.setVisible(false);
+        }
 
     }
 }
