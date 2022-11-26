@@ -1,9 +1,17 @@
 package Pages;
 
+import DTO.StoreDTO;
+import HTTP.SearchHTTP;
+import Setting.SingleTon;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.io.IOException;
+import java.util.ArrayList;
 
 enum HowSearch{
     SEARCH_BY_NAME,
@@ -14,7 +22,7 @@ enum HowSearch{
     SEARCH_SNACKFOOD,
     SEARCH_FASTFOOD
 }
-public class MainPage extends JFrame implements ActionListener {
+public class MainPage extends JFrame implements ActionListener, ItemListener {
 
     Font mainFont40; Font mainFont30; Font mainFont20; Font searchFont;
 
@@ -26,10 +34,17 @@ public class MainPage extends JFrame implements ActionListener {
     JButton mainButton_DS; //디저트버튼
     JButton mainButton_FD; //패스트푸드 버튼
     JButton mainButton_SB; //분식 버튼
-    JButton mainButton_DC; // 동백전
-    JButton mainButton_CC; // 아동급식카드
+    JCheckBox mainButton_DC; // 지역화폐
+    JCheckBox mainButton_CC; // 아동급식카드
+    JCheckBox mainButton_ZC; // 모범음식점
     HowSearch search_State; // 검색 조건
-
+    StoreDTO store;
+    SearchHTTP httpStore=new SearchHTTP();
+    ArrayList<StoreDTO> storeList=new ArrayList<StoreDTO>(); //스토어 목록
+    //체크박스
+    public static boolean local_Currency=false;
+    public static boolean forChild=false;
+    public static boolean roleModel=false;
     public MainPage() {
         try{
            init();
@@ -84,6 +99,7 @@ public class MainPage extends JFrame implements ActionListener {
         quickSearch.setBorderPainted(false);      //버튼 테두리 없에기
         quickSearch.setContentAreaFilled(false);
         quickSearch.setActionCommand("bSearch");
+        quickSearch.addActionListener(this);
         //quickSearch.setFocusPainted(false);
 
         mainButton_kr = new JButton("한식", new ImageIcon("app/res/bibimbap.png"));
@@ -94,6 +110,7 @@ public class MainPage extends JFrame implements ActionListener {
         mainButton_kr.setBorderPainted(false);      //버튼 테두리 없에기
         mainButton_kr.setContentAreaFilled(false);
         mainButton_kr.setActionCommand("bKorean");
+        mainButton_kr.addActionListener(this);
         //mainButton_kr.setFocusPainted(false);
 
         mainButton_ch = new JButton("중식",new ImageIcon("app/res/dimsum.png"));
@@ -104,6 +121,7 @@ public class MainPage extends JFrame implements ActionListener {
         mainButton_ch.setBorderPainted(false);      //버튼 테두리 없에기
         mainButton_ch.setContentAreaFilled(false);
         mainButton_ch.setActionCommand("bChinese");
+        mainButton_ch.addActionListener(this);
         //mainButton_ch.setFocusPainted(false);
 
         mainButton_jp = new JButton("일식",new ImageIcon("app/res/sushi.png"));
@@ -114,6 +132,7 @@ public class MainPage extends JFrame implements ActionListener {
         mainButton_jp.setBorderPainted(false);      //버튼 테두리 없에기
         mainButton_jp.setContentAreaFilled(false);
         mainButton_jp.setActionCommand("bJapanese");
+        mainButton_jp.addActionListener(this);
         //mainButton_jp.setFocusPainted(false);
 
         mainButton_DS = new JButton("디저트",new ImageIcon("app/res/cake.png"));
@@ -124,6 +143,7 @@ public class MainPage extends JFrame implements ActionListener {
         mainButton_DS.setBorderPainted(false);      //버튼 테두리 없에기
         mainButton_DS.setContentAreaFilled(false);
         mainButton_DS.setActionCommand("bDessert");
+        mainButton_DS.addActionListener(this);
         //mainButton_DS.setFocusPainted(false);
 
        mainButton_FD = new JButton("패스트푸드",new ImageIcon("app/res/fastfood.png"));
@@ -134,6 +154,7 @@ public class MainPage extends JFrame implements ActionListener {
         mainButton_FD.setBorderPainted(false);      //버튼 테두리 없에기
         mainButton_FD.setContentAreaFilled(false);
         mainButton_FD.setActionCommand("bFastfood");
+        mainButton_FD.addActionListener(this);
         //mainButton_FD.setFocusPainted(false);
 
         mainButton_SB = new JButton("분식",new ImageIcon("app/res/ramen.png"));
@@ -144,27 +165,31 @@ public class MainPage extends JFrame implements ActionListener {
         mainButton_SB.setBorderPainted(false);      //버튼 테두리 없에기
         mainButton_SB.setContentAreaFilled(false);
         mainButton_SB.setActionCommand("bSnackfood");
+        mainButton_SB.addActionListener(this);
         //mainButton_SB.setFocusPainted(false);
 
-        mainButton_DC = new JButton("동백전");
-        mainButton_DC.setBounds(406,450,107,34);
+        mainButton_DC = new JCheckBox("지역화폐");
+        mainButton_DC.setBounds(406,450,110,34);
         mainButton_DC.setFont(mainFont20);
         mainButton_DC.setBorderPainted(false);      //버튼 테두리 없에기
         mainButton_DC.setContentAreaFilled(false);
+        mainButton_DC.addItemListener(this);
         //mainButton_DC.setFocusPainted(false);
 
-        mainButton_CC = new JButton("아동급식카드");
+        mainButton_CC = new JCheckBox("아동급식카드");
         mainButton_CC.setBounds(543,450,170,34);
         mainButton_CC.setFont(mainFont20);
         mainButton_CC.setBorderPainted(false);      //버튼 테두리 없에기
         mainButton_CC.setContentAreaFilled(false);
+        mainButton_CC.addItemListener(this);
         //mainButton_CC.setFocusPainted(false);
 
-        JButton mainButton_ZC = new JButton("제로페이");
+        mainButton_ZC = new JCheckBox("모범음식점");
         mainButton_ZC.setBounds(709,450,130,34);
         mainButton_ZC.setFont(mainFont20);
         mainButton_ZC.setBorderPainted(false);      //버튼 테두리 없에기
         mainButton_ZC.setContentAreaFilled(false);
+        mainButton_ZC.addItemListener(this);
         //mainButton_ZC.setFocusPainted(false);
 
         JButton mainButton_Search = new JButton("식당 찾기");
@@ -172,6 +197,8 @@ public class MainPage extends JFrame implements ActionListener {
         mainButton_Search.setFont(mainFont20);
         mainButton_Search.setBackground(mint);
         mainButton_Search.setBorderPainted(false);
+        mainButton_Search.setActionCommand("VIEW_LIST");
+        mainButton_Search.addActionListener(this);
 
         JButton mainButton_Random = new JButton("오늘의 추천 메뉴");
         mainButton_Random.setBounds(502,570,260,53);
@@ -209,21 +236,49 @@ public class MainPage extends JFrame implements ActionListener {
 }
 @Override
 public void actionPerformed(ActionEvent e){
-        if(e.equals("bSearch"))
-            search_State=HowSearch.SEARCH_BY_NAME;
-        else if(e.equals("bKorean"))
-            search_State=HowSearch.SEARCH_KOREAN;
-        else if(e.equals("bChinese"))
-            search_State=HowSearch.SEARCH_CHINESE;
-        else if(e.equals("bJapanese"))
-            search_State=HowSearch.SEARCH_JAPANESE;
-        else if(e.equals("bFastfood"))
-            search_State=HowSearch.SEARCH_FASTFOOD;
-        else if(e.equals("bDessert"))
-            search_State=HowSearch.SEARCH_DESSERT;
-        else if(e.equals("bSnackfood"))
-            search_State=HowSearch.SEARCH_SNACKFOOD;
+        String event = e.getActionCommand();
+        //검색버튼 및 음식 카테고리(라디오버튼)
+    switch(event){
+        case "bSearch":
+            search_State = HowSearch.SEARCH_BY_NAME; break;
+        case "bKorean":
+            search_State=HowSearch.SEARCH_KOREAN; break;
+        case "bChinese":
+            search_State = HowSearch.SEARCH_CHINESE; break;
+        case "bJapanese":
+            search_State = HowSearch.SEARCH_JAPANESE; break;
+        case "bFastFood":
+            search_State = HowSearch.SEARCH_FASTFOOD; break;
+        case "bDessert":
+            search_State = HowSearch.SEARCH_DESSERT; break;
+        case "bSnackfood":
+            search_State = HowSearch.SEARCH_SNACKFOOD; break;
+        case "VIEW_LIST":
+            Set_Storelist(); break;
+    }
 
+}
+@Override
+public void itemStateChanged(ItemEvent e){
+     //적용할 필터링 선택
+    if(e.getSource()==mainButton_ZC) local_Currency=(e.getStateChange()==1)?true:false;
+    else if(e.getSource()==mainButton_CC) forChild=(e.getStateChange()==1)?true:false;
+    else if(e.getSource()==mainButton_DC) roleModel=(e.getStateChange()==1)?true:false;
+}
 
+public void Set_Storelist(){
+        if(search_State.equals(HowSearch.SEARCH_BY_NAME)){
+            try {
+                store = StoreDTO.builder()
+                        .name(textMainSearch.getText())
+                        .location1("부산광역시")
+                        .location1("부산진구")
+                        .build();
+                storeList.add(httpStore.searchByName(store));
+                //TODO: 반환값이 여러개임
+                System.out.println(SingleTon.getUser());
+            } catch (IOException t) {
+            }
+        }
 }
 }

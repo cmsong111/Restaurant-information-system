@@ -12,6 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @ToString
 @Builder
+@Getter
 public class StoreDTO {
     private Long SPK;
     private String name;

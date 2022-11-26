@@ -129,10 +129,8 @@ public class LoginPage extends JFrame implements ActionListener {
                         .password(tx_PassWord.getText())
                         .build();
                 SingleTon.setUser(httpLogIn.login(userSingIn));
-
             } catch (IOException t) {
             }
-
             if (SingleTon.getUser().getUpk()!=0L) {
 
                 JOptionPane.showMessageDialog(null, "Welcome. " + SingleTon.getUser().getName());

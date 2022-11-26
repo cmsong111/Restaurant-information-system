@@ -1,9 +1,11 @@
 package HTTP;
 
 import DTO.StoreDTO;
+import Pages.MainPage;
 import com.google.gson.Gson;
 import DTO.UserDTO;
 import Setting.SingleTon;
+import okhttp3.*;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -15,41 +17,69 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import java.io.IOException;
+import java.util.ArrayList;
+
+import Pages.MainPage;
 
 public class SearchHTTP {
 
     Gson gson = new Gson();
     // 가게 이름으로 검색
-    public StoreDTO searchByName(StoreDTO storeName) throws IOException {
+    public StoreDTO searchByName(StoreDTO store) throws IOException {
+        String strURL="http://113.198.230.14:5001/store/serch-name?location1=부산광역시&location2=부산진구&";
+        strURL=strURL+store.getName();
 
-        //URL 생성
-        CloseableHttpClient client = HttpClients.createDefault();
-        HttpGet Name_search = new HttpGet(SingleTon.getBaseURL() + "/store/serch-name");
-        URIBuilder uri=new URIBuilder(Name_search.getURI());
-        uri.addParameter("location1", storeName.getLocation1());
-        uri.addParameter("location2", storeName.getLocation2());
-        uri.addParameter("store", storeName.getName());
+        OkHttpClient client = new OkHttpClient().newBuilder()
+                .build();
+        MediaType mediaType = MediaType.parse("text/plain");
+        RequestBody body = RequestBody.create(mediaType, "");
+        Request request = new Request.Builder()
+                .url(strURL)
+                .method("GET", body)
+                .build();
 
-
-        // BODY 담기
-        /*String json = gson.toJson(storeName);
-        StringEntity entity = new StringEntity(json);
-        httpPost.setEntity(entity);
-        httpPost.setHeader("Content-Type","application/json");
-
-        // HTTP POST 요청하기
-        HttpResponse response = client.execute(httpPost);
+        Response response = client.newCall(request).execute(); //Get요청 전송
 
 
-        if (response.getStatusLine().getStatusCode() != 200) {
-            return null;
+        if (response.isSuccessful()) {
+            ResponseBody result=response.body();
+            return gson.fromJson(result.toString(), StoreDTO.class);
+
         } else {
-            String result = EntityUtils.toString(response.getEntity());
-            return gson.fromJson(result, StoreDTO.class);
-        }*/
-        return null;
+            System.out.println("서버 통신 실패");
+            return null;
+        }
     }
+    public StoreDTO search_Category(StoreDTO store) throws IOException{
+        String strURL="http://113.198.230.14:5001/store/serch-name?location1=부산광역시&location2=부산진구&";
+        strURL=strURL+store.getCategory();
+        if(MainPage.local_Currency==true)
+            strURL=strURL+"&price=true";
+        if(MainPage.forChild==true)
+            strURL=strURL+"&kids=true";
+        if(MainPage.roleModel==true)
+            strURL=strURL+"&roleModel=true";
+
+        OkHttpClient client = new OkHttpClient().newBuilder()
+                .build();
+        MediaType mediaType = MediaType.parse("text/plain");
+        RequestBody body = RequestBody.create(mediaType, "");
+        Request request = new Request.Builder()
+                .url(strURL)
+                .method("GET", body)
+                .build();
+
+        Response response = client.newCall(request).execute(); //Get요청 전송
 
 
+        if (response.isSuccessful()) {
+            ResponseBody result=response.body();
+            return gson.fromJson(result.toString(), StoreDTO.class);
 
+        } else {
+            System.out.println("서버 통신 실패");
+            return null;
+        }
+    }
+    
 }

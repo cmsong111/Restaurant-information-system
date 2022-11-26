@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.Setter;
 import DTO.*;
 
+import java.util.ArrayList;
+
 public class SingleTon {
 
     private SingleTon() {
@@ -15,5 +17,6 @@ public class SingleTon {
     @Getter
     @Setter
     private static UserDTO user = new UserDTO();
+
 
 }
