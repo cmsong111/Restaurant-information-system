@@ -1,7 +1,6 @@
 import HTTP.NaverMapAPI;
-import Pages.MainPage;
 import org.json.simple.parser.ParseException;
-
+import Pages.*;
 import java.io.IOException;
 import java.net.URISyntaxException;
 public class App {

@@ -4,6 +4,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import Components.StoreComponent;
+import DTO.StoreDTO;
 
 public class StoreList extends JFrame implements ActionListener{
 
@@ -12,6 +18,21 @@ public class StoreList extends JFrame implements ActionListener{
             StoreList();
         } catch (Exception e){
         }
+    }
+
+    public StoreDTO MaptoDTO(Map<String, Object> t){  //Arraylist<Map<String, Object>>에서 각 인덱스를 StoreDTO객체로 치환
+       StoreDTO storeset=new StoreDTO();
+       storeset.setSPK((Long)t.get("SPK"));
+       storeset.setName((String) t.get("name"));
+       storeset.setLocation1((String) t.get("location1"));
+        storeset.setLocation2((String) t.get("location2"));
+        storeset.setLocation3((String) t.get("location3"));
+        storeset.setCall((String) t.get("call"));
+
+       /* storeset.setLocationX((double)t.get("locationX"));
+        storeset.setLocationY((double)t.get("locationY"));*/
+
+        return storeset;
     }
 
     public void StoreList(){
@@ -49,8 +70,12 @@ public class StoreList extends JFrame implements ActionListener{
         labelSearch.setBounds(382,100,500,100);
         labelSearch.setFont(mainFont26);
 
-
-        Object temp=new Object();
+        //리스트 생성
+        DefaultListModel model=new DefaultListModel<>();
+        model.addElement(MaptoDTO(MainPage.storeList.get(0)));
+        JList storeList=new JList(model);
+        add(storeList);
+        /*Object temp=new Object();
         temp=MainPage.storeList.get(0).get("name");
         JLabel labelStore1Name = new JLabel(temp.toString()); //가게이름
         labelStore1Name.setHorizontalAlignment(JLabel.LEFT);
@@ -132,11 +157,11 @@ public class StoreList extends JFrame implements ActionListener{
         buttonStore3.setContentAreaFilled(false);     //버튼 내부 색 채움 여부
         buttonStore3.setFocusPainted(false);        //버튼 포커스(클릭시 테두리)
         buttonStore3.setActionCommand("Store3");
-        buttonStore3.addActionListener(this);
+        buttonStore3.addActionListener(this);*/
 
 
 
-        JPanel line1 = new JPanel();
+       /* JPanel line1 = new JPanel();
         line1.setBounds(352, 295, 570, 2);
         line1.setBackground(gray1);
 
@@ -146,7 +171,7 @@ public class StoreList extends JFrame implements ActionListener{
 
         JPanel line3 = new JPanel();
         line3.setBounds(352, 535, 570, 2);
-        line3.setBackground(gray1);
+        line3.setBackground(gray1);*/
 
 
         JButton buttonBack = new JButton("뒤로가기");
@@ -158,7 +183,7 @@ public class StoreList extends JFrame implements ActionListener{
         buttonBack.setActionCommand("BackPage");
         buttonBack.addActionListener(this);
 
-        getContentPane().add(buttonStore1);
+        /*getContentPane().add(buttonStore1);
         getContentPane().add(buttonStore2);
         getContentPane().add(buttonStore3);
 
@@ -172,15 +197,15 @@ public class StoreList extends JFrame implements ActionListener{
 
         getContentPane().add(labelStore3Name);
         getContentPane().add(labelStore3Address);
-        getContentPane().add(labelImage3);
+        getContentPane().add(labelImage3);*/
 
         getContentPane().add(labelSearch);
         getContentPane().add(buttonBack);
         getContentPane().add(mainLabel);
 
-        getContentPane().add(line1);
+       /* getContentPane().add(line1);
         getContentPane().add(line2);
-        getContentPane().add(line3);
+        getContentPane().add(line3);*/
         getContentPane().add(panelMainMint);
         getContentPane().add(panelMainWhite);
         getContentPane().setBackground(mint);

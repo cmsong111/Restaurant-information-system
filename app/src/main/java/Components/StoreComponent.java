@@ -1,15 +1,11 @@
 package Components;
 
-import DTO.StoreDTO;
-
 import javax.swing.*;
 import java.awt.*;
-import java.net.MalformedURLException;
-import java.net.URL;
 
-public class StoreComponent extends JLabel implements ListCellRenderer {
-    @Override
-    public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+public class StoreComponent extends DefaultListCellRenderer {
+    //@Override
+  /*  public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
         StoreDTO item = (StoreDTO) value;
         Icon image;
         try {
@@ -22,5 +18,16 @@ public class StoreComponent extends JLabel implements ListCellRenderer {
         this.setIcon(image);
 
         return this;
+    }*/
+
+    //Renderer
+    public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus){
+        Font font=new Font("배달의민족 도현",Font.PLAIN,22);
+       JLabel label= (JLabel)super.getListCellRendererComponent(list, value,index,isSelected, cellHasFocus);
+
+       return label;
     }
+
+
+
 }
