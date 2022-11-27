@@ -20,8 +20,6 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 public class SearchHTTP {
 
@@ -29,11 +27,12 @@ public class SearchHTTP {
     Gson gson = new Gson();
 
     // 가게 이름으로 검색
-    public ArrayList<Map<String, Object>> searchByName(StoreDTO store) throws IOException {
-        CloseableHttpClient Client = HttpClientBuilder.create().build();
-        // 파라미터
-        String baseURL = SingleTon.getBaseURL() + "/store/serch-name";
+    public ArrayList<StoreDTO> searchByName(StoreDTO store) throws IOException {
         // URL 생성
+        CloseableHttpClient Client = HttpClientBuilder.create().build();
+        String baseURL = SingleTon.getBaseURL() + "/store/serch-name";
+
+        // 파라메터 설정
         HttpGet httpget = new HttpGet(baseURL);
         try {
             URI uri = new URIBuilder(httpget.getURI()).addParameter("location1", store.getLocation1()).addParameter("location2", store.getLocation2()) //콤보박스로 지역 수정할 수 있게
@@ -41,25 +40,18 @@ public class SearchHTTP {
             httpget.setURI(uri);
         } catch (URISyntaxException t) {
         }
+
         // HTTP GET method 실행
         HttpResponse response = Client.execute(httpget);
-        // 로그 남기기
-            /*logger.info(httpget.getURI().toString());
-            logger.info(StoreKidsServiceKey);*/
 
+        // 객체화
         if (response.getStatusLine().getStatusCode() == 200) {
-            // body 결과값 얻기
             HttpEntity entity = response.getEntity();
-            String result = EntityUtils.toString(entity);
-            List<Map<String, Object>> allStores = null;
-            allStores = gson.fromJson(result, new TypeToken<List<Map<String, Object>>>() {
+            String responseBody = EntityUtils.toString(entity);
+            ArrayList<StoreDTO> results = gson.fromJson(responseBody, new TypeToken<ArrayList<StoreDTO>>() {
             }.getType());
-            System.out.println(allStores.toString());
 
-
-            ArrayList<Map<String, Object>> storeList = new ArrayList<Map<String, Object>>();
-            storeList.addAll(allStores);
-            return storeList;
+            return results;
         } else {
             return null;
         }
@@ -67,7 +59,7 @@ public class SearchHTTP {
 
     public ArrayList<StoreDTO> search_Category(StoreDTO store) throws IOException {
 
-        //URI BODY 만들기
+        //URI 만들기
         CloseableHttpClient client = HttpClients.createDefault();
         HttpPost httpPost = new HttpPost(SingleTon.getBaseURL() + "/store/serch-overwall");
 
@@ -79,11 +71,10 @@ public class SearchHTTP {
         // HTTP POST 요청하기
         CloseableHttpResponse response = client.execute(httpPost);
         String responseBody = EntityUtils.toString(response.getEntity());
-        
+
         // 객체화
         if (response.getStatusLine().getStatusCode() == 200) {
             // body 결과값 얻기
-            System.out.println("성공");
             ArrayList<StoreDTO> result = gson.fromJson(responseBody, new TypeToken<ArrayList<StoreDTO>>() {
             }.getType());
             return result;

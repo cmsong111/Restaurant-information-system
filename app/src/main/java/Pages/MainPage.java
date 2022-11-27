@@ -40,7 +40,7 @@ public class MainPage extends JFrame implements ActionListener, ItemListener {
     HowSearch search_State; // 검색 조건
     StoreDTO store;
     SearchHTTP httpStore=new SearchHTTP();
-    static public  ArrayList<Map<String, Object>> storeList=new ArrayList<>(); //스토어 목록
+    static public  ArrayList<StoreDTO> storeList=new ArrayList<>(); //스토어 목록
     //체크박스
     public static boolean local_Currency=false;
     public static boolean forChild=false;
@@ -303,7 +303,7 @@ public void Set_Storelist(){
                         .roleModel(roleModel)
                         .price(local_Currency)
                         .build();
-                //storeList=(httpStore.search_Category(store));
+                storeList=(httpStore.search_Category(store));
                 //반환값이 여러개임
             } catch (Exception t) {}
         }

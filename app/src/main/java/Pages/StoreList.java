@@ -72,7 +72,7 @@ public class StoreList extends JFrame implements ActionListener{
 
         //리스트 생성
         DefaultListModel model=new DefaultListModel<>();
-        model.addElement(MaptoDTO(MainPage.storeList.get(0)));
+        model.addElement(MainPage.storeList.get(0));
         JList storeList=new JList(model);
         add(storeList);
         /*Object temp=new Object();

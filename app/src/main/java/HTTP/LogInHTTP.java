@@ -1,8 +1,8 @@
 package HTTP;
 
-import com.google.gson.Gson;
 import DTO.UserDTO;
 import Setting.SingleTon;
+import com.google.gson.Gson;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
@@ -26,22 +26,19 @@ public class LogInHTTP {
         //비밀번호 암호화
         userDTO.setPassword(encrypt(userDTO.getPassword()));
 
-
         // BODY 담기
         String json = gson.toJson(userDTO);
-        StringEntity entity = new StringEntity(json);
+        StringEntity entity = new StringEntity(json, "UTF-8");
         httpPost.setEntity(entity);
         httpPost.setHeader("Content-Type", "application/json");
 
         // HTTP POST 요청하기
         HttpResponse response = client.execute(httpPost);
 
-
         if (response.getStatusLine().getStatusCode() != 200) {
             return UserDTO.builder().upk(0L).build();
         } else {
             String result = EntityUtils.toString(response.getEntity());
-            System.out.println(gson.fromJson(result, UserDTO.class).toString());
             return gson.fromJson(result, UserDTO.class);
         }
     }
@@ -54,7 +51,7 @@ public class LogInHTTP {
         userDTO.setPassword(encrypt(userDTO.getPassword()));
         // BODY 담기
         String json = gson.toJson(userDTO);
-        StringEntity entity = new StringEntity(json);
+        StringEntity entity = new StringEntity(json, "UTF-8");
         httpPost.setEntity(entity);
         httpPost.setHeader("Content-Type", "application/json");
 
