@@ -1,10 +1,9 @@
 //package com.galaxy.Restaurantinformationsystem.DTO;
 package DTO;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
-//import org.springframework.format.annotation.DateTimeFormat;
-
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,9 +22,9 @@ public class StoreDTO {
     private String location3;
     private String category;
 
-   // @DateTimeFormat(pattern = "hh:mm:ss")
-    private LocalTime startTime;
-    private LocalTime endTime;
+    @JsonFormat(pattern = "hh:mm:ss")
+    private String startTime;
+    private String endTime;
     private boolean kids;
     private boolean price;
     private boolean tasty;

@@ -24,7 +24,7 @@ import java.util.Map;
 
 public class SearchHTTP {
 
-    ArrayList<StoreDTO> stores=new ArrayList<>();
+
     Gson gson = new Gson();
     // 가게 이름으로 검색
     public  ArrayList<Map<String, Object>> searchByName(StoreDTO store) throws IOException {
@@ -74,8 +74,6 @@ public class SearchHTTP {
         StringEntity entity = new StringEntity(json);
         httpPost.setEntity(entity);
         httpPost.setHeader("Content-Type", "application/json");
-
-        System.out.println(httpPost.getEntity());
         // HTTP POST 요청하기
         HttpResponse response = client.execute(httpPost);
 
@@ -84,17 +82,16 @@ public class SearchHTTP {
             // body 결과값 얻기
 
            HttpEntity entity2 = response.getEntity();
-            String result = EntityUtils.toString(entity2);
-            List<Map<String, Object>> allStores=null;
-            allStores=gson.fromJson(result, new TypeToken<List<Map<String, Object>>>(){}.getType());
-            System.out.println(allStores);
+            String result2 = EntityUtils.toString(entity2);
+            List<Map<String, Object>> allStores2=null;
+            allStores2=gson.fromJson(result2, new TypeToken<List<Map<String, Object>>>(){}.getType());
+            System.out.println(allStores2.toString());
 
-            ArrayList<Map<String, Object>> storeList=new ArrayList<Map<String, Object>>();
-            storeList.addAll(allStores);
+            ArrayList<Map<String, Object>> storeList2=new ArrayList<Map<String, Object>>();
+            storeList2.addAll(allStores2);
 
-            return storeList;
+            return storeList2;
         }
-
         else {
             return null;
         }

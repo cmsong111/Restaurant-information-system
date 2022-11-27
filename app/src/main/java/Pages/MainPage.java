@@ -37,7 +37,7 @@ public class MainPage extends JFrame implements ActionListener, ItemListener {
     JCheckBox mainButton_DC; // 지역화폐
     JCheckBox mainButton_CC; // 아동급식카드
     JCheckBox mainButton_ZC; // 모범음식점
-    HowSearch search_State=HowSearch.SEARCH_BY_NAME; // 검색 조건
+    HowSearch search_State; // 검색 조건
     StoreDTO store;
     SearchHTTP httpStore=new SearchHTTP();
     static public  ArrayList<Map<String, Object>> storeList=new ArrayList<>(); //스토어 목록
@@ -296,9 +296,9 @@ public void Set_Storelist(){
                 else if(search_State.equals(HowSearch.SEARCH_FASTFOOD)) temp="패스트푸드";
                 else if(search_State.equals(HowSearch.SEARCH_SNACKFOOD)) temp="일반대중음식";
                 store = StoreDTO.builder()
-                        .category(temp)
                         .location1("부산광역시")
                         .location2("부산진구")
+                        .category(temp)
                         .kids(forChild)
                         .roleModel(roleModel)
                         .price(local_Currency)
