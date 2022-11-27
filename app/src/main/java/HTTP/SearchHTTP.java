@@ -6,6 +6,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.utils.URIBuilder;
@@ -26,23 +27,22 @@ public class SearchHTTP {
 
 
     Gson gson = new Gson();
+
     // 가게 이름으로 검색
-    public  ArrayList<Map<String, Object>> searchByName(StoreDTO store) throws IOException {
-            CloseableHttpClient Client = HttpClientBuilder.create().build();
-            // 파라미터
-            String baseURL = SingleTon.getBaseURL() + "/store/serch-name";
-            // URL 생성
-            HttpGet httpget = new HttpGet(baseURL);
-            try {
-                URI uri = new URIBuilder(httpget.getURI())
-                        .addParameter("location1", store.getLocation1())
-                        .addParameter("location2", store.getLocation2()) //콤보박스로 지역 수정할 수 있게
-                        .addParameter("name", store.getName())
-                        .build();
-                httpget.setURI(uri);
-            }catch(URISyntaxException t){}
-            // HTTP GET method 실행
-            HttpResponse response = Client.execute(httpget);
+    public ArrayList<Map<String, Object>> searchByName(StoreDTO store) throws IOException {
+        CloseableHttpClient Client = HttpClientBuilder.create().build();
+        // 파라미터
+        String baseURL = SingleTon.getBaseURL() + "/store/serch-name";
+        // URL 생성
+        HttpGet httpget = new HttpGet(baseURL);
+        try {
+            URI uri = new URIBuilder(httpget.getURI()).addParameter("location1", store.getLocation1()).addParameter("location2", store.getLocation2()) //콤보박스로 지역 수정할 수 있게
+                    .addParameter("name", store.getName()).build();
+            httpget.setURI(uri);
+        } catch (URISyntaxException t) {
+        }
+        // HTTP GET method 실행
+        HttpResponse response = Client.execute(httpget);
         // 로그 남기기
             /*logger.info(httpget.getURI().toString());
             logger.info(StoreKidsServiceKey);*/
@@ -51,48 +51,43 @@ public class SearchHTTP {
             // body 결과값 얻기
             HttpEntity entity = response.getEntity();
             String result = EntityUtils.toString(entity);
-            List<Map<String, Object>> allStores=null;
-            allStores=gson.fromJson(result, new TypeToken<List<Map<String, Object>>>(){}.getType());
+            List<Map<String, Object>> allStores = null;
+            allStores = gson.fromJson(result, new TypeToken<List<Map<String, Object>>>() {
+            }.getType());
             System.out.println(allStores.toString());
 
 
-            ArrayList<Map<String, Object>> storeList=new ArrayList<Map<String, Object>>();
+            ArrayList<Map<String, Object>> storeList = new ArrayList<Map<String, Object>>();
             storeList.addAll(allStores);
             return storeList;
-        }
-
-        else {
+        } else {
             return null;
         }
     }
-    public  ArrayList<Map<String, Object>> search_Category(StoreDTO store) throws IOException{
 
+    public ArrayList<StoreDTO> search_Category(StoreDTO store) throws IOException {
+
+        //URI BODY 만들기
         CloseableHttpClient client = HttpClients.createDefault();
         HttpPost httpPost = new HttpPost(SingleTon.getBaseURL() + "/store/serch-overwall");
 
         String json = gson.toJson(store);
-        StringEntity entity = new StringEntity(json);
+        StringEntity entity = new StringEntity(json, "UTF-8");
         httpPost.setEntity(entity);
         httpPost.setHeader("Content-Type", "application/json");
+
         // HTTP POST 요청하기
-        HttpResponse response = client.execute(httpPost);
-
-
+        CloseableHttpResponse response = client.execute(httpPost);
+        String responseBody = EntityUtils.toString(response.getEntity());
+        
+        // 객체화
         if (response.getStatusLine().getStatusCode() == 200) {
             // body 결과값 얻기
-
-           HttpEntity entity2 = response.getEntity();
-            String result2 = EntityUtils.toString(entity2);
-            List<Map<String, Object>> allStores2=null;
-            allStores2=gson.fromJson(result2, new TypeToken<List<Map<String, Object>>>(){}.getType());
-            System.out.println(allStores2.toString());
-
-            ArrayList<Map<String, Object>> storeList2=new ArrayList<Map<String, Object>>();
-            storeList2.addAll(allStores2);
-
-            return storeList2;
-        }
-        else {
+            System.out.println("성공");
+            ArrayList<StoreDTO> result = gson.fromJson(responseBody, new TypeToken<ArrayList<StoreDTO>>() {
+            }.getType());
+            return result;
+        } else {
             return null;
         }
 
