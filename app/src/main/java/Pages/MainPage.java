@@ -11,6 +11,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Map;
 
 enum HowSearch{
     SEARCH_BY_NAME,
@@ -39,7 +40,7 @@ public class MainPage extends JFrame implements ActionListener, ItemListener {
     HowSearch search_State=HowSearch.SEARCH_BY_NAME; // 검색 조건
     StoreDTO store;
     SearchHTTP httpStore=new SearchHTTP();
-    static public ArrayList<StoreDTO> storeList=new ArrayList<StoreDTO>(); //스토어 목록
+    static public  ArrayList<Map<String, Object>> storeList=new ArrayList<>(); //스토어 목록
     //체크박스
     public static boolean local_Currency=false;
     public static boolean forChild=false;
@@ -134,7 +135,7 @@ public class MainPage extends JFrame implements ActionListener, ItemListener {
         mainButton_jp.addActionListener(this);
         //mainButton_jp.setFocusPainted(false);
 
-        mainButton_DS = new JButton("디저트",new ImageIcon("app/res/cake.png"));
+        mainButton_DS = new JButton("제과점",new ImageIcon("app/res/cake.png"));
         mainButton_DS.setBounds(406,307,115,100);
         mainButton_DS.setVerticalTextPosition(JButton.BOTTOM);
         mainButton_DS.setHorizontalTextPosition(JButton.CENTER);
@@ -167,7 +168,7 @@ public class MainPage extends JFrame implements ActionListener, ItemListener {
         mainButton_SB.addActionListener(this);
         //mainButton_SB.setFocusPainted(false);
 
-        mainButton_DC = new JCheckBox("지역화폐");
+        mainButton_DC = new JCheckBox("착한가격");
         mainButton_DC.setBounds(406,450,110,34);
         mainButton_DC.setFont(mainFont20);
         mainButton_DC.setBorderPainted(false);      //버튼 테두리 없에기
@@ -249,7 +250,7 @@ public void actionPerformed(ActionEvent e){
             search_State = HowSearch.SEARCH_CHINESE; break;
         case "bJapanese":
             search_State = HowSearch.SEARCH_JAPANESE; break;
-        case "bFastFood":
+        case "bFastfood":
             search_State = HowSearch.SEARCH_FASTFOOD; break;
         case "bDessert":
             search_State = HowSearch.SEARCH_DESSERT; break;
@@ -265,9 +266,10 @@ public void actionPerformed(ActionEvent e){
 @Override
 public void itemStateChanged(ItemEvent e){
      //적용할 필터링 선택
-    if(e.getSource()==mainButton_ZC) local_Currency=(e.getStateChange()==1)?true:false;
+    if(e.getSource()==mainButton_ZC) roleModel=(e.getStateChange()==1)?true:false;
     else if(e.getSource()==mainButton_CC) forChild=(e.getStateChange()==1)?true:false;
-    else if(e.getSource()==mainButton_DC) roleModel=(e.getStateChange()==1)?true:false;
+    else if(e.getSource()==mainButton_DC) local_Currency=(e.getStateChange()==1)?true:false;
+
 }
 
 public void Set_Storelist(){
@@ -276,7 +278,7 @@ public void Set_Storelist(){
                 store = StoreDTO.builder()
                         .name(textMainSearch.getText())
                         .location1("부산광역시")
-                        .location1("부산진구")
+                        .location2("부산진구")
                         .build();
                 storeList=(httpStore.searchByName(store));
                 //반환값이 여러개임
@@ -290,13 +292,16 @@ public void Set_Storelist(){
                 if(search_State.equals(HowSearch.SEARCH_KOREAN)) temp="한식";
                 else if(search_State.equals(HowSearch.SEARCH_CHINESE)) temp="중식";
                 else if(search_State.equals(HowSearch.SEARCH_JAPANESE)) temp="일식";
-                else if(search_State.equals(HowSearch.SEARCH_DESSERT)) temp="디저트";
+                else if(search_State.equals(HowSearch.SEARCH_DESSERT)) temp="제과점";
                 else if(search_State.equals(HowSearch.SEARCH_FASTFOOD)) temp="패스트푸드";
-                else if(search_State.equals(HowSearch.SEARCH_SNACKFOOD)) temp="분식";
+                else if(search_State.equals(HowSearch.SEARCH_SNACKFOOD)) temp="일반대중음식";
                 store = StoreDTO.builder()
                         .category(temp)
                         .location1("부산광역시")
-                        .location1("부산진구")
+                        .location2("부산진구")
+                        .kids(forChild)
+                        .roleModel(roleModel)
+                        .price(local_Currency)
                         .build();
                 storeList=(httpStore.search_Category(store));
                 //반환값이 여러개임

@@ -1,33 +1,33 @@
 package HTTP;
 
-import DTO.ArrayListStoreDto;
 import DTO.StoreDTO;
-import Pages.MainPage;
 import Setting.SingleTon;
 import com.google.gson.Gson;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
-import okhttp3.ResponseBody;
+import com.google.gson.reflect.TypeToken;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.utils.URIBuilder;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 public class SearchHTTP {
 
     ArrayList<StoreDTO> stores=new ArrayList<>();
     Gson gson = new Gson();
     // 가게 이름으로 검색
-    public ArrayList<StoreDTO> searchByName(StoreDTO store) throws IOException {
+    public  ArrayList<Map<String, Object>> searchByName(StoreDTO store) throws IOException {
             CloseableHttpClient Client = HttpClientBuilder.create().build();
             // 파라미터
             String baseURL = SingleTon.getBaseURL() + "/store/serch-name";
@@ -35,8 +35,8 @@ public class SearchHTTP {
             HttpGet httpget = new HttpGet(baseURL);
             try {
                 URI uri = new URIBuilder(httpget.getURI())
-                        .addParameter("location1", "부산광역시")
-                        .addParameter("location2", "부산진구") //콤보박스로 지역 수정할 수 있게
+                        .addParameter("location1", store.getLocation1())
+                        .addParameter("location2", store.getLocation2()) //콤보박스로 지역 수정할 수 있게
                         .addParameter("name", store.getName())
                         .build();
                 httpget.setURI(uri);
@@ -47,55 +47,58 @@ public class SearchHTTP {
             /*logger.info(httpget.getURI().toString());
             logger.info(StoreKidsServiceKey);*/
 
-        if (response.getStatusLine().getStatusCode() != 200) {
+        if (response.getStatusLine().getStatusCode() == 200) {
             // body 결과값 얻기
             HttpEntity entity = response.getEntity();
             String result = EntityUtils.toString(entity);
-            ArrayListStoreDto storelist = gson.fromJson(result, ArrayListStoreDto.class);
-            for (StoreDTO item : storelist.getStoreDTOArrayList()) {
-                stores.add(item);
-            }
-            return stores;
+            List<Map<String, Object>> allStores=null;
+            allStores=gson.fromJson(result, new TypeToken<List<Map<String, Object>>>(){}.getType());
+            System.out.println(allStores.toString());
+
+
+            ArrayList<Map<String, Object>> storeList=new ArrayList<Map<String, Object>>();
+            storeList.addAll(allStores);
+            return storeList;
         }
 
         else {
             return null;
         }
     }
-    public ArrayList<StoreDTO> search_Category(StoreDTO store) throws IOException{
-        String strURL="http://113.198.230.14:5001/store/serch-name?location1=부산광역시&location2=부산진구&";
-        strURL=strURL+store.getCategory();
-        if(MainPage.local_Currency==true)
-            strURL=strURL+"&price=true";
-        if(MainPage.forChild==true)
-            strURL=strURL+"&kids=true";
-        if(MainPage.roleModel==true)
-            strURL=strURL+"&roleModel=true";
+    public  ArrayList<Map<String, Object>> search_Category(StoreDTO store) throws IOException{
 
-        OkHttpClient client = new OkHttpClient().newBuilder()
-                .build();
-       /* MediaType mediaType = MediaType.parse("text/plain");
-        RequestBody body = RequestBody.create(mediaType, "");*/
-        Request request = new Request.Builder()
-                .url(strURL)
-                //.method("GET", body)
-                .build();
+        CloseableHttpClient client = HttpClients.createDefault();
+        HttpPost httpPost = new HttpPost(SingleTon.getBaseURL() + "/store/serch-overwall");
 
-        Response response = client.newCall(request).execute(); //Get요청 전송
+        String json = gson.toJson(store);
+        StringEntity entity = new StringEntity(json);
+        httpPost.setEntity(entity);
+        httpPost.setHeader("Content-Type", "application/json");
+
+        System.out.println(httpPost.getEntity());
+        // HTTP POST 요청하기
+        HttpResponse response = client.execute(httpPost);
 
 
-        if (response.isSuccessful()) {
-            ResponseBody result=response.body();
-            ArrayListStoreDto storelist=gson.fromJson(result.toString(), ArrayListStoreDto.class);
+        if (response.getStatusLine().getStatusCode() == 200) {
+            // body 결과값 얻기
 
-            for (StoreDTO item : storelist.getStoreDTOArrayList()) {
-                stores.add(item);
-            }
-            return stores;
-        } else {
-            System.out.println("서버 통신 실패");
+           HttpEntity entity2 = response.getEntity();
+            String result = EntityUtils.toString(entity2);
+            List<Map<String, Object>> allStores=null;
+            allStores=gson.fromJson(result, new TypeToken<List<Map<String, Object>>>(){}.getType());
+            System.out.println(allStores);
+
+            ArrayList<Map<String, Object>> storeList=new ArrayList<Map<String, Object>>();
+            storeList.addAll(allStores);
+
+            return storeList;
+        }
+
+        else {
             return null;
         }
+
     }
 
 }

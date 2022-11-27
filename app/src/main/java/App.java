@@ -1,12 +1,9 @@
-import DTO.UserDTO;
 import HTTP.NaverMapAPI;
-import Setting.SingleTon;
-import Pages.*;
+import Pages.MainPage;
 import org.json.simple.parser.ParseException;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
-
 public class App {
     public String getGreeting() {
         return "Hello World!";
@@ -14,10 +11,10 @@ public class App {
 
     public static void main(String[] args) throws URISyntaxException, IOException, ParseException {
         NaverMapAPI api = new NaverMapAPI();
-        System.out.println(api.getStaticMAP(128.9586888,35.10382849));
+        //System.out.println(api.getStaticMAP(128.9586888,35.10382849));
         //SingleTon.setUser(UserDTO.builder().upk(0L).build());
 
-        //MainPage MT = new MainPage();
+        MainPage MT = new MainPage();
         //LoginPage LT = new LoginPage();
         //ReviewPage RP = new ReviewPage();
 

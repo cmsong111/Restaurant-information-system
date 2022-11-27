@@ -4,10 +4,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
-
-import DTO.StoreDTO;
-import Pages.MainPage;
 
 public class StoreList extends JFrame implements ActionListener{
 
@@ -53,14 +49,15 @@ public class StoreList extends JFrame implements ActionListener{
         labelSearch.setBounds(382,100,500,100);
         labelSearch.setFont(mainFont26);
 
-        StoreDTO Store1=new StoreDTO();
-        Store1=MainPage.storeList.get(0); //0번 인덱스 가게정보 가져옴
-        JLabel labelStore1Name = new JLabel(Store1.getName()); //가게이름
+
+        Object temp=new Object();
+        temp=MainPage.storeList.get(0).get("name");
+        JLabel labelStore1Name = new JLabel(temp.toString()); //가게이름
         labelStore1Name.setHorizontalAlignment(JLabel.LEFT);
         labelStore1Name.setBounds(482,190,500,43);
         labelStore1Name.setFont(mainFont22);
 
-        JLabel labelStore1Address = new JLabel(Store1.getLocation1()+Store1.getLocation2()+Store1.getLocation3());
+        JLabel labelStore1Address = new JLabel("sdfsdfs");
         labelStore1Address.setHorizontalAlignment(JLabel.LEFT);
         labelStore1Address.setBounds(482,230,500,43);
         labelStore1Address.setFont(mainFont18);

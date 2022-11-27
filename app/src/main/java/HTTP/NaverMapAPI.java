@@ -1,13 +1,10 @@
 package HTTP;
 
-import DTO.StoreDTO;
-import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.http.util.EntityUtils;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -15,7 +12,6 @@ import org.json.simple.parser.ParseException;
 import java.io.*;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.URL;
 
 public class NaverMapAPI {
     JSONParser parser = new JSONParser();
@@ -49,7 +45,7 @@ public class NaverMapAPI {
 
         BufferedInputStream bInStr = new BufferedInputStream(response.getEntity().getContent()); // Buffered Stream 이용: fast down
 
-        BufferedOutputStream bOutStr = new BufferedOutputStream(new FileOutputStream(new File("app/build/resources//main/locationImage.jpg"))); // Buffered  Stream
+        BufferedOutputStream bOutStr = new BufferedOutputStream(new FileOutputStream(new File(".\\locationImage.jpg"))); // Buffered  Stream
         int inpByte;
         while ((inpByte = bInStr.read()) != -1) {
             bOutStr.write(inpByte);
