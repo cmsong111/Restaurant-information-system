@@ -14,7 +14,7 @@ import java.util.List;
 @Builder
 @Getter
 public class StoreDTO {
-    private Long SPK;
+    private Long spk;
     private String name;
     private String call;
     private String location1;
@@ -33,7 +33,7 @@ public class StoreDTO {
     private double locationY;
     private List<Long> reviews = new ArrayList<>();
     private List<Long> menus = new ArrayList<>();
-    private Long UPK;
+    private Long upk;
     private String image;
 }
 

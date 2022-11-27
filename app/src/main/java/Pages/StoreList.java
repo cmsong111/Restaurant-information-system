@@ -22,7 +22,7 @@ public class StoreList extends JFrame implements ActionListener{
 
     public StoreDTO MaptoDTO(Map<String, Object> t){  //Arraylist<Map<String, Object>>에서 각 인덱스를 StoreDTO객체로 치환
        StoreDTO storeset=new StoreDTO();
-       storeset.setSPK((Long)t.get("SPK"));
+       storeset.setSpk((Long)t.get("SPK"));
        storeset.setName((String) t.get("name"));
        storeset.setLocation1((String) t.get("location1"));
         storeset.setLocation2((String) t.get("location2"));

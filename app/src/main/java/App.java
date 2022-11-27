@@ -1,5 +1,5 @@
-import DTO.UserDTO;
-import HTTP.LogInHTTP;
+import DTO.StoreDTO;
+import HTTP.StoreHTTP;
 import org.json.simple.parser.ParseException;
 
 import java.io.IOException;
@@ -12,35 +12,18 @@ public class App {
     }
 
     public static void main(String[] args) throws URISyntaxException, IOException, ParseException, NoSuchAlgorithmException {
-        //NaverMapAPI api = new NaverMapAPI();
-        //System.out.println(api.getStaticMAP(128.9586888,35.10382849));
-        //SingleTon.setUser(UserDTO.builder().upk(0L).build());
+        StoreHTTP storeHTTP = new StoreHTTP();
 
-        //MainPage MT = new MainPage();
-//        SearchHTTP searchHTTP = new SearchHTTP();
-//        StoreDTO storeDTO = StoreDTO.builder()
-//                .location1("부산광역시")
-//                .location2("부산진구")
-//                .name("맥도날드")
-//                .build();
-//        System.out.println(storeDTO.toString());
-//
-//        //ArrayList<StoreDTO> result = searchHTTP.search_Category(storeDTO);
-//        ArrayList<StoreDTO> result = searchHTTP.searchByName(storeDTO);
-//        for (StoreDTO item : result) {
-//            System.out.println(item.toString());
-//        }
-
-        LogInHTTP logInHTTP = new LogInHTTP();
-        UserDTO user = UserDTO.builder()
-                .id("namju59621")
-                .password("namju59621")
-                .name("김남주")
-                .age(20)
+        StoreDTO storeDTO = StoreDTO.builder()
+                .spk(1001L)
                 .build();
-        System.out.println("USERDTO" + user.toString());
-        //System.out.println("회원가입" + logInHTTP.create(user).toString());
-        System.out.println("로그인" + logInHTTP.login(user).toString());
+
+        //System.out.println(storeHTTP.createStore(storeDTO).toString());
+        storeDTO = storeHTTP.readStore(storeDTO);
+
+        System.out.println(storeHTTP.updateStore(storeDTO).toString());
+
+        storeHTTP.deleteStore(storeDTO);
 
 
         //LoginPage LT = new LoginPage();

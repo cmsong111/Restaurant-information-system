@@ -42,7 +42,7 @@ public class MenuHTTP {
 
         HttpPost httpPost = new HttpPost(SingleTon.getBaseURL() + "/menu/read");
         URI uri = new URIBuilder(httpPost.getURI())
-                .addParameter("spk", storeDTO.getSPK().toString())
+                .addParameter("spk", storeDTO.getSpk().toString())
                 .build();
         httpPost.setURI(uri);
 

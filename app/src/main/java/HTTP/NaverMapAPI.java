@@ -46,7 +46,7 @@ public class NaverMapAPI {
 
         BufferedInputStream bInStr = new BufferedInputStream(response.getEntity().getContent()); // Buffered Stream 이용: fast down
 
-        BufferedOutputStream bOutStr = new BufferedOutputStream(new FileOutputStream(new File(".\\locationImage.jpg"))); // Buffered  Stream
+        BufferedOutputStream bOutStr = new BufferedOutputStream(new FileOutputStream(new File(".\\location_Image.jpg"))); // Buffered  Stream
         int inpByte;
         while ((inpByte = bInStr.read()) != -1) {
             bOutStr.write(inpByte);
