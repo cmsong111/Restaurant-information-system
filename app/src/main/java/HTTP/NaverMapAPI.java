@@ -34,6 +34,7 @@ public class NaverMapAPI {
                 .addParameter("center", String.valueOf(locationX) + "," + String.valueOf(locationY))
                 .addParameter("level", "14")
                 .addParameter("scale", "2")
+                .addParameter("markers","pos:"+String.valueOf(locationX) + " " + String.valueOf(locationY))
                 .build();
         httpget.setURI(uri);
         httpget.setHeader("X-NCP-APIGW-API-KEY-ID",jsonObject.get("X-NCP-APIGW-API-KEY-ID").toString());
