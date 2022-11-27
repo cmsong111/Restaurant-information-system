@@ -38,6 +38,7 @@ public class NaverMapAPI {
                 .addParameter("center", String.valueOf(locationX) + "," + String.valueOf(locationY))
                 .addParameter("level", "14")
                 .addParameter("scale", "2")
+                .addParameter("markers","pos:"+String.valueOf(locationX) + " " + String.valueOf(locationY))
                 .build();
         httpget.setURI(uri);
         httpget.setHeader("X-NCP-APIGW-API-KEY-ID",jsonObject.get("X-NCP-APIGW-API-KEY-ID").toString());
@@ -49,7 +50,7 @@ public class NaverMapAPI {
 
         BufferedInputStream bInStr = new BufferedInputStream(response.getEntity().getContent()); // Buffered Stream 이용: fast down
 
-        BufferedOutputStream bOutStr = new BufferedOutputStream(new FileOutputStream(new File("app/build/resources//main/locationImage.jpg"))); // Buffered  Stream
+        BufferedOutputStream bOutStr = new BufferedOutputStream(new FileOutputStream(new File(".\\locationImage.jpg"))); // Buffered  Stream
         int inpByte;
         while ((inpByte = bInStr.read()) != -1) {
             bOutStr.write(inpByte);
