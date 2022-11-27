@@ -11,6 +11,9 @@
 .idea/**/usage.statistics.xml
 .idea/**/dictionaries
 .idea/**/shelf
+.idea/
+.idea/*
+
 
 # AWS User-specific
 .idea/**/aws.xml
@@ -228,6 +231,7 @@ gradle-app.setting
 
 # End of https://www.toptal.com/developers/gitignore/api/intellij,java,windows,macos,gradle
 .idea/jpa-buddy.xml
+.idea/misc.xml
 .idea/misc.xml
 .idea/misc.xml
 .idea/misc.xml
