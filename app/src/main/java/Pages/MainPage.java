@@ -2,7 +2,6 @@ package Pages;
 
 import DTO.StoreDTO;
 import HTTP.SearchHTTP;
-import Setting.SingleTon;
 
 import javax.swing.*;
 import java.awt.*;
@@ -282,6 +281,7 @@ public void Set_Storelist(){
                 storeList=(httpStore.searchByName(store));
                 //반환값이 여러개임
             } catch (IOException t) {}
+            StoreDetail SD=new StoreDetail();
         }
 
         else { //카테고리별 검색

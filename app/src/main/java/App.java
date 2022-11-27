@@ -1,7 +1,6 @@
 import DTO.UserDTO;
-import Pages.*;
 import Setting.SingleTon;
-
+import Pages.*;
 public class App {
     public String getGreeting() {
         return "Hello World!";
@@ -10,8 +9,8 @@ public class App {
     public static void main(String[] args) {
         SingleTon.setUser(UserDTO.builder().upk(0L).build());
 
-        //MainPage MT = new MainPage();
-        LoginPage LT = new LoginPage();
+        MainPage MT = new MainPage();
+        //LoginPage LT = new LoginPage();
         //ReviewPage RP = new ReviewPage();
 
        //StoreList SL = new StoreList();

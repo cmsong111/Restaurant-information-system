@@ -1,27 +1,26 @@
 package HTTP;
 
 import DTO.ArrayListStoreDto;
-import DTO.ReviewDTO;
 import DTO.StoreDTO;
 import Pages.MainPage;
-import com.google.gson.Gson;
-import DTO.UserDTO;
 import Setting.SingleTon;
-import okhttp3.*;
+import com.google.gson.Gson;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+import okhttp3.ResponseBody;
+import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
-import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.client.utils.URIBuilder;
-import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
+import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
-import java.io.IOException;
-import java.util.ArrayList;
 
-import Pages.MainPage;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.ArrayList;
 
 public class SearchHTTP {
 
@@ -29,32 +28,37 @@ public class SearchHTTP {
     Gson gson = new Gson();
     // 가게 이름으로 검색
     public ArrayList<StoreDTO> searchByName(StoreDTO store) throws IOException {
-        String strURL="http://113.198.230.14:5001/store/serch-name?location1=부산광역시&location2=부산진구&";
-        strURL=strURL+store.getName();
+            CloseableHttpClient Client = HttpClientBuilder.create().build();
+            // 파라미터
+            String baseURL = SingleTon.getBaseURL() + "/store/serch-name";
+            // URL 생성
+            HttpGet httpget = new HttpGet(baseURL);
+            try {
+                URI uri = new URIBuilder(httpget.getURI())
+                        .addParameter("location1", "부산광역시")
+                        .addParameter("location2", "부산진구") //콤보박스로 지역 수정할 수 있게
+                        .addParameter("name", store.getName())
+                        .build();
+                httpget.setURI(uri);
+            }catch(URISyntaxException t){}
+            // HTTP GET method 실행
+            HttpResponse response = Client.execute(httpget);
+        // 로그 남기기
+            /*logger.info(httpget.getURI().toString());
+            logger.info(StoreKidsServiceKey);*/
 
-        OkHttpClient client = new OkHttpClient().newBuilder()
-                .build();
-       /* MediaType mediaType = MediaType.parse("text/plain");
-        RequestBody body = RequestBody.create(mediaType, "");*/
-        Request request = new Request.Builder()
-                .url(strURL)
-                //.method("GET", body)
-                .get()
-                .build();
-
-        Response response = client.newCall(request).execute(); //Get요청 전송
-
-
-        if (response.isSuccessful()) {
-            ResponseBody result=response.body();
-            ArrayListStoreDto storelist=gson.fromJson(result.toString(), ArrayListStoreDto.class);
-
+        if (response.getStatusLine().getStatusCode() != 200) {
+            // body 결과값 얻기
+            HttpEntity entity = response.getEntity();
+            String result = EntityUtils.toString(entity);
+            ArrayListStoreDto storelist = gson.fromJson(result, ArrayListStoreDto.class);
             for (StoreDTO item : storelist.getStoreDTOArrayList()) {
                 stores.add(item);
             }
             return stores;
-        } else {
-            System.out.println("서버 통신 실패");
+        }
+
+        else {
             return null;
         }
     }
