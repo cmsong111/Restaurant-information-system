@@ -5,6 +5,7 @@ import DTO.ReviewDTO;
 import DTO.StoreDTO;
 import Setting.SingleTon;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
@@ -85,7 +86,7 @@ public class ReviewHTTP extends ArrayList<ReviewDTO> {
 
         // DTO Body에 담기
         String json = gson.toJson(storeDTO);
-        StringEntity entity = new StringEntity(json);
+        StringEntity entity = new StringEntity(json,"UTF-8");
         httpPost.setEntity(entity);
         httpPost.setHeader("Content-Type", "application/json");
 
@@ -93,13 +94,12 @@ public class ReviewHTTP extends ArrayList<ReviewDTO> {
         HttpResponse response = client.execute(httpPost);
 
         // 결과 반환
-        String result = EntityUtils.toString(response.getEntity());
-        ArrayListReviewDto resultArray = gson.fromJson(result, ArrayListReviewDto.class);
-        for (ReviewDTO item : resultArray.getReviewDTOArrayList()) {
-            results.add(item);
-        }
+        String responseBody = EntityUtils.toString(response.getEntity());
+        ArrayList<ReviewDTO> resultArray = gson.fromJson(responseBody, new TypeToken<ArrayList<ReviewDTO>>() {
+        }.getType());
 
-        return results;
+
+        return resultArray;
     }
 
     /**
