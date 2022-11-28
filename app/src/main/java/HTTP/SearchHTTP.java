@@ -50,7 +50,7 @@ public class SearchHTTP {
             String responseBody = EntityUtils.toString(entity);
             ArrayList<StoreDTO> results = gson.fromJson(responseBody, new TypeToken<ArrayList<StoreDTO>>() {
             }.getType());
-
+            System.out.println(results);
             return results;
         } else {
             return null;
@@ -77,6 +77,7 @@ public class SearchHTTP {
             // body 결과값 얻기
             ArrayList<StoreDTO> result = gson.fromJson(responseBody, new TypeToken<ArrayList<StoreDTO>>() {
             }.getType());
+            System.out.println(result);
             return result;
         } else {
             return null;

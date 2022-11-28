@@ -5,7 +5,7 @@ import HTTP.MenuHTTP;
 import HTTP.ReviewHTTP;
 import HTTP.StoreHTTP;
 import org.json.simple.parser.ParseException;
-
+import Pages.*;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.security.NoSuchAlgorithmException;
@@ -19,16 +19,16 @@ public class App {
     public static void main(String[] args) throws URISyntaxException, IOException, ParseException, NoSuchAlgorithmException {
 
 
-        ReviewHTTP reviewHTTP = new ReviewHTTP();
+       /* ReviewHTTP reviewHTTP = new ReviewHTTP();
         ArrayList<ReviewDTO> results=  reviewHTTP.readReviewbyStore(StoreDTO.builder().spk(1L).build());
         for (ReviewDTO item : results){
             System.out.println(item.toString());
-        }
+        }*/
 
 
         //LoginPage LT = new LoginPage();
         //ReviewPage RP = new ReviewPage();
-
+        MainPage temp=new MainPage();
         //StoreList SL = new StoreList();
         //StoreDetail SD = new StoreDetail();
         //StoreList SL = new StoreList();
