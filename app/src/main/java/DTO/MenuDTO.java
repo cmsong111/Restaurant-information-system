@@ -8,9 +8,9 @@ import lombok.*;
 @NoArgsConstructor
 @ToString
 public class MenuDTO {
-    private Long MPK;
+    private Long mpk;
     private String name;
     private int price;
     private String image;
-    private Long SPK;
+    private Long spk;
 }
