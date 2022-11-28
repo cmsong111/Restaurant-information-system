@@ -242,7 +242,10 @@ public void actionPerformed(ActionEvent e){
         case "bSearch":
             search_State = HowSearch.SEARCH_BY_NAME;
             Set_Storelist();
-            StoreList SN=new StoreList();
+            if(this.storeList.size()==0)
+                JOptionPane.showMessageDialog(null, "검색 결과가 없습니다.");
+            else{
+                StoreList SN=new StoreList();}
             break;
         case "bKorean":
             search_State=HowSearch.SEARCH_KOREAN; break;
@@ -258,7 +261,10 @@ public void actionPerformed(ActionEvent e){
             search_State = HowSearch.SEARCH_SNACKFOOD; break;
         case "VIEW_LIST":
             Set_Storelist();
-            StoreList SL=new StoreList();
+            if(this.storeList.size()==0)
+                JOptionPane.showMessageDialog(null, "검색 결과가 없습니다.");
+            else{
+                StoreList SN=new StoreList();}
             break;
     }
 
@@ -283,7 +289,6 @@ public void Set_Storelist(){
                 storeList=(httpStore.searchByName(store));
                 //반환값이 여러개임
             } catch (IOException t) {}
-            StoreDetail SD=new StoreDetail();
         }
 
         else { //카테고리별 검색

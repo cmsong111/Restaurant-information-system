@@ -1,15 +1,54 @@
 package Pages;
 
+import Components.ReviewComponent;
+import Components.StoreComponent;
+import DTO.MenuDTO;
+import DTO.ReviewDTO;
+import DTO.StoreDTO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class StoreDetail extends JFrame implements ActionListener{
+    JPanel panelMainWhite;
+    JPanel panelMainMint;
+    JLabel mainLabel;
+    JLabel textStoreName;
+    JPanel panelLineTap;
+    ArrayList<MenuDTO> allMenus=new ArrayList<>();  //가게 메뉴 저장
+    ArrayList<ReviewDTO> allRevies=new ArrayList<>(); //가게 리뷰 저장
+    JButton buttonMenu;
+    JButton buttonReview;
+    JButton buttonBack;
+    btnSelect btnState=btnSelect.MENUS; //버튼선택
+    JList cpnList; //리스트
+    StoreInfo storeInfo;
+    MenuComponent menuRenderer; //메뉴 렌더링
+    ReviewComponent reviewRenderer; //리뷰 렌더링
     public StoreDetail(){
         try{
             StoreDetail();
         } catch (Exception e){
+        }
+    }
+    enum btnSelect{
+        MENUS,
+        REVIEWS
+    }
+    public class StoreInfo extends DefaultListModel{ //리스트에 객체추가 , renderer는 StoreComponent
+        public StoreInfo(){
+            if(btnState.equals(btnSelect.MENUS)) {
+                for (MenuDTO menu : allMenus) {
+                    addElement(menu);
+                }
+            }
+            else if(btnState.equals(btnSelect.REVIEWS)){
+                for (ReviewDTO review : allRevies) {
+                    addElement(review);
+                }
+            }
         }
     }
     public void StoreDetail(){
@@ -30,25 +69,26 @@ public class StoreDetail extends JFrame implements ActionListener{
         Color gray1 = new Color(192,192,192);
 
 
-        JPanel panelMainWhite = new JPanel();
+        panelMainWhite = new JPanel();
         panelMainWhite.setBounds(30,30,1204,614);
         panelMainWhite.setBackground(Color.white);
 
-        JPanel panelMainMint = new JPanel();
+        panelMainMint = new JPanel();
         panelMainMint.setBounds(322,30,620,80);
         panelMainMint.setBackground(mint);
 
-        JLabel mainLabel = new JLabel("오점뭐 (오늘 점심 뭐 먹지)");
+        mainLabel = new JLabel("오점뭐 (오늘 점심 뭐 먹지)");
         mainLabel.setHorizontalAlignment(JLabel.CENTER);
         mainLabel.setBounds(382,30,500,70);
         mainLabel.setFont(mainFont40);
 
-        JLabel textStoreName = new JLabel("STORE NAME");
+        textStoreName = new JLabel("STORE NAME");
         textStoreName.setBounds(482,120,300,43);
         textStoreName.setHorizontalAlignment(JLabel.CENTER);
         textStoreName.setFont(mainFont22);
 
-
+        // TODO:선택 store의 이미지, 이름, 전화번호, 주소
+        ///////////////////////////////////////////////////
         ImageIcon iconStore = new ImageIcon("app/res/fastfood.png");  //이미지 불러오기
         Image imgS1 = iconStore.getImage();
         Image changeImgS1 = imgS1.getScaledInstance(120,120,Image.SCALE_SMOOTH);
@@ -70,13 +110,14 @@ public class StoreDetail extends JFrame implements ActionListener{
         textGenNumber.setBounds(600,190,300,43);
         textGenNumber.setHorizontalAlignment(JLabel.LEFT);
         textGenNumber.setFont(mainFont18);
+        ///////////////////////////////////////////////////
 
-        JPanel panelLineTap = new JPanel();
+        panelLineTap = new JPanel();
         panelLineTap.setBounds(322,290,620,1);
         panelLineTap.setBackground(gray1);
         getContentPane().add(panelLineTap);
 
-        JButton buttonMenu = new JButton("메뉴");
+        buttonMenu = new JButton("메뉴");
         buttonMenu.setBounds(432,300,70,30);
         buttonMenu.setFont(mainFont18);
         buttonMenu.setBackground(mint);
@@ -86,7 +127,7 @@ public class StoreDetail extends JFrame implements ActionListener{
         buttonMenu.setActionCommand("MenuPage");
         buttonMenu.addActionListener(this);
 
-        JButton buttonReview = new JButton("리뷰");
+        buttonReview = new JButton("리뷰");
         buttonReview.setBounds(762,300,70,30);
         buttonReview.setFont(mainFont18);
         buttonReview.setBackground(mint);
@@ -96,7 +137,7 @@ public class StoreDetail extends JFrame implements ActionListener{
         buttonReview.setActionCommand("ReviewPage");
         buttonReview.addActionListener(this);
 
-        JButton buttonBack = new JButton("뒤로가기");
+        buttonBack = new JButton("뒤로가기");
         buttonBack.setBounds(572,560,120,30);
         buttonBack.setFont(mainFont18);
         buttonBack.setBorderPainted(false);         //버튼 테두리 없에기
@@ -105,93 +146,25 @@ public class StoreDetail extends JFrame implements ActionListener{
         buttonBack.setActionCommand("BackPage");
         buttonBack.addActionListener(this);
 
-        ImageIcon iconMenu1 = new ImageIcon("app/res/fastfood.png");  //이미지 불러오기
-        Image img1 = iconMenu1.getImage();
-        Image changeImg1 = img1.getScaledInstance(80,80,Image.SCALE_SMOOTH);
-        ImageIcon changeIcon1 = new ImageIcon(changeImg1);
-        JLabel labelImage1 = new JLabel(changeIcon1);
-        labelImage1.setBounds(322, 350, 80, 80);
 
-        JLabel labelMenu1 = new JLabel("싸이버거 세트");
-        labelMenu1.setBounds(422,350,300,43);
-        labelMenu1.setHorizontalAlignment(JLabel.LEFT);
-        labelMenu1.setFont(mainFont18);
+        //리스트 생성
+       /* storeInfo=new StoreInfo();
+        menuRenderer=new MenuComponent();
+        list=new JList(listvalues);
+        list.setCellRenderer(renderer);
+        list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        list.setBorder(BorderFactory.createLineBorder(Color.BLACK,1));
+        list.setVisibleRowCount(MainPage.storeList.size());
 
-        JLabel labelMenuCost1 = new JLabel("6,000원");
-        labelMenuCost1.setBounds(422,385,300,43);
-        labelMenuCost1.setHorizontalAlignment(JLabel.LEFT);
-        labelMenuCost1.setFont(mainFont18);
+        list.setFixedCellWidth(700); //컴포넌트 너비
+        list.setFixedCellHeight(100); //컴포넌트 높이
 
+        //스크롤패널 생성
+        scrollPane=new JScrollPane(list); //리스트 패널
+        scrollPane.setPreferredSize(new Dimension(620,350));
+        scrollPane.setBounds(352, 190, 570, 100);*/
 
-        ImageIcon iconMenu2 = new ImageIcon("app/res/fastfood.png");  //이미지 불러오기
-        Image img2 = iconMenu2.getImage();
-        Image changeImg2 = img2.getScaledInstance(80,80,Image.SCALE_SMOOTH);
-        ImageIcon changeIcon2 = new ImageIcon(changeImg2);
-        JLabel labelImage2 = new JLabel(changeIcon2);
-        labelImage2.setBounds(632, 350, 80, 80);
-
-        JLabel labelMenu2 = new JLabel("MENU2");
-        labelMenu2.setBounds(732,350,300,43);
-        labelMenu2.setHorizontalAlignment(JLabel.LEFT);
-        labelMenu2.setFont(mainFont18);
-
-        JLabel labelMenuCost2 = new JLabel("MENU COST2");
-        labelMenuCost2.setBounds(732,385,300,43);
-        labelMenuCost2.setHorizontalAlignment(JLabel.LEFT);
-        labelMenuCost2.setFont(mainFont18);
-
-
-        ImageIcon iconMenu3 = new ImageIcon("app/res/fastfood.png");  //이미지 불러오기
-        Image img3 = iconMenu3.getImage();
-        Image changeImg3 = img3.getScaledInstance(80,80,Image.SCALE_SMOOTH);
-        ImageIcon changeIcon3 = new ImageIcon(changeImg3);
-        JLabel labelImage3 = new JLabel(changeIcon3);
-        labelImage3.setBounds(322, 450, 80, 80);
-
-        JLabel labelMenu3 = new JLabel("MENU3");
-        labelMenu3.setBounds(422,450,300,43);
-        labelMenu3.setHorizontalAlignment(JLabel.LEFT);
-        labelMenu3.setFont(mainFont18);
-
-        JLabel labelMenuCost3 = new JLabel("MENU COST3");
-        labelMenuCost3.setBounds(422,485,300,43);
-        labelMenuCost3.setHorizontalAlignment(JLabel.LEFT);
-        labelMenuCost3.setFont(mainFont18);
-
-
-        ImageIcon iconMenu4 = new ImageIcon("app/res/fastfood.png");  //이미지 불러오기
-        Image img4 = iconMenu4.getImage();
-        Image changeImg4 = img4.getScaledInstance(80,80,Image.SCALE_SMOOTH);
-        ImageIcon changeIcon4 = new ImageIcon(changeImg4);
-        JLabel labelImage4 = new JLabel(changeIcon4);
-        labelImage4.setBounds(632, 450, 80, 80);
-
-        JLabel labelMenu4 = new JLabel("MENU4");
-        labelMenu4.setBounds(732,450,300,43);
-        labelMenu4.setHorizontalAlignment(JLabel.LEFT);
-        labelMenu4.setFont(mainFont18);
-
-        JLabel labelMenuCost4 = new JLabel("MENU COST4");
-        labelMenuCost4.setBounds(732,485,300,43);
-        labelMenuCost4.setHorizontalAlignment(JLabel.LEFT);
-        labelMenuCost4.setFont(mainFont18);
-
-
-        getContentPane().add(labelImage1);
-        getContentPane().add(labelImage2);
-        getContentPane().add(labelImage3);
-        getContentPane().add(labelImage4);
-
-        getContentPane().add(labelMenu1);
-        getContentPane().add(labelMenu2);
-        getContentPane().add(labelMenu3);
-        getContentPane().add(labelMenu4);
-
-        getContentPane().add(labelMenuCost1);
-        getContentPane().add(labelMenuCost2);
-        getContentPane().add(labelMenuCost3);
-        getContentPane().add(labelMenuCost4);
-
+        
         getContentPane().add(buttonReview);
         getContentPane().add(buttonMenu);
 
@@ -217,12 +190,14 @@ public class StoreDetail extends JFrame implements ActionListener{
         String event = e.getActionCommand();
 
         if (event.equals("MenuPage")) {
-
+            btnState=btnSelect.MENUS;
+            //TODO:메뉴 DTO작성하여 HTTP요청
         }
-        if (event.equals("ReviewPage")) {
-
+        else if (event.equals("ReviewPage")) {
+            btnState=btnSelect.REVIEWS;
+            //TODO:리뷰 DTO작성하여 HTTP요청
         }
-        if (event.equals("BackPage")) {
+        else if (event.equals("BackPage")) {
             this.setVisible(false);
         }
 

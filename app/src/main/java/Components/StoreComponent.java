@@ -24,11 +24,14 @@ public class StoreComponent extends DefaultListCellRenderer {
         } catch (MalformedURLException e) {
             throw new RuntimeException(e);
         }
-
+       /* JLabel label=(JLabel)super.getListCellRendererComponent(list,value,index,isSelected,cellHasFocus);
+        label.setIcon(image);
+        label.setText(item.getName());*/
         this.setText(item.getName());
         this.setIcon(image);
 
         return this;
+
     }
 
 }

@@ -1,6 +1,8 @@
 package Pages;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,8 +13,18 @@ import java.util.Map;
 import Components.StoreComponent;
 import DTO.StoreDTO;
 
-public class StoreList extends JFrame implements ActionListener{
+public class StoreList extends JFrame implements ActionListener, ListSelectionListener {
 
+    JList list;
+    JPanel panelMainWhite;
+    JPanel panelMainWhite2;
+    JPanel panelMainMint;
+    JLabel mainLabel;
+    JLabel labelSearch;
+    StoreModel listvalues;
+    StoreComponent renderer;
+    JScrollPane scrollPane;
+    JButton buttonBack;
     public StoreList(){
         try{
             StoreList();
@@ -44,41 +56,43 @@ public class StoreList extends JFrame implements ActionListener{
         Color mint = new Color(62,185,180); //색상 정하기
         Color gray1 = new Color(192,192,192);
 
-        JPanel panelMainWhite = new JPanel();
+        panelMainWhite = new JPanel();
         panelMainWhite.setBounds(30,30,1204,614);
         panelMainWhite.setBackground(Color.white);
 
-        JPanel panelMainWhite2 = new JPanel();
+        panelMainWhite2 = new JPanel();
         panelMainWhite2.setBounds(322, 190, 620, 350);
         panelMainWhite2.setBackground(Color.white);
 
 
-        JPanel panelMainMint = new JPanel();
+        panelMainMint = new JPanel();
         panelMainMint.setBounds(322,30,620,80);
         panelMainMint.setBackground(mint);
 
-        JLabel mainLabel = new JLabel("오점뭐 (오늘 점심 뭐 먹지)");
+        mainLabel = new JLabel("오점뭐 (오늘 점심 뭐 먹지)");
         mainLabel.setHorizontalAlignment(JLabel.CENTER);
         mainLabel.setBounds(382,30,500,70);         //나머지 페이지들도 적용
         mainLabel.setFont(mainFont40);
 
-        JLabel labelSearch = new JLabel("-관련 검색 결과-");
+        labelSearch = new JLabel("-관련 검색 결과-");
         labelSearch.setHorizontalAlignment(JLabel.CENTER);
         labelSearch.setBounds(382,100,500,100);
         labelSearch.setFont(mainFont26);
 
         //리스트 생성
-        StoreModel listvalues=new StoreModel();
-        StoreComponent renderer=new StoreComponent();
-        JList list=new JList(listvalues);
+        listvalues=new StoreModel();
+        renderer=new StoreComponent();
+        list=new JList(listvalues);
         list.setCellRenderer(renderer);
         list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         list.setBorder(BorderFactory.createLineBorder(Color.BLACK,1));
         list.setVisibleRowCount(MainPage.storeList.size());
-        list.setFixedCellWidth(120); //컴포넌트 너비
+
+        list.setFixedCellWidth(700); //컴포넌트 너비
         list.setFixedCellHeight(100); //컴포넌트 높이
+
         //스크롤패널 생성
-        JScrollPane scrollPane=new JScrollPane(list); //리스트 패널
+        scrollPane=new JScrollPane(list); //리스트 패널
         scrollPane.setPreferredSize(new Dimension(620,350));
         scrollPane.setBounds(352, 190, 570, 100);
 
@@ -89,7 +103,7 @@ public class StoreList extends JFrame implements ActionListener{
 
 
 
-        JButton buttonBack = new JButton("뒤로가기");
+        buttonBack = new JButton("뒤로가기");
         buttonBack.setBounds(572,560,120,30);
         buttonBack.setFont(mainFont22);
         buttonBack.setBorderPainted(false);         //버튼 테두리 없에기
@@ -99,14 +113,9 @@ public class StoreList extends JFrame implements ActionListener{
         buttonBack.addActionListener(this);
 
 
-
         getContentPane().add(labelSearch);
         getContentPane().add(buttonBack);
         getContentPane().add(mainLabel);
-
-       /* getContentPane().add(line1);
-        getContentPane().add(line2);
-        getContentPane().add(line3);*/
         getContentPane().add(panelMainMint);
         getContentPane().add(panelMainWhite);
         getContentPane().setBackground(mint);
@@ -115,22 +124,18 @@ public class StoreList extends JFrame implements ActionListener{
         setVisible(true);
 
     }
-
+@Override
     public void actionPerformed(ActionEvent e) {
 
         String event = e.getActionCommand();
+        if(event.equals("BackPage")){
+            this.setVisible(false);
+        }
+    }
+    @Override
+    public void valueChanged(ListSelectionEvent e){
+            int index = list.getSelectedIndex();
+            StoreDetail SD = new StoreDetail();
 
-        if (event.equals("Store1")) {
-            this.setVisible(false);
-        }
-        if (event.equals("Store2")) {
-            this.setVisible(false);
-        }
-        if (event.equals("Store3")) {
-            this.setVisible(false);
-        }
-        if (event.equals("BackPage")) {
-            this.setVisible(false);
-        }
     }
 }
