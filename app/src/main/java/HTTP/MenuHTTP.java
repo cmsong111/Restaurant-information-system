@@ -57,6 +57,7 @@ public class MenuHTTP {
         String result = EntityUtils.toString(response.getEntity());
         ArrayList<MenuDTO> menuDTOArrayList = gson.fromJson(result, new TypeToken<ArrayList<MenuDTO>>() {
         }.getType());
+        System.out.println(menuDTOArrayList);
         return menuDTOArrayList;
     }
 

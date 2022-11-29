@@ -2,6 +2,7 @@ package Components;
 
 import DTO.MenuDTO;
 import DTO.StoreDTO;
+import Pages.StoreDetail;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,7 +15,11 @@ public class MenuComponent extends JLabel implements ListCellRenderer {
         MenuDTO item = (MenuDTO) value;
         Icon image;
         try {
-            image = new ImageIcon(new URL(item.getImage()));
+            if(item.getImage()!=null){
+            image = new ImageIcon(new URL(item.getImage()));}
+            else{
+                image=new ImageIcon("app/res/bibimbap.png");
+            }
         } catch (MalformedURLException e) {
             throw new RuntimeException(e);
         }

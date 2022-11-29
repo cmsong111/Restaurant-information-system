@@ -1,14 +1,17 @@
 package Pages;
 
 import Components.ReviewComponent;
-import Components.StoreComponent;
+import Components.MenuComponent;
 import DTO.MenuDTO;
 import DTO.ReviewDTO;
 import DTO.StoreDTO;
+import HTTP.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 
 public class StoreDetail extends JFrame implements ActionListener{
@@ -17,39 +20,39 @@ public class StoreDetail extends JFrame implements ActionListener{
     JLabel mainLabel;
     JLabel textStoreName;
     JPanel panelLineTap;
+    MenuHTTP httpMenu=new MenuHTTP();
+    ReviewHTTP httpReview=new ReviewHTTP();
     ArrayList<MenuDTO> allMenus=new ArrayList<>();  //가게 메뉴 저장
     ArrayList<ReviewDTO> allRevies=new ArrayList<>(); //가게 리뷰 저장
     JButton buttonMenu;
     JButton buttonReview;
     JButton buttonBack;
-    btnSelect btnState=btnSelect.MENUS; //버튼선택
     static StoreDTO currentStore; //현재 선택된 가게 받아오기
-    JList cpnList; //리스트
+    public static ImageIcon storeLogo= new ImageIcon(); //스토어 대표이미지
+    JList menuList, reviewList; //리스트
+    JScrollPane scroll;
     StoreInfo storeInfo;
+    ReviewInfo reviewInfo;
     MenuComponent menuRenderer; //메뉴 렌더링
     ReviewComponent reviewRenderer; //리뷰 렌더링
+    public class StoreInfo extends DefaultListModel{ //리스트에 객체추가 , renderer는 StoreComponent
+        public StoreInfo(){
+            for (MenuDTO menu : allMenus) {
+                addElement(menu);
+            }
+        }
+    }
+    public class ReviewInfo extends DefaultListModel{ //리스트에 객체추가 , renderer는 StoreComponent
+        public ReviewInfo(){
+            for (ReviewDTO review : allRevies) {
+                addElement(review);
+            }
+        }
+    }
     public StoreDetail(){
         try{
             StoreDetail();
         } catch (Exception e){
-        }
-    }
-    enum btnSelect{
-        MENUS,
-        REVIEWS
-    }
-    public class StoreInfo extends DefaultListModel{ //리스트에 객체추가 , renderer는 StoreComponent
-        public StoreInfo(){
-            if(btnState.equals(btnSelect.MENUS)) {
-                for (MenuDTO menu : allMenus) {
-                    addElement(menu);
-                }
-            }
-            else if(btnState.equals(btnSelect.REVIEWS)){
-                for (ReviewDTO review : allRevies) {
-                    addElement(review);
-                }
-            }
         }
     }
     public void StoreDetail(){
@@ -74,6 +77,10 @@ public class StoreDetail extends JFrame implements ActionListener{
         panelMainWhite.setBounds(30,30,1204,614);
         panelMainWhite.setBackground(Color.white);
 
+        JPanel listPanel = new JPanel();
+        listPanel.setBounds(322, 330, 620, 230);
+        listPanel.setBackground(Color.white);
+
         panelMainMint = new JPanel();
         panelMainMint.setBounds(322,30,620,80);
         panelMainMint.setBackground(mint);
@@ -83,21 +90,20 @@ public class StoreDetail extends JFrame implements ActionListener{
         mainLabel.setBounds(382,30,500,70);
         mainLabel.setFont(mainFont40);
 
-        textStoreName = new JLabel("STORE NAME");
-        textStoreName.setBounds(482,120,300,43);
+        textStoreName = new JLabel(currentStore.getName());
+        textStoreName.setBounds(482,120,350,43);
         textStoreName.setHorizontalAlignment(JLabel.CENTER);
         textStoreName.setFont(mainFont22);
 
-        // TODO:선택 store의 이미지, 이름, 전화번호, 주소
-        ///////////////////////////////////////////////////
-        ImageIcon iconStore = new ImageIcon("app/res/fastfood.png");  //이미지 불러오기
+
+        ImageIcon iconStore =storeLogo;  //이미지 불러오기
         Image imgS1 = iconStore.getImage();
         Image changeImgS1 = imgS1.getScaledInstance(120,120,Image.SCALE_SMOOTH);
         ImageIcon changeIconS1 = new ImageIcon(changeImgS1);
         JLabel labelImageS1 = new JLabel(changeIconS1);
         labelImageS1.setBounds(322, 150, 120, 120);
 
-        JLabel textAddress = new JLabel("ADDRESS1234567890");
+        JLabel textAddress = new JLabel(currentStore.getLocation2()+" "+currentStore.getLocation3());
         textAddress.setBounds(470,160,400,43);
         textAddress.setHorizontalAlignment(JLabel.LEFT);
         textAddress.setFont(mainFont18);
@@ -107,11 +113,11 @@ public class StoreDetail extends JFrame implements ActionListener{
         textGen.setHorizontalAlignment(JLabel.LEFT);
         textGen.setFont(mainFont18);
 
-        JLabel textGenNumber = new JLabel("000-000-0000");
+        JLabel textGenNumber = new JLabel(currentStore.getCall());
         textGenNumber.setBounds(600,190,300,43);
         textGenNumber.setHorizontalAlignment(JLabel.LEFT);
         textGenNumber.setFont(mainFont18);
-        ///////////////////////////////////////////////////
+
 
         panelLineTap = new JPanel();
         panelLineTap.setBounds(322,290,620,1);
@@ -147,24 +153,15 @@ public class StoreDetail extends JFrame implements ActionListener{
         buttonBack.setActionCommand("BackPage");
         buttonBack.addActionListener(this);
 
-
-        //리스트 생성
-       /* storeInfo=new StoreInfo();
-        menuRenderer=new MenuComponent();
-        list=new JList(listvalues);
-        list.setCellRenderer(renderer);
-        list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        list.setBorder(BorderFactory.createLineBorder(Color.BLACK,1));
-        list.setVisibleRowCount(MainPage.storeList.size());
-
-        list.setFixedCellWidth(700); //컴포넌트 너비
-        list.setFixedCellHeight(100); //컴포넌트 높이
-
-        //스크롤패널 생성
-        scrollPane=new JScrollPane(list); //리스트 패널
-        scrollPane.setPreferredSize(new Dimension(620,350));
-        scrollPane.setBounds(352, 190, 570, 100);*/
-
+        arraySet();
+        createList();
+        scroll=new JScrollPane(menuList); //리스트 패널
+        //scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+        scroll.setPreferredSize(new Dimension(620,200));
+        //scroll.setBounds(352, 190, 570, 100);
+        getContentPane().add(listPanel);
+        listPanel.add(scroll);
+        //TODO:리스트 리스너 등록
 
         getContentPane().add(buttonReview);
         getContentPane().add(buttonMenu);
@@ -186,21 +183,47 @@ public class StoreDetail extends JFrame implements ActionListener{
         setVisible(true);
 
     }
+    public void arraySet(){
+        try {
+            allMenus = httpMenu.readMenu(currentStore);
+            allRevies=httpReview.readReviewbyStore(currentStore);
+        }catch (Exception e){}
+    }
+    public void createList(){ //리스트 생성 메서드
+        storeInfo=new StoreInfo();
+        reviewInfo=new ReviewInfo();
+        menuRenderer=new MenuComponent();
+        reviewRenderer=new ReviewComponent();
+
+        menuList=new JList(storeInfo);
+        reviewList=new JList(reviewInfo);
+
+        menuList.setCellRenderer(menuRenderer);
+        reviewList.setCellRenderer(reviewRenderer);
+
+        menuList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        menuList.setBorder(BorderFactory.createLineBorder(Color.BLACK,1));
+        menuList.setVisibleRowCount(allMenus.size());
+        menuList.setFixedCellWidth(500); //컴포넌트 너비
+        menuList.setFixedCellHeight(100); //컴포넌트 높이
+
+        reviewList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        reviewList.setBorder(BorderFactory.createLineBorder(Color.BLACK,1));
+        reviewList.setVisibleRowCount(allRevies.size());
+        reviewList.setFixedCellWidth(500); //컴포넌트 너비
+        reviewList.setFixedCellHeight(100); //컴포넌트 높이
+    }
     public void actionPerformed(ActionEvent e) {
-
         String event = e.getActionCommand();
-
         if (event.equals("MenuPage")) {
-            btnState=btnSelect.MENUS;
-            //TODO:메뉴 DTO작성하여 HTTP요청
+            //TODO:스크롤패널생성, 메뉴리스트 등록
         }
         else if (event.equals("ReviewPage")) {
-            btnState=btnSelect.REVIEWS;
-            //TODO:리뷰 DTO작성하여 HTTP요청
+            //TODO:스크롤패널생성, 리뷰리스트 등록
         }
         else if (event.equals("BackPage")) {
             this.setVisible(false);
+            StoreList.SD=null;
         }
-
     }
 }
