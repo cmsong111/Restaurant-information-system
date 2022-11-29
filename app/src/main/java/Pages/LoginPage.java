@@ -11,14 +11,14 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 
-import HTTP.LogInHTTP;
+import HTTP.UserHTTP;
 
 public class LoginPage extends JFrame implements ActionListener {
     JLabel mainlabel1;
     JTextField tx_ID;
     JTextField tx_PassWord;
     UserDTO userSingIn;
-    LogInHTTP httpLogIn = new LogInHTTP();
+    UserHTTP httpLogIn = new UserHTTP();
     JButton LoginButton;
     JButton RegisterButton;
 

@@ -10,13 +10,13 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 
-import HTTP.LogInHTTP;
+import HTTP.UserHTTP;
 
 
 public class SignUpPage extends JFrame implements ActionListener {
 
     UserDTO userDTO;
-    LogInHTTP http = new LogInHTTP();
+    UserHTTP http = new UserHTTP();
 
     JTextField textID;
     JTextField textPassWord;
