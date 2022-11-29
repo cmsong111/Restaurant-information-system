@@ -289,6 +289,25 @@ public void Set_Storelist(){
                 //반환값이 여러개임
             } catch (IOException t) {}
         }
+        //카테고리 검색
+       else if(!search_State.equals(HowSearch.SEARCH_BY_NAME)&&roleModel==false&&forChild==false&&local_Currency==false){
+            try {
+                String temp="한식";
+                if(search_State.equals(HowSearch.SEARCH_KOREAN)) temp="한식";
+                else if(search_State.equals(HowSearch.SEARCH_CHINESE)) temp="중식";
+                else if(search_State.equals(HowSearch.SEARCH_JAPANESE)) temp="일식";
+                else if(search_State.equals(HowSearch.SEARCH_DESSERT)) temp="제과점";
+                else if(search_State.equals(HowSearch.SEARCH_FASTFOOD)) temp="패스트푸드";
+                else if(search_State.equals(HowSearch.SEARCH_SNACKFOOD)) temp="일반대중음식";
+                store = StoreDTO.builder()
+                        .location1("부산광역시")
+                        .location2("부산진구")
+                        .category(temp)
+                        .build();
+                storeList=(httpStore.searchStoreByNameWithLocation(store));
+                //TODO:음식 카테고리 검색 http 생성해서 연결
+            } catch (IOException t) {}
+        }
 
         else { //카테고리별 검색
             try {
