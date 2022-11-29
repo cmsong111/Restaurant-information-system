@@ -11,7 +11,6 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Map;
 
 enum HowSearch{
     SEARCH_BY_NAME,
@@ -286,7 +285,7 @@ public void Set_Storelist(){
                         .location1("부산광역시")
                         .location2("부산진구")
                         .build();
-                storeList=(httpStore.searchByName(store));
+                storeList=(httpStore.searchStoreByNameWithLocation(store));
                 //반환값이 여러개임
             } catch (IOException t) {}
         }
@@ -308,7 +307,7 @@ public void Set_Storelist(){
                         .roleModel(roleModel)
                         .price(local_Currency)
                         .build();
-                storeList=(httpStore.search_Category(store));
+                storeList=(httpStore.searchStoreByOverall(store));
                 //반환값이 여러개임
             } catch (Exception t) {}
         }

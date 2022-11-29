@@ -19,12 +19,18 @@ import java.net.URISyntaxException;
 public class StoreHTTP {
     Gson gson = new Gson();
 
-    public StoreDTO createStore(StoreDTO store) throws IOException {
+    /**
+     * 새로운 Store 객체 생성
+     * @param storeDTO (spk = null)
+     * @return 완성된 storeDTO
+     * @throws IOException
+     */
+    public StoreDTO createStore(StoreDTO storeDTO) throws IOException {
         CloseableHttpClient client = HttpClients.createDefault();
         HttpPost httpPost = new HttpPost(SingleTon.getBaseURL() + "/store/create");
 
         // DTO Body에 담기
-        String json = gson.toJson(store);
+        String json = gson.toJson(storeDTO);
         StringEntity entity = new StringEntity(json, "UTF-8");
         httpPost.setEntity(entity);
         httpPost.setHeader("Content-Type", "application/json");
@@ -37,13 +43,13 @@ public class StoreHTTP {
         return gson.fromJson(result, StoreDTO.class);
     }
 
-    public StoreDTO readStore(StoreDTO store) throws IOException, URISyntaxException {
+    public StoreDTO readStoreBySPK(Long spk) throws IOException, URISyntaxException {
         CloseableHttpClient client = HttpClients.createDefault();
         HttpGet httpGet = new HttpGet(SingleTon.getBaseURL() + "/store/serch-id");
 
         // URI 제작
         URI uri = new URIBuilder(httpGet.getURI())
-                .addParameter("id", store.getSpk().toString())
+                .addParameter("id", String.valueOf(spk))
                 .build();
         httpGet.setURI(uri);
         httpGet.setHeader("Content-Type", "application/json");
