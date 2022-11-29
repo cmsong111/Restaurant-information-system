@@ -12,23 +12,22 @@ public class StoreComponent extends DefaultListCellRenderer {
   public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
         StoreDTO item = (StoreDTO) value;
         ImageIcon image;
-       // ImageIcon image2;
-        //Image temp;
+        ImageIcon changedImage; //크기 변환된 이미지
+        Image temp;
+        Image changedtemp;
         try {
             image = new ImageIcon(new URL(item.getImage()));
-            /////////////////////////////////
-           /* temp=image.getImage();
-            temp.getScaledInstance(80,80,Image.SCALE_SMOOTH);
-            image2=new ImageIcon(temp);*/
+
+            temp=image.getImage();
+            temp=temp.getScaledInstance(100,100,Image.SCALE_SMOOTH);
+            changedImage=new ImageIcon(temp);
 
         } catch (MalformedURLException e) {
             throw new RuntimeException(e);
         }
-       /* JLabel label=(JLabel)super.getListCellRendererComponent(list,value,index,isSelected,cellHasFocus);
-        label.setIcon(image);
-        label.setText(item.getName());*/
+
         this.setText(item.getName());
-        this.setIcon(image);
+        this.setIcon(changedImage);
 
         return this;
 

@@ -23,6 +23,7 @@ public class StoreDetail extends JFrame implements ActionListener{
     JButton buttonReview;
     JButton buttonBack;
     btnSelect btnState=btnSelect.MENUS; //버튼선택
+    static StoreDTO currentStore; //현재 선택된 가게 받아오기
     JList cpnList; //리스트
     StoreInfo storeInfo;
     MenuComponent menuRenderer; //메뉴 렌더링
@@ -164,7 +165,7 @@ public class StoreDetail extends JFrame implements ActionListener{
         scrollPane.setPreferredSize(new Dimension(620,350));
         scrollPane.setBounds(352, 190, 570, 100);*/
 
-        
+
         getContentPane().add(buttonReview);
         getContentPane().add(buttonMenu);
 
