@@ -25,6 +25,7 @@ public class StoreList extends JFrame implements ActionListener, ListSelectionLi
     StoreComponent renderer;
     JScrollPane scrollPane;
     JButton buttonBack;
+    StoreDetail SD;
     public StoreList(){
         try{
             StoreList();
@@ -88,17 +89,18 @@ public class StoreList extends JFrame implements ActionListener, ListSelectionLi
         list.setBorder(BorderFactory.createLineBorder(Color.BLACK,1));
         list.setVisibleRowCount(MainPage.storeList.size());
 
-        list.setFixedCellWidth(700); //컴포넌트 너비
+        list.setFixedCellWidth(500); //컴포넌트 너비
         list.setFixedCellHeight(100); //컴포넌트 높이
+        list.addListSelectionListener(this);
 
         //스크롤패널 생성
         scrollPane=new JScrollPane(list); //리스트 패널
+        //scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
         scrollPane.setPreferredSize(new Dimension(620,350));
         scrollPane.setBounds(352, 190, 570, 100);
-
         getContentPane().add(panelMainWhite2);
         panelMainWhite2.add(scrollPane);
-        //scrollPane.setBounds(50, 50, 300, 300); //컴포넌트 크기지정
+
 
 
 
@@ -134,8 +136,8 @@ public class StoreList extends JFrame implements ActionListener, ListSelectionLi
     }
     @Override
     public void valueChanged(ListSelectionEvent e){
-            int index = list.getSelectedIndex();
-            StoreDetail SD = new StoreDetail();
-
+        int index = list.getSelectedIndex();
+        if(SD==null)
+            SD = new StoreDetail();
     }
 }
