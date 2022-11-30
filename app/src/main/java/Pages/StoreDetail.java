@@ -20,6 +20,7 @@ public class StoreDetail extends JFrame implements ActionListener{
     JLabel mainLabel;
     JLabel textStoreName;
     JPanel panelLineTap;
+    JPanel listPanel;
     MenuHTTP httpMenu=new MenuHTTP();
     ReviewHTTP httpReview=new ReviewHTTP();
     ArrayList<MenuDTO> allMenus=new ArrayList<>();  //가게 메뉴 저장
@@ -77,8 +78,8 @@ public class StoreDetail extends JFrame implements ActionListener{
         panelMainWhite.setBounds(30,30,1204,614);
         panelMainWhite.setBackground(Color.white);
 
-        JPanel listPanel = new JPanel();
-        listPanel.setBounds(322, 330, 620, 230);
+        listPanel = new JPanel();
+        listPanel.setBounds(322, 330, 620, 220);
         listPanel.setBackground(Color.white);
 
         panelMainMint = new JPanel();
@@ -107,6 +108,16 @@ public class StoreDetail extends JFrame implements ActionListener{
         textAddress.setBounds(470,160,400,43);
         textAddress.setHorizontalAlignment(JLabel.LEFT);
         textAddress.setFont(mainFont18);
+
+        JButton view_map = new JButton("지도보기");
+        view_map.setBounds(850,160,110,30);
+        view_map.setFont(mainFont18);
+        view_map.setBackground(mint);
+        view_map.setBorderPainted(false);         //버튼 테두리 없에기
+        //buttonMenu.setContentAreaFilled(false);     //버튼 내부 색 채움 여부
+        view_map.setFocusPainted(false);        //버튼 포커스(클릭시 테두리)
+        view_map.setActionCommand("Map");
+        view_map.addActionListener(this);
 
         JLabel textGen = new JLabel("전화번호");
         textGen.setBounds(470,190,120,43);
@@ -144,8 +155,18 @@ public class StoreDetail extends JFrame implements ActionListener{
         buttonReview.setActionCommand("ReviewPage");
         buttonReview.addActionListener(this);
 
+        JButton writeReview = new JButton("리뷰 작성");
+        writeReview.setBounds(572,550,120,30);
+        writeReview.setFont(mainFont18);
+        writeReview.setBackground(mint);
+        writeReview.setBorderPainted(false);         //버튼 테두리 없에기
+        //writeReview.setContentAreaFilled(false);     //버튼 내부 색 채움 여부
+        //buttonBack.setFocusPainted(false);        //버튼 포커스(클릭시 테두리)
+        writeReview.setActionCommand("WriteReview");
+        writeReview.addActionListener(this);
+
         buttonBack = new JButton("뒤로가기");
-        buttonBack.setBounds(572,560,120,30);
+        buttonBack.setBounds(572,600,120,30);
         buttonBack.setFont(mainFont18);
         buttonBack.setBorderPainted(false);         //버튼 테두리 없에기
         buttonBack.setContentAreaFilled(false);     //버튼 내부 색 채움 여부
@@ -155,13 +176,10 @@ public class StoreDetail extends JFrame implements ActionListener{
 
         arraySet();
         createList();
-        scroll=new JScrollPane(menuList); //리스트 패널
-        //scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+        scroll=new JScrollPane(menuList);//리스트 패널
         scroll.setPreferredSize(new Dimension(620,200));
-        //scroll.setBounds(352, 190, 570, 100);
         getContentPane().add(listPanel);
         listPanel.add(scroll);
-        //TODO:리스트 리스너 등록
 
         getContentPane().add(buttonReview);
         getContentPane().add(buttonMenu);
@@ -172,9 +190,9 @@ public class StoreDetail extends JFrame implements ActionListener{
         getContentPane().add(textStoreName);
         getContentPane().add(buttonBack);
         getContentPane().add(mainLabel);
-
+        getContentPane().add(writeReview);
         getContentPane().add(labelImageS1);
-
+        getContentPane().add(view_map);
         getContentPane().add(panelMainMint);
         getContentPane().add(panelMainWhite);
         getContentPane().setBackground(mint);
@@ -196,17 +214,15 @@ public class StoreDetail extends JFrame implements ActionListener{
         reviewRenderer=new ReviewComponent();
 
         menuList=new JList(storeInfo);
-        reviewList=new JList(reviewInfo);
-
         menuList.setCellRenderer(menuRenderer);
-        reviewList.setCellRenderer(reviewRenderer);
-
         menuList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         menuList.setBorder(BorderFactory.createLineBorder(Color.BLACK,1));
         menuList.setVisibleRowCount(allMenus.size());
         menuList.setFixedCellWidth(500); //컴포넌트 너비
         menuList.setFixedCellHeight(100); //컴포넌트 높이
 
+        reviewList=new JList(reviewInfo);
+        reviewList.setCellRenderer(reviewRenderer);
         reviewList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         reviewList.setBorder(BorderFactory.createLineBorder(Color.BLACK,1));
         reviewList.setVisibleRowCount(allRevies.size());
@@ -217,13 +233,25 @@ public class StoreDetail extends JFrame implements ActionListener{
         String event = e.getActionCommand();
         if (event.equals("MenuPage")) {
             //TODO:스크롤패널생성, 메뉴리스트 등록
+
+
         }
         else if (event.equals("ReviewPage")) {
             //TODO:스크롤패널생성, 리뷰리스트 등록
+            //scroll.s(reviewList);
+            scroll.validate();
+            scroll.repaint();
         }
         else if (event.equals("BackPage")) {
             this.setVisible(false);
             StoreList.SD=null;
+        }
+        else if(event.equals(("WriteReview"))){
+            //TODO: 리뷰작성 페이지 연결
+            ReviewPage RP=new ReviewPage();
+        }
+        else if(event.equals("Map")){
+            //TODO: 지도 페이지
         }
     }
 }

@@ -37,7 +37,7 @@ public class SearchHTTP {
     public ArrayList<StoreDTO> searchStoreByNameWithLocation(StoreDTO store) throws IOException {
         // URL 생성
         CloseableHttpClient Client = HttpClientBuilder.create().build();
-        String baseURL = SingleTon.getBaseURL() + "/store/serch-name";
+        String baseURL = SingleTon.getBaseURL() + "/store/search-name";
 
         // 파라메터 설정
         HttpGet httpget = new HttpGet(baseURL);
@@ -78,7 +78,7 @@ public class SearchHTTP {
 
         //URI 만들기
         CloseableHttpClient client = HttpClients.createDefault();
-        HttpPost httpPost = new HttpPost(SingleTon.getBaseURL() + "/store/serch-overwall");
+        HttpPost httpPost = new HttpPost(SingleTon.getBaseURL() + "/store/search-overwall");
 
         String json = gson.toJson(store);
         StringEntity entity = new StringEntity(json, "UTF-8");
@@ -111,7 +111,7 @@ public class SearchHTTP {
     public StoreDTO serchByStoreSPK(long spk) throws IOException {
         // URL 생성
         CloseableHttpClient Client = HttpClientBuilder.create().build();
-        String baseURL = SingleTon.getBaseURL() + "/store/serch-id";
+        String baseURL = SingleTon.getBaseURL() + "/store/search-id";
 
         // 파라메터 설정
         HttpGet httpget = new HttpGet(baseURL);
@@ -149,7 +149,7 @@ public class SearchHTTP {
     public ArrayList<StoreDTO> searchStoreByLocation(String location1, String location2) throws IOException {
         // URL 생성
         CloseableHttpClient Client = HttpClientBuilder.create().build();
-        String baseURL = SingleTon.getBaseURL() + "/store/serch-location";
+        String baseURL = SingleTon.getBaseURL() + "/store/search-location";
 
         // 파라메터 설정
         HttpGet httpget = new HttpGet(baseURL);
