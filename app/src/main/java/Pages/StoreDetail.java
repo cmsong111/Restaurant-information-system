@@ -262,6 +262,7 @@ public class StoreDetail extends JFrame implements ActionListener{
         else if(event.equals(("WriteReview"))){
             //TODO: 리뷰작성 페이지 연결
             ReviewPage RP=new ReviewPage();
+            this.setVisible(false);
         }
         else if(event.equals("Map")){
             //TODO: 지도 페이지
