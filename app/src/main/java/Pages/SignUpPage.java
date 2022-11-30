@@ -172,7 +172,7 @@ public class SignUpPage extends JFrame implements ActionListener {
             }
         }
         if (event.equals("BackPage")) {
-            this.setVisible(false);
+            dispose();
             LoginPage LP = new LoginPage();
         }
 

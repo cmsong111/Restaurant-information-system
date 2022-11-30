@@ -6,6 +6,7 @@ import HTTP.ReviewHTTP;
 import HTTP.StoreHTTP;
 import org.json.simple.parser.ParseException;
 import Pages.*;
+
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.security.NoSuchAlgorithmException;
@@ -26,9 +27,9 @@ public class App {
         }*/
 
 
-        //LoginPage LT = new LoginPage();
-        ReviewPage RP = new ReviewPage();
-        //MainPage temp=new MainPage();
+        LoginPage LT = new LoginPage();
+        //ReviewPage RP = new ReviewPage();
+        //MainPage temp = new MainPage();
         //StoreList SL = new StoreList();
         //StoreDetail SD = new StoreDetail();
         //StoreList SL = new StoreList();

@@ -256,7 +256,7 @@ public class StoreDetail extends JFrame implements ActionListener{
             this.repaint();
         }
         else if (event.equals("BackPage")) {
-            this.setVisible(false);
+            dispose();
             StoreList.SD=null;
         }
         else if(event.equals(("WriteReview"))){

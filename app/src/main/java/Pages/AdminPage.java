@@ -24,7 +24,7 @@ public class AdminPage extends JFrame implements ActionListener{
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         Font mainFont40 = new Font("Consolas",Font.PLAIN,40);   //폰트 설정
-        Font mainFont30 = new Font("Consolas",Font.PLAIN,30);
+        Font mainFont30 = new Font("Consolas",Font.BOLD,30);
         Font mainFont26 = new Font("Consolas",Font.PLAIN,26);
         Font mainFont22 = new Font("Consolas",Font.PLAIN,22);
         Font mainFont18 = new Font("Consolas",Font.PLAIN,18);
@@ -43,8 +43,8 @@ public class AdminPage extends JFrame implements ActionListener{
 
         JLabel labelAdmin = new JLabel("-Admin Page-");
         labelAdmin.setHorizontalAlignment(JLabel.CENTER);
-        labelAdmin.setBounds(382,100,500,100);
-        labelAdmin.setFont(mainFont26);
+        labelAdmin.setBounds(382,95,500,100);
+        labelAdmin.setFont(mainFont30);
         labelAdmin.setForeground(darkModeText);
 
         JButton createStoreButton = new JButton("Create Store");
@@ -80,10 +80,22 @@ public class AdminPage extends JFrame implements ActionListener{
         deleteStoreButton.setActionCommand("DeleteStore");
         deleteStoreButton.addActionListener(this);
 
+        JButton buttonExit = new JButton("Exit AdminPage");
+        buttonExit.setBounds(527,560,210,40);
+        buttonExit.setFont(mainFont22);
+        buttonExit.setBorderPainted(false);         //버튼 테두리 없에기
+        //buttonExit.setContentAreaFilled(false);     //버튼 내부 색 채움 여부
+        buttonExit.setFocusPainted(false);        //버튼 포커스(클릭시 테두리)
+        buttonExit.setForeground(darkModeText);
+        buttonExit.setBackground(darkModeBack);
+        buttonExit.setActionCommand("ExitAdminPage");
+        buttonExit.addActionListener(this);
+
         getContentPane().add(labelAdmin);
         getContentPane().add(createStoreButton);
         getContentPane().add(updateStoreButton);
         getContentPane().add(deleteStoreButton);
+        getContentPane().add(buttonExit);
 
         getContentPane().add(mainLabel);
         getContentPane().setBackground(darkMode);
@@ -108,6 +120,9 @@ public class AdminPage extends JFrame implements ActionListener{
         if (event.equals("DeleteStore")) {
 
             AdminDeleteStorePage ADSP = new AdminDeleteStorePage();
+        }
+        if(event.equals("ExitAdminPage")){
+            dispose();
         }
     }
 }

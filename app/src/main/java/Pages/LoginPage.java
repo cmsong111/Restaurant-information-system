@@ -92,7 +92,8 @@ public class LoginPage extends JFrame implements ActionListener {
         //RegisterButton.setFocusPainted(false);
 
         panelMainWhite.setBackground(Color.white);
-        linePW.setBackground(gray1);
+        //linePW.setBackground(gray1);
+        //lineID.setBackground(gray1);
         RegisterButton.setForeground(Color.white);
         RegisterButton.setBackground(mint);
 
@@ -144,7 +145,7 @@ public class LoginPage extends JFrame implements ActionListener {
                 JOptionPane.showMessageDialog(null, "아이디/비밀번호가 일치하지 않습니다");
             }
         } else if (event.equals("signUp")) {
-            this.setVisible(false);
+            dispose();
             SignUpPage SP = new SignUpPage();
         }
 

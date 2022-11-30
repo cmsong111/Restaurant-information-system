@@ -25,6 +25,7 @@ public class AdminDeleteStorePage extends JFrame implements ActionListener{
         Font mainFont40 = new Font("Consolas",Font.PLAIN,40);   //폰트 설정
         Font mainFont30 = new Font("Consolas",Font.PLAIN,30);
         Font mainFont26 = new Font("Consolas",Font.PLAIN,26);
+        Font textFont22 = new Font("배달의민족 도현",Font.PLAIN,22);
         Font mainFont22 = new Font("Consolas",Font.PLAIN,22);
         Font mainFont18 = new Font("Consolas",Font.PLAIN,18);
 
@@ -88,7 +89,7 @@ public class AdminDeleteStorePage extends JFrame implements ActionListener{
 
         }
         if (event.equals("BackPage")) {
-            this.setVisible(false);
+            dispose();
         }
 
     }

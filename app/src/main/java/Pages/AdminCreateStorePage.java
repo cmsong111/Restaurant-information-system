@@ -25,6 +25,7 @@ public class AdminCreateStorePage extends JFrame implements ActionListener{
         Font mainFont40 = new Font("Consolas",Font.PLAIN,40);   //폰트 설정
         Font mainFont30 = new Font("Consolas",Font.PLAIN,30);
         Font mainFont26 = new Font("Consolas",Font.PLAIN,26);
+        Font textFont22 = new Font("배달의민족 도현",Font.PLAIN,22);
         Font mainFont22 = new Font("Consolas",Font.PLAIN,22);
         Font mainFont18 = new Font("Consolas",Font.PLAIN,18);
 
@@ -48,21 +49,21 @@ public class AdminCreateStorePage extends JFrame implements ActionListener{
 
         JTextField textStoreName = new JTextField("Store Name");
         textStoreName.setBounds(392, 220, 490, 43);
-        textStoreName.setFont(mainFont22);
+        textStoreName.setFont(textFont22);
         textStoreName.setForeground(gray1);
         textStoreName.setBackground(darkModeBack);
         textStoreName.setBorder(javax.swing.BorderFactory.createEmptyBorder());
 
         JTextField textStoreLocation = new JTextField("Store Location");
         textStoreLocation.setBounds(392, 280, 490, 43);
-        textStoreLocation.setFont(mainFont22);
+        textStoreLocation.setFont(textFont22);
         textStoreLocation.setForeground(gray1);
         textStoreLocation.setBackground(darkModeBack);
         textStoreLocation.setBorder(javax.swing.BorderFactory.createEmptyBorder());
 
         JTextField textStoreGDNumber = new JTextField("General Directory Number");
         textStoreGDNumber.setBounds(392, 340, 490, 43);
-        textStoreGDNumber.setFont(mainFont22);
+        textStoreGDNumber.setFont(textFont22);
         textStoreGDNumber.setForeground(gray1);
         textStoreGDNumber.setBackground(darkModeBack);
         textStoreGDNumber.setBorder(javax.swing.BorderFactory.createEmptyBorder());
@@ -127,7 +128,7 @@ public class AdminCreateStorePage extends JFrame implements ActionListener{
 
         }
         if (event.equals("BackPage")) {
-            this.setVisible(false);
+            dispose();
         }
 
     }
