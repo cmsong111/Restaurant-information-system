@@ -15,7 +15,7 @@ public class ViewMap extends JFrame implements ActionListener {
             setSize(500,300);
             setLocationRelativeTo(null);
             getContentPane().setLayout(null);
-            setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            //setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             NaverMapAPI ds=new NaverMapAPI();
             String s=ds.getStaticMAP(StoreDetail.currentStore.getLocationX(), StoreDetail.currentStore.getLocationY());
 
@@ -35,8 +35,6 @@ public class ViewMap extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         String event = e.getActionCommand();
-
-
 
     }
 }

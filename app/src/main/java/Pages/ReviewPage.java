@@ -130,8 +130,7 @@ public class ReviewPage extends JFrame implements ActionListener{
         }
         if (event.equals("BackPage")) {
             this.setVisible(false);
-            //StoreList.SD=null;
-            //StoreList.SD=new StoreList();
+            StoreDetail SD=new StoreDetail();
         }
     }
 }
