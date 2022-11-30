@@ -20,18 +20,20 @@ public class StoreDetail extends JFrame implements ActionListener{
     JLabel mainLabel;
     JLabel textStoreName;
     JPanel panelLineTap;
-    JPanel listPanel;
+    JPanel listPanel1;
+    JPanel listPanel2;
     MenuHTTP httpMenu=new MenuHTTP();
     ReviewHTTP httpReview=new ReviewHTTP();
     ArrayList<MenuDTO> allMenus=new ArrayList<>();  //가게 메뉴 저장
-    ArrayList<ReviewDTO> allRevies=new ArrayList<>(); //가게 리뷰 저장
+    ArrayList<ReviewDTO> allReviews=new ArrayList<>(); //가게 리뷰 저장
     JButton buttonMenu;
     JButton buttonReview;
     JButton buttonBack;
     static StoreDTO currentStore; //현재 선택된 가게 받아오기
     public static ImageIcon storeLogo= new ImageIcon(); //스토어 대표이미지
     JList menuList, reviewList; //리스트
-    JScrollPane scroll;
+    JScrollPane Mscroll;
+    JScrollPane Rscroll;
     StoreInfo storeInfo;
     ReviewInfo reviewInfo;
     MenuComponent menuRenderer; //메뉴 렌더링
@@ -45,7 +47,7 @@ public class StoreDetail extends JFrame implements ActionListener{
     }
     public class ReviewInfo extends DefaultListModel{ //리스트에 객체추가 , renderer는 StoreComponent
         public ReviewInfo(){
-            for (ReviewDTO review : allRevies) {
+            for (ReviewDTO review : allReviews) {
                 addElement(review);
             }
         }
@@ -78,9 +80,13 @@ public class StoreDetail extends JFrame implements ActionListener{
         panelMainWhite.setBounds(30,30,1204,614);
         panelMainWhite.setBackground(Color.white);
 
-        listPanel = new JPanel();
-        listPanel.setBounds(322, 330, 620, 220);
-        listPanel.setBackground(Color.white);
+        listPanel1 = new JPanel();
+        listPanel1.setBounds(322, 330, 620, 220);
+        listPanel1.setBackground(Color.white);
+
+        listPanel2 = new JPanel();
+        listPanel2.setBounds(322, 330, 620, 220);
+        listPanel2.setBackground(Color.white);
 
         panelMainMint = new JPanel();
         panelMainMint.setBounds(322,30,620,80);
@@ -176,10 +182,17 @@ public class StoreDetail extends JFrame implements ActionListener{
 
         arraySet();
         createList();
-        scroll=new JScrollPane(menuList);//리스트 패널
-        scroll.setPreferredSize(new Dimension(620,200));
-        getContentPane().add(listPanel);
-        listPanel.add(scroll);
+        Mscroll=new JScrollPane(menuList);//리스트 패널
+        Mscroll.setPreferredSize(new Dimension(620,200));
+        getContentPane().add(listPanel1);
+        listPanel1.add(Mscroll);
+        listPanel1.setVisible(true);
+
+        Rscroll=new JScrollPane(reviewList);//리스트 패널
+        Rscroll.setPreferredSize(new Dimension(620,200));
+        getContentPane().add(listPanel2);
+        listPanel2.add(Rscroll);
+        listPanel2.setVisible(false);
 
         getContentPane().add(buttonReview);
         getContentPane().add(buttonMenu);
@@ -203,8 +216,9 @@ public class StoreDetail extends JFrame implements ActionListener{
     }
     public void arraySet(){
         try {
+            System.out.println(currentStore);
             allMenus = httpMenu.readMenu(currentStore);
-            allRevies=httpReview.readReviewbyStore(currentStore);
+            allReviews=httpReview.readReviewbyStore(currentStore);
         }catch (Exception e){}
     }
     public void createList(){ //리스트 생성 메서드
@@ -225,22 +239,21 @@ public class StoreDetail extends JFrame implements ActionListener{
         reviewList.setCellRenderer(reviewRenderer);
         reviewList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         reviewList.setBorder(BorderFactory.createLineBorder(Color.BLACK,1));
-        reviewList.setVisibleRowCount(allRevies.size());
+        reviewList.setVisibleRowCount(allReviews.size());
         reviewList.setFixedCellWidth(500); //컴포넌트 너비
         reviewList.setFixedCellHeight(100); //컴포넌트 높이
     }
     public void actionPerformed(ActionEvent e) {
         String event = e.getActionCommand();
         if (event.equals("MenuPage")) {
-            //TODO:스크롤패널생성, 메뉴리스트 등록
-
-
+            listPanel2.setVisible(false);
+            listPanel1.setVisible(true);
+            this.repaint();
         }
         else if (event.equals("ReviewPage")) {
-            //TODO:스크롤패널생성, 리뷰리스트 등록
-
-            scroll.validate();
-            scroll.repaint();
+            listPanel1.setVisible(false);
+            listPanel2.setVisible(true);
+            this.repaint();
         }
         else if (event.equals("BackPage")) {
             this.setVisible(false);
