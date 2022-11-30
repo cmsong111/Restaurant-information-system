@@ -1,11 +1,20 @@
 package Pages;
 
+import DTO.ReviewDTO;
+import DTO.StoreDTO;
+import HTTP.ReviewHTTP;
+import Setting.SingleTon;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 public class ReviewPage extends JFrame implements ActionListener{
+    ReviewHTTP httpReview=new ReviewHTTP();
+    JTextArea textTitle;
+    ReviewDTO myReview;
+    JTextArea textReview;
     public ReviewPage(){
         try{
             ReviewPage();
@@ -49,18 +58,23 @@ public class ReviewPage extends JFrame implements ActionListener{
         labelStore.setBounds(382,100,500,100);
         labelStore.setFont(mainFont22);
 
-        JTextArea textReview = new JTextArea("리뷰 내용");
-        textReview.setBounds(297,182,670,296);
+        textTitle = new JTextArea("제목");
+        textTitle.setBounds(297,182,670,50);
+        textTitle.setFont(mainFont22);
+        textTitle.setForeground(gray1);
+
+        textReview = new JTextArea("리뷰 내용");
+        textReview.setBounds(297,242,670,227);
         textReview.setFont(mainFont22);
         textReview.setForeground(gray1);
 
         JPanel panelReviewGray = new JPanel();
-        panelReviewGray.setBounds(290,178,684,304);
+        panelReviewGray.setBounds(288,177,688,306);
         panelReviewGray.setBackground(gray1);
 
-        JPanel panelReviewWhite = new JPanel();
+       /* JPanel panelReviewWhite = new JPanel();
         panelReviewWhite.setBounds(292,180,680,300);
-        panelReviewWhite.setBackground(Color.white);
+        panelReviewWhite.setBackground(Color.gray);*/
 
         JButton buttonDone = new JButton("-리뷰 작성-");
         buttonDone.setBounds(532,510,200,34);
@@ -68,7 +82,7 @@ public class ReviewPage extends JFrame implements ActionListener{
         buttonDone.setBorderPainted(false);         //버튼 테두리 없에기
         buttonDone.setContentAreaFilled(false);     //버튼 내부 색 채움 여부
         //buttonDone.setFocusPainted(false);        //버튼 포커스(클릭시 테두리)
-        buttonDone.setActionCommand("StoreUpdate");
+        buttonDone.setActionCommand("Write");
         buttonDone.addActionListener(this);
 
         JButton buttonBack = new JButton("뒤로가기");
@@ -85,8 +99,8 @@ public class ReviewPage extends JFrame implements ActionListener{
         getContentPane().add(buttonDone);
         getContentPane().add(textReview);
         getContentPane().add(mainLabel);
-
-        getContentPane().add(panelReviewWhite);
+        getContentPane().add(textTitle);
+        //getContentPane().add(panelReviewWhite);
         getContentPane().add(panelReviewGray);
         getContentPane().add(panelMainMint);
         getContentPane().add(panelMainWhite);
@@ -100,12 +114,24 @@ public class ReviewPage extends JFrame implements ActionListener{
 
         String event = e.getActionCommand();
 
-        if (event.equals("UpdateStore")) {
-
+        if (event.equals("Write")) {
+            try {
+                ReviewDTO wr = ReviewDTO.builder()
+                        .title(textTitle.getText())
+                        .content(textReview.getText())
+                        .upk(SingleTon.getUser().getUpk())
+                        .spk(StoreDetail.currentStore.getSpk())
+                        .build();
+                myReview=(httpReview.createReview(wr));
+                if(myReview!=null) {
+                    JOptionPane.showMessageDialog(null, "내 리뷰가 등록되었습니다.");
+                }
+            } catch (IOException t) {}
         }
         if (event.equals("BackPage")) {
             this.setVisible(false);
+            //StoreList.SD=null;
+            //StoreList.SD=new StoreList();
         }
-
     }
 }

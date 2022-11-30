@@ -10,10 +10,10 @@ import lombok.*;
 
 public class ReviewDTO {
 
-    private Long RPK;
+    private Long rpk;
     private String title;
     private String content;
     private String image;
-    private Long menuDTO;
-    private Long userDTO;
+    private Long spk;
+    private Long upk;
 }

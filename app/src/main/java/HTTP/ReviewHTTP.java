@@ -1,6 +1,6 @@
 package HTTP;
 
-import DTO.ArrayListReviewDto;
+
 import DTO.ReviewDTO;
 import DTO.StoreDTO;
 import Setting.SingleTon;
@@ -27,6 +27,7 @@ public class ReviewHTTP extends ArrayList<ReviewDTO> {
      * @Author 김남주
      */
     public ReviewDTO createReview(ReviewDTO reviewDTO) throws IOException {
+
         // HTTP POST 객체 생성
         CloseableHttpClient client = HttpClients.createDefault();
         HttpPost httpPost = new HttpPost(SingleTon.getBaseURL() + "/review/create");

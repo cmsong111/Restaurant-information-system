@@ -49,12 +49,13 @@ public class MenuHTTP {
                 .build();
         httpGet.setURI(uri);
 
-
+        System.out.println(httpGet.getURI());
         // HTTP POST 요청하기
         HttpResponse response = client.execute(httpGet);
 
         // 결과 반환
         String result = EntityUtils.toString(response.getEntity());
+        System.out.println(result);
         ArrayList<MenuDTO> menuDTOArrayList = gson.fromJson(result, new TypeToken<ArrayList<MenuDTO>>() {
         }.getType());
         System.out.println(menuDTOArrayList);
