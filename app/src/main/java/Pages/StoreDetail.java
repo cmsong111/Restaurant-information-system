@@ -252,6 +252,8 @@ public class StoreDetail extends JFrame implements ActionListener{
         }
         else if(event.equals("Map")){
             //TODO: 지도 페이지
+            ViewMap VM = new ViewMap();
+
         }
     }
 }
