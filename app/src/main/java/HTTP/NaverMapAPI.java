@@ -54,10 +54,6 @@ public class NaverMapAPI {
 
         bInStr.close();
         bOutStr.close();
-
-
-
-
         return "http get 완료";
     }
 }

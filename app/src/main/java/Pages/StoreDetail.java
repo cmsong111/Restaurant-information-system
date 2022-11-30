@@ -238,7 +238,7 @@ public class StoreDetail extends JFrame implements ActionListener{
         }
         else if (event.equals("ReviewPage")) {
             //TODO:스크롤패널생성, 리뷰리스트 등록
-            //scroll.s(reviewList);
+
             scroll.validate();
             scroll.repaint();
         }

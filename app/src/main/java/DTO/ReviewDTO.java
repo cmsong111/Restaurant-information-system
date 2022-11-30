@@ -16,6 +16,4 @@ public class ReviewDTO {
     private String image;
     private Long menuDTO;
     private Long userDTO;
-
-
 }
