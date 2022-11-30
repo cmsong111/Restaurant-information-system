@@ -101,6 +101,21 @@ public class MainPage extends JFrame implements ActionListener, ItemListener {
         quickSearch.addActionListener(this);
         //quickSearch.setFocusPainted(false);
 
+
+        JButton buttonEditUser = new JButton("USER NAME");
+        buttonEditUser.setBounds(1000,50,60,60);
+        buttonEditUser.setVerticalTextPosition(JButton.BOTTOM);
+        buttonEditUser.setHorizontalTextPosition(JButton.CENTER);
+        buttonEditUser.setBorderPainted(false);      //버튼 테두리 없에기
+        //buttonEditUser.setContentAreaFilled(false);
+        buttonEditUser.setBackground(mint);
+        buttonEditUser.setActionCommand("editUser");
+        buttonEditUser.addActionListener(this);
+        buttonEditUser.setFocusPainted(false);
+
+
+
+
         mainButton_kr = new JButton("한식", new ImageIcon("app/res/bibimbap.png"));
         mainButton_kr.setBounds(411,210,107,100);
         mainButton_kr.setVerticalTextPosition(JButton.BOTTOM);
@@ -213,6 +228,9 @@ public class MainPage extends JFrame implements ActionListener, ItemListener {
         getContentPane().add(labelMain);
         getContentPane().add(textMainSearch);
         getContentPane().add(quickSearch);
+
+        getContentPane().add(buttonEditUser);
+
         getContentPane().add(mainButton_kr);
         getContentPane().add(mainButton_ch);
         getContentPane().add(mainButton_jp);
@@ -236,6 +254,11 @@ public class MainPage extends JFrame implements ActionListener, ItemListener {
 @Override
 public void actionPerformed(ActionEvent e){
         String event = e.getActionCommand();
+
+        if(event.equals("editUser")){
+            EditUserPage EU = new EditUserPage();
+        }
+
         //검색버튼 및 음식 카테고리(라디오버튼)
     switch(event){
         case "bSearch":
@@ -330,5 +353,6 @@ public void Set_Storelist(){
                 //반환값이 여러개임
             } catch (Exception t) {}
         }
-}
+
+    }
 }
