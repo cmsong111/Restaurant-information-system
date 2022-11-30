@@ -23,6 +23,10 @@ public class EditUserPage extends JFrame implements ActionListener{
         panelMainWhite.setBounds(30,30,1204,614);
         panelMainWhite.setBackground(Color.white);
 
+
+
+
+
         getContentPane().add(panelMainWhite);
         getContentPane().setBackground(mint);
         setResizable(false);    //화면 크기 고정

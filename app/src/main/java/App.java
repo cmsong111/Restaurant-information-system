@@ -26,8 +26,8 @@ public class App {
         }*/
 
 
-        LoginPage LT = new LoginPage();
-        //ReviewPage RP = new ReviewPage();
+        //LoginPage LT = new LoginPage();
+        ReviewPage RP = new ReviewPage();
         //MainPage temp=new MainPage();
         //StoreList SL = new StoreList();
         //StoreDetail SD = new StoreDetail();

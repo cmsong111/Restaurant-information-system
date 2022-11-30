@@ -58,23 +58,28 @@ public class ReviewPage extends JFrame implements ActionListener{
         labelStore.setBounds(382,100,500,100);
         labelStore.setFont(mainFont22);
 
+        JPanel panelReviewWhiteTitle = new JPanel();
+        panelReviewWhiteTitle.setBounds(284,182,696,50);
+        panelReviewWhiteTitle.setBackground(Color.white);
+
         textTitle = new JTextArea("제목");
-        textTitle.setBounds(297,182,670,50);
+        textTitle.setBounds(288,190,688,42);
         textTitle.setFont(mainFont22);
         textTitle.setForeground(gray1);
 
+        JPanel panelReviewWhiteReview = new JPanel();
+        panelReviewWhiteReview.setBounds(284,234,696,244);
+        panelReviewWhiteReview.setBackground(Color.white);
+
         textReview = new JTextArea("리뷰 내용");
-        textReview.setBounds(297,242,670,227);
+        textReview.setBounds(288,238,688,240);
         textReview.setFont(mainFont22);
         textReview.setForeground(gray1);
 
         JPanel panelReviewGray = new JPanel();
-        panelReviewGray.setBounds(288,177,688,306);
+        panelReviewGray.setBounds(282,180,700,300);
         panelReviewGray.setBackground(gray1);
 
-       /* JPanel panelReviewWhite = new JPanel();
-        panelReviewWhite.setBounds(292,180,680,300);
-        panelReviewWhite.setBackground(Color.gray);*/
 
         JButton buttonDone = new JButton("-리뷰 작성-");
         buttonDone.setBounds(532,510,200,34);
@@ -100,7 +105,8 @@ public class ReviewPage extends JFrame implements ActionListener{
         getContentPane().add(textReview);
         getContentPane().add(mainLabel);
         getContentPane().add(textTitle);
-        //getContentPane().add(panelReviewWhite);
+        getContentPane().add(panelReviewWhiteTitle);
+        getContentPane().add(panelReviewWhiteReview);
         getContentPane().add(panelReviewGray);
         getContentPane().add(panelMainMint);
         getContentPane().add(panelMainWhite);
