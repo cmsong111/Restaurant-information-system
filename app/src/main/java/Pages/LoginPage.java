@@ -16,7 +16,7 @@ import HTTP.UserHTTP;
 public class LoginPage extends JFrame implements ActionListener {
     JLabel mainlabel1;
     JTextField tx_ID;
-    JTextField tx_PassWord;
+    JPasswordField tx_PassWord;
     UserDTO userSingIn;
     UserHTTP httpLogIn = new UserHTTP();
     JButton LoginButton;
@@ -63,7 +63,7 @@ public class LoginPage extends JFrame implements ActionListener {
         tx_ID.setFont(mainFont20);
         tx_ID.setForeground(gray1);
 
-        tx_PassWord = new JTextField("비밀번호");
+        tx_PassWord = new JPasswordField("비밀번호");
         tx_PassWord.setBounds(200, 380, 300, 43);
         tx_PassWord.setFont(mainFont20);
         tx_PassWord.setForeground(gray1);

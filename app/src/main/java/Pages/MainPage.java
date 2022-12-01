@@ -237,14 +237,27 @@ public class MainPage extends JFrame implements ActionListener, ItemListener {
         buttonAdminPage.setFont(mainFont20);
         buttonAdminPage.setForeground(Color.darkGray);
         buttonAdminPage.setBackground(mint);
+
         buttonAdminPage.setBorderPainted(false);
         buttonAdminPage.setActionCommand("ViewAdminPage");
         buttonAdminPage.addActionListener(this);
         buttonAdminPage.setVisible(false);      //관리자 페이지 버튼 기본 비활성
 
-        if(SingleTon.getUser().getUpk()==3){   //어드민 계정일 경우, 관리자 페이지 버튼 표시
+        if (SingleTon.getUser().isAdmin() == true) {   //어드민 계정일 경우, 관리자 페이지 버튼 표시
             buttonAdminPage.setVisible(true);
         }
+
+        JButton buttonLogout = new JButton("로그아웃");
+        buttonLogout.setBounds(1000, 210, 180, 40);
+        buttonLogout.setFont(mainFont20);
+        buttonLogout.setForeground(Color.darkGray);
+        buttonLogout.setBackground(mint);
+
+        buttonLogout.setBorderPainted(false);
+        buttonLogout.setActionCommand("Logout");
+        buttonLogout.addActionListener(this);
+        buttonLogout.setVisible(true);      //관리자 페이지 버튼 기본 비활성
+
 
 
         getContentPane().setBackground(mint);
@@ -267,6 +280,7 @@ public class MainPage extends JFrame implements ActionListener, ItemListener {
         getContentPane().add(mainButton_Search);
         getContentPane().add(mainButton_Random);
         getContentPane().add(buttonAdminPage);
+        getContentPane().add(buttonLogout);
 
         getContentPane().add(panelSearch);
         getContentPane().add(panelMainMint);
@@ -291,6 +305,9 @@ public class MainPage extends JFrame implements ActionListener, ItemListener {
                 break;
             case "location":
                 selectedlocation=selectLocation.getSelectedItem().toString();
+            case "Logout":
+                this.setVisible(false);
+                LoginPage NP = new LoginPage();
                 break;
             case "bSearch":
                 search_State = HowSearch.SEARCH_BY_NAME;

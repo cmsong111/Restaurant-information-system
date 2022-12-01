@@ -1,19 +1,31 @@
 package Pages;
 
+import DTO.UserDTO;
+import HTTP.UserHTTP;
+import Setting.SingleTon;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
+import java.security.Signature;
 
 public class EditUserPage extends JFrame implements ActionListener {
-    public EditUserPage(){
-        try{
+    public EditUserPage() {
+        try {
             EditUserPage();
-        } catch (Exception e){
+        } catch (Exception e) {
         }
     }
+
+    JTextField textName;
+    JPasswordField textPassWord;
+    JPasswordField textPassWord2;
+    JTextField textAge;
+    JCheckBox checkBoxAdmin;
+
 
     public void EditUserPage() {
         setTitle("EditUser Screen");
@@ -37,37 +49,50 @@ public class EditUserPage extends JFrame implements ActionListener {
         panelMainWhite.setBackground(Color.white);
 
         JPanel panelMainMint = new JPanel();
-        panelMainMint.setBounds(322,30,620,80);
+        panelMainMint.setBounds(322, 30, 620, 80);
         panelMainMint.setBackground(mint);
 
         JLabel labelMain = new JLabel("오점뭐 (오늘 점심 뭐 먹지)");
         labelMain.setHorizontalAlignment(JLabel.CENTER);
-        labelMain.setBounds(382,30,500,70);         //나머지 페이지들도 적용
+        labelMain.setBounds(382, 30, 500, 70);         //나머지 페이지들도 적용
         labelMain.setFont(mainFont40);
 
         JLabel labelUnderMain = new JLabel("-유저 정보 수정-");
         labelUnderMain.setHorizontalAlignment(JLabel.CENTER);
-        labelUnderMain.setBounds(382,100,500,100);
+        labelUnderMain.setBounds(382, 100, 500, 100);
         labelUnderMain.setFont(mainFont26);
 
-        JTextField textName = new JTextField("이름");
+        textName = new JTextField(SingleTon.getUser().getName());
         textName.setBounds(482, 220, 300, 43);
         textName.setFont(mainFont22);
         textName.setForeground(gray1);
         textName.setBorder(javax.swing.BorderFactory.createEmptyBorder());
 
-        JTextField textPassWord = new JTextField("비밀번호");
+        textPassWord = new JPasswordField("비밀번호");
         textPassWord.setBounds(482, 280, 300, 43);
         textPassWord.setFont(mainFont22);
         textPassWord.setForeground(gray1);
         textPassWord.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+
+        textPassWord2 = new JPasswordField("비밀번호 재입력");
+        textPassWord2.setBounds(482, 340, 300, 43);
+        textPassWord2.setFont(mainFont22);
+        textPassWord2.setForeground(gray1);
+        textPassWord2.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+
+        textAge = new JTextField(String.valueOf(SingleTon.getUser().getAge()));
+        textAge.setBounds(482, 400, 300, 43);
+        textAge.setFont(mainFont22);
+        textAge.setForeground(gray1);
+        textAge.setBorder(javax.swing.BorderFactory.createEmptyBorder());
 
         JPanel lineName = new JPanel();
         lineName.setBounds(482, 265, 300, 2);
         JPanel linePassWord = new JPanel();
         linePassWord.setBounds(482, 325, 300, 2);
 
-        JCheckBox checkBoxAdmin = new JCheckBox("관리자 지정");
+        checkBoxAdmin = new JCheckBox("관리자 지정");
+        checkBoxAdmin.setSelected(SingleTon.getUser().isAdmin());
         checkBoxAdmin.setBounds(557, 450, 170, 34);
         checkBoxAdmin.setFont(mainFont22);
         checkBoxAdmin.setBorderPainted(false);      //버튼 테두리 없에기
@@ -77,7 +102,7 @@ public class EditUserPage extends JFrame implements ActionListener {
         checkBoxAdmin.addActionListener(this);
 
         JButton buttonBack = new JButton("뒤로가기");
-        buttonBack.setBounds(572,560,120,30);
+        buttonBack.setBounds(572, 540, 120, 30);
         buttonBack.setFont(mainFont22);
         buttonBack.setBorderPainted(false);         //버튼 테두리 없에기
         buttonBack.setContentAreaFilled(false);     //버튼 내부 색 채움 여부
@@ -85,16 +110,29 @@ public class EditUserPage extends JFrame implements ActionListener {
         buttonBack.setActionCommand("BackPage");
         buttonBack.addActionListener(this);
 
+        JButton buttonSave = new JButton("저장하기");
+        buttonSave.setBounds(572, 600, 120, 30);
+        buttonSave.setFont(mainFont22);
+        buttonSave.setBorderPainted(false);         //버튼 테두리 없에기
+        buttonSave.setContentAreaFilled(false);     //버튼 내부 색 채움 여부
+        //buttonBack.setFocusPainted(false);        //버튼 포커스(클릭시 테두리)
+        buttonSave.setActionCommand("Save");
+        buttonSave.addActionListener(this);
+
+
         getContentPane().add(labelMain);
         getContentPane().add(labelUnderMain);
 
         getContentPane().add(textName);
         getContentPane().add(textPassWord);
-        getContentPane().add(lineName);
-        getContentPane().add(linePassWord);
+
+        getContentPane().add(textPassWord2);
+
+        getContentPane().add(textAge);
 
         getContentPane().add(checkBoxAdmin);
         getContentPane().add(buttonBack);
+        getContentPane().add(buttonSave);
 
         getContentPane().add(panelMainMint);
         getContentPane().add(panelMainWhite);
@@ -107,11 +145,47 @@ public class EditUserPage extends JFrame implements ActionListener {
 
     public void actionPerformed(ActionEvent e) {
         String event = e.getActionCommand();
-        if(event.equals("setAdmin")){
+        UserHTTP userHTTP = new UserHTTP();
+        if (event.equals("setAdmin")) {
 
         }
-        if(event.equals("BackPage")){
+        if (event.equals("BackPage")) {
             dispose();
+        }
+        if (event.equals("Save")) {
+            if (textPassWord.getText().equals(textPassWord2.getText())) {
+                try {
+                    UserDTO newUserDTO = SingleTon.getUser();
+                    newUserDTO.setName(textName.getText());
+                    newUserDTO.setPassword(textPassWord2.getText());
+                    newUserDTO.setAge(Integer.parseInt(textAge.getText()));
+                    newUserDTO.setAdmin(checkBoxAdmin.isSelected());
+
+                    newUserDTO = userHTTP.editUser(newUserDTO);
+                    if(newUserDTO.getUpk()!=0L){
+                        SingleTon.setUser(newUserDTO);
+                        JOptionPane.showMessageDialog(null, "저장 되었습니다.");
+                        this.setVisible(false);
+                        MainPage mp = new MainPage();
+                    }
+                    else{
+                        JOptionPane.showMessageDialog(null, "저장에 실패하였습니다..");
+
+                    }
+
+
+                } catch (NoSuchAlgorithmException ex) {
+                    throw new RuntimeException(ex);
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+
+
+            } else {
+                JOptionPane.showMessageDialog(null, "패스워드가 일치하지 않습니다.");
+            }
+
+
         }
     }
 }
