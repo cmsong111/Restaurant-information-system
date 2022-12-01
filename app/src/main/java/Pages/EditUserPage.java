@@ -65,6 +65,7 @@ public class EditUserPage extends JFrame implements ActionListener {
         textName = new JTextField(SingleTon.getUser().getName());
         textName.setBounds(482, 220, 300, 43);
         textName.setFont(mainFont22);
+        textName.setBackground(Color.white);
         textName.setForeground(gray1);
         textName.setBorder(javax.swing.BorderFactory.createEmptyBorder());
 
@@ -72,18 +73,21 @@ public class EditUserPage extends JFrame implements ActionListener {
         textPassWord.setBounds(482, 280, 300, 43);
         textPassWord.setFont(mainFont22);
         textPassWord.setForeground(gray1);
+        textPassWord.setBackground(Color.white);
         textPassWord.setBorder(javax.swing.BorderFactory.createEmptyBorder());
 
         textPassWord2 = new JPasswordField("비밀번호 재입력");
         textPassWord2.setBounds(482, 340, 300, 43);
         textPassWord2.setFont(mainFont22);
         textPassWord2.setForeground(gray1);
+        textPassWord2.setBackground(Color.white);
         textPassWord2.setBorder(javax.swing.BorderFactory.createEmptyBorder());
 
         textAge = new JTextField(String.valueOf(SingleTon.getUser().getAge()));
         textAge.setBounds(482, 400, 300, 43);
         textAge.setFont(mainFont22);
         textAge.setForeground(gray1);
+        textAge.setBackground(Color.white);
         textAge.setBorder(javax.swing.BorderFactory.createEmptyBorder());
 
         JPanel lineName = new JPanel();

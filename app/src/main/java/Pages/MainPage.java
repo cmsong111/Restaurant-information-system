@@ -305,6 +305,7 @@ public class MainPage extends JFrame implements ActionListener, ItemListener {
                 break;
             case "location":
                 selectedlocation=selectLocation.getSelectedItem().toString();
+                break;
             case "Logout":
                 this.setVisible(false);
                 LoginPage NP = new LoginPage();
