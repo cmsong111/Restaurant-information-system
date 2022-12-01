@@ -1,13 +1,34 @@
 package Pages;
 
+import Components.StoreComponent;
+import DTO.StoreDTO;
+import HTTP.StoreHTTP;
+import Setting.SingleTon;
+
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.ArrayList;
 
-public class AdminPage extends JFrame implements ActionListener{
-
+public class AdminPage extends JFrame implements ActionListener, ListSelectionListener {
+JScrollPane scrollPane;
+StoreComponent renderer;
+StoreModel listvalues;
+StoreHTTP httpStore=new StoreHTTP();
+int index;//선택 리스트 인덱스
+public static ArrayList<StoreDTO> myStores=new ArrayList<>(); //내 가게들
+JList list;
+    public class StoreModel extends DefaultListModel{ //리스트에 객체추가 , renderer는 StoreComponent
+        public StoreModel(){
+            for(StoreDTO store:MainPage.storeList){ //TODO:upk로 상점들 로드하여 연결
+                addElement(store);
+            }
+        }
+    }
     public AdminPage(){
         try{
             AdminPage();
@@ -16,6 +37,7 @@ public class AdminPage extends JFrame implements ActionListener{
     }
 
     public void AdminPage(){
+        set_storeList(); //가게 목록 불러오기
         setTitle("TestMain Screen");
         setSize(1280, 720);
 
@@ -47,8 +69,26 @@ public class AdminPage extends JFrame implements ActionListener{
         labelAdmin.setFont(mainFont30);
         labelAdmin.setForeground(darkModeText);
 
+        listvalues=new StoreModel();
+        renderer=new StoreComponent();
+        list=new JList(listvalues);
+        list.setCellRenderer(renderer);
+        list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        list.setBorder(BorderFactory.createLineBorder(Color.BLACK,1));
+        list.setVisibleRowCount(MainPage.storeList.size());
+        list.setFixedCellWidth(500); //컴포넌트 너비
+        list.setFixedCellHeight(100); //컴포넌트 높이
+        list.addListSelectionListener(this);
+
+        scrollPane=new JScrollPane(list); //리스트 패널
+        //scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+        scrollPane.setPreferredSize(new Dimension(620,350));
+        scrollPane.setBounds(352, 190, 570, 280);
+        getContentPane().add(scrollPane);
+        //panelMainWhite2.add(scrollPane);
+
         JButton createStoreButton = new JButton("Create Store");
-        createStoreButton.setBounds(542, 200, 180, 40);
+        createStoreButton.setBounds(220, 500, 180, 40);
         createStoreButton.setFont(mainFont22);
         createStoreButton.setBorderPainted(false);      //버튼 테두리 없에기
         //createStoreButton.setContentAreaFilled(false);
@@ -59,7 +99,7 @@ public class AdminPage extends JFrame implements ActionListener{
         createStoreButton.addActionListener(this);
 
         JButton updateStoreButton = new JButton("Update Store");
-        updateStoreButton.setBounds(542, 300, 180, 40);
+        updateStoreButton.setBounds(440, 500, 180, 40);
         updateStoreButton.setFont(mainFont22);
         updateStoreButton.setBorderPainted(false);      //버튼 테두리 없에기
         //updateStoreButton.setContentAreaFilled(false);
@@ -70,7 +110,7 @@ public class AdminPage extends JFrame implements ActionListener{
         updateStoreButton.addActionListener(this);
 
         JButton myStoreButton = new JButton("My StorePage");
-        myStoreButton.setBounds(542, 400, 180, 40);
+        myStoreButton.setBounds(660, 500, 180, 40);
         myStoreButton.setFont(mainFont22);
         myStoreButton.setBorderPainted(false);      //버튼 테두리 없에기
         //updateStoreButton.setContentAreaFilled(false);
@@ -81,7 +121,7 @@ public class AdminPage extends JFrame implements ActionListener{
         myStoreButton.addActionListener(this);
 
         JButton deleteStoreButton = new JButton("Delete Store");
-        deleteStoreButton.setBounds(542, 500, 180, 40);
+        deleteStoreButton.setBounds(880, 500, 180, 40);
         deleteStoreButton.setFont(mainFont22);
         deleteStoreButton.setBorderPainted(false);      //버튼 테두리 없에기
         //deleteStoreButton.setContentAreaFilled(false);
@@ -121,18 +161,40 @@ public class AdminPage extends JFrame implements ActionListener{
         String event = e.getActionCommand();
 
         if (event.equals("CreateStore")) {
-
+            //TODO:선택된 가게 정보 넘기기
             AdminCreateStorePage ACSP = new AdminCreateStorePage();
         }
-        if (event.equals("UpdateStore")) {
-
+        else if (event.equals("UpdateStore")) {
+            //TODO:선택된 가게 정보 넘기기
             AdminUpdateStorePage AUSP = new AdminUpdateStorePage();
         }
-        if (event.equals("DeleteStore")) {
+        else if (event.equals("My StorePage")) {
+
+            StoreDetail.currentStore=MainPage.storeList.get(index); //가게 정보 넘김
+            this.setVisible(false);
+            StoreDetail SD = new StoreDetail();
+        }
+        else if (event.equals("DeleteStore")) {
+            //TODO:선택된 가게 정보 넘기기
             AdminDeleteStorePage ADSP = new AdminDeleteStorePage();
         }
-        if(event.equals("ExitAdminPage")){
+        else if(event.equals("ExitAdminPage")){
             dispose();
         }
     }
+
+    @Override
+    public void valueChanged(ListSelectionEvent e){
+        index = list.getSelectedIndex();
+
+    }
+    public void set_storeList(){
+        try {
+            MainPage.storeList = (httpStore.readStoreByUPK(SingleTon.getUser().getUpk()));
+            //반환값이 여러개임
+        } catch (Exception t) {}
+        if(MainPage.storeList.size()==0){
+        JOptionPane.showMessageDialog(null, "검색 결과가 없습니다.");}
+    }
 }
+

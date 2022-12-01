@@ -3,6 +3,7 @@ package HTTP;
 import DTO.StoreDTO;
 import Setting.SingleTon;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
@@ -15,12 +16,14 @@ import org.apache.http.util.EntityUtils;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 
 public class StoreHTTP {
     Gson gson = new Gson();
 
     /**
      * 새로운 Store 객체 생성
+     *
      * @param storeDTO (spk = null)
      * @return 완성된 storeDTO
      * @throws IOException
@@ -93,7 +96,8 @@ public class StoreHTTP {
         // HTTP POST 요청하기
         HttpResponse response = client.execute(httpPost);
     }
-    public StoreDTO readStoreByUPK(Long upk) throws IOException, URISyntaxException {
+
+    public ArrayList<StoreDTO> readStoreByUPK(Long upk) throws IOException, URISyntaxException {
         CloseableHttpClient client = HttpClients.createDefault();
         HttpGet httpGet = new HttpGet(SingleTon.getBaseURL() + "/store/searchByUPK");
 
@@ -109,6 +113,7 @@ public class StoreHTTP {
 
         // 결과 반환
         String result = EntityUtils.toString(response.getEntity());
-        return gson.fromJson(result, StoreDTO.class);
+        return gson.fromJson(result, new TypeToken<ArrayList<StoreDTO>>() {
+        }.getType());
     }
 }
