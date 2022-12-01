@@ -13,6 +13,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
 
 public class AdminCreateStorePage extends JFrame implements ActionListener, ItemListener {
     JTextField textStoreLocation1;
@@ -215,6 +216,7 @@ public class AdminCreateStorePage extends JFrame implements ActionListener, Item
 
             if (myStore!=null) {
                 JOptionPane.showMessageDialog(null, "Store "+textStoreName.getText()+" 생성 성공!");
+                SingleTon.getUser().getSpk().add(0,myStore.getSpk());
                 AdminPage AP = new AdminPage();
                 dispose();
             } else {

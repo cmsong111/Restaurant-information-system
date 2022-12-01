@@ -118,7 +118,6 @@ public class AdminPage extends JFrame implements ActionListener{
             AdminUpdateStorePage AUSP = new AdminUpdateStorePage();
         }
         if (event.equals("DeleteStore")) {
-
             AdminDeleteStorePage ADSP = new AdminDeleteStorePage();
         }
         if(event.equals("ExitAdminPage")){

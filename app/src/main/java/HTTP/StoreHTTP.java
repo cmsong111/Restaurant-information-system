@@ -45,7 +45,7 @@ public class StoreHTTP {
 
     public StoreDTO readStoreBySPK(Long spk) throws IOException, URISyntaxException {
         CloseableHttpClient client = HttpClients.createDefault();
-        HttpGet httpGet = new HttpGet(SingleTon.getBaseURL() + "/store/serch-id");
+        HttpGet httpGet = new HttpGet(SingleTon.getBaseURL() + "/store/search-id");
 
         // URI 제작
         URI uri = new URIBuilder(httpGet.getURI())
