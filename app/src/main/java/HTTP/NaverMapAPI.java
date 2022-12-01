@@ -29,8 +29,8 @@ public class NaverMapAPI {
         // URL 생성
         HttpGet httpget = new HttpGet(baseURL);
         URI uri = new URIBuilder(httpget.getURI())
-                .addParameter("w", "500")
-                .addParameter("h", "300")
+                .addParameter("w", "750")
+                .addParameter("h", "450")
                 .addParameter("center", String.valueOf(locationX) + "," + String.valueOf(locationY))
                 .addParameter("level", "14")
                 .addParameter("scale", "2")

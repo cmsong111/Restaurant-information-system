@@ -6,7 +6,11 @@ import DTO.MenuDTO;
 import DTO.ReviewDTO;
 import DTO.StoreDTO;
 import HTTP.*;
+import Setting.SingleTon;
+
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,7 +18,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 
-public class StoreDetail extends JFrame implements ActionListener{
+public class StoreDetail extends JFrame implements ActionListener, ListSelectionListener {
     JPanel panelMainWhite;
     JPanel panelMainMint;
     JLabel mainLabel;
@@ -188,6 +192,7 @@ public class StoreDetail extends JFrame implements ActionListener{
         listPanel1.add(Mscroll);
         listPanel1.setVisible(true);
 
+
         Rscroll=new JScrollPane(reviewList);//리스트 패널
         Rscroll.setPreferredSize(new Dimension(620,200));
         getContentPane().add(listPanel2);
@@ -242,6 +247,8 @@ public class StoreDetail extends JFrame implements ActionListener{
         reviewList.setVisibleRowCount(allReviews.size());
         reviewList.setFixedCellWidth(500); //컴포넌트 너비
         reviewList.setFixedCellHeight(100); //컴포넌트 높이
+        reviewList.addListSelectionListener(this);
+
     }
     public void actionPerformed(ActionEvent e) {
         String event = e.getActionCommand();
@@ -260,14 +267,24 @@ public class StoreDetail extends JFrame implements ActionListener{
             StoreList.SD=null;
         }
         else if(event.equals(("WriteReview"))){
-            //TODO: 리뷰작성 페이지 연결
             ReviewPage RP=new ReviewPage();
             this.setVisible(false);
         }
         else if(event.equals("Map")){
-            //TODO: 지도 페이지
             ViewMap VM = new ViewMap();
 
         }
+    }
+    //TODO:내 리뷰이면 수정/삭제 버튼 활성화
+    @Override
+    public void valueChanged(ListSelectionEvent e){
+        int index = reviewList.getSelectedIndex();
+        long userUpk=SingleTon.getUser().getUpk();
+        if(allReviews.get(index).getUpk().equals(userUpk)){
+            ReviewEditPage RP=new ReviewEditPage();
+            ReviewEditPage.originReview=allReviews.get(index);
+            this.setVisible(false);
+        }
+
     }
 }

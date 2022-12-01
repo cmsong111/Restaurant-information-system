@@ -235,9 +235,9 @@ public class MainPage extends JFrame implements ActionListener, ItemListener {
         buttonAdminPage.addActionListener(this);
         buttonAdminPage.setVisible(false);      //관리자 페이지 버튼 기본 비활성
 
-        /*if(SingleTon.getUser().getUpk()==){   //어드민 계정일 경우, 관리자 페이지 버튼 표시
+        if(SingleTon.getUser().getUpk()==3){   //어드민 계정일 경우, 관리자 페이지 버튼 표시
             buttonAdminPage.setVisible(true);
-        }*/
+        }
 
 
         getContentPane().setBackground(mint);
@@ -275,21 +275,21 @@ public class MainPage extends JFrame implements ActionListener, ItemListener {
     public void actionPerformed(ActionEvent e) {
         String event = e.getActionCommand();
 
-        if (event.equals("editUser")) {
-            EditUserPage EU = new EditUserPage();
-        }
-        if(event.equals("ViewAdminPage")){
-            AdminPage AP = new AdminPage();
-        }
-
         //검색버튼 및 음식 카테고리(라디오버튼)
         switch (event) {
+            case "editUser":
+                EditUserPage EU = new EditUserPage();
+                break;
+            case "ViewAdminPage":
+                AdminPage AP = new AdminPage();
+                break;
             case "bSearch":
                 search_State = HowSearch.SEARCH_BY_NAME;
                 Set_Storelist();
                 if (this.storeList.size() == 0)
                     JOptionPane.showMessageDialog(null, "검색 결과가 없습니다.");
                 else {
+                    this.setVisible(false);
                     StoreList SN = new StoreList();
                 }
                 break;
@@ -316,6 +316,7 @@ public class MainPage extends JFrame implements ActionListener, ItemListener {
                 if (this.storeList.size() == 0)
                     JOptionPane.showMessageDialog(null, "검색 결과가 없습니다.");
                 else {
+                    this.setVisible(false);
                     StoreList SN = new StoreList();
                 }
                 break;

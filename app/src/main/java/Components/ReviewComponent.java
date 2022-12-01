@@ -11,10 +11,15 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 public class ReviewComponent extends JLabel implements ListCellRenderer {
+    private JLabel icon=new JLabel();
+    private JLabel content=new JLabel();
+
+    //TODO:패널 생성하여 반환
     @Override
     public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
         ReviewDTO item = (ReviewDTO) value;
         Icon image;
+
         try {
             if(item.getImage()!=null){
             image = new ImageIcon(new URL(item.getImage()));}
@@ -24,26 +29,27 @@ public class ReviewComponent extends JLabel implements ListCellRenderer {
         } catch (MalformedURLException e) {
             throw new RuntimeException(e);
         }
-        JButton updateReview;
-        JButton deleteReview;
+      JPanel itemPanel=new JPanel();
+        itemPanel.setBackground(Color.WHITE);
+        itemPanel.setBounds(0,0,500,100);
+        icon.setBounds(10,10,50,50);
+        content.setBounds(250,50,50,20);
+        icon.setIcon(image);
+        content.setText(item.getTitle());
+        itemPanel.add(icon);
+        itemPanel.add(content);
 
-       /* if(item.getUpk().equals(SingleTon.getUser().getUpk())){
-            updateReview=new JButton("수정");
-            deleteReview=new JButton("삭제");
-
-            updateReview.setBounds(400,10,50,30);
+        if(item.getUpk().equals(SingleTon.getUser().getUpk())) {
+            JButton updateReview = new JButton("리뷰 수정/삭제");
+            updateReview.setBounds(400, 10, 50, 30);
             //updateReview.setFont(mainFont18);
             updateReview.setBackground(Color.CYAN);
-            updateReview.setBorderPainted(false);         //버튼 테두리 없에기
-            //buttonReview.setContentAreaFilled(false);     //버튼 내부 색 채움 여부
-            updateReview.setFocusPainted(false);        //버튼 포커스(클릭시 테두리)
-            //updateReview.setActionCommand("ReviewPage");
-            //updateReview.addActionListener(StoreDetail.);
-            this.add(updateReview);
-        }*/
-        this.setText(item.getTitle());
-        this.setIcon(image);
+            itemPanel.add(updateReview);
+        }
 
-        return this;
+      /* this.setText(item.getTitle());
+        this.setIcon(image);*/
+
+        return itemPanel;
     }
 }

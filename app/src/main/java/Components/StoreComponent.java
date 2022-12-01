@@ -12,6 +12,7 @@ public class StoreComponent extends DefaultListCellRenderer {
   public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
         StoreDTO item = (StoreDTO) value;
         ImageIcon image;
+
         /*ImageIcon changedImage; //크기 변환된 이미지
         Image temp;
         Image changedtemp;*/

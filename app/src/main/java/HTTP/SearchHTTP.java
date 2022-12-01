@@ -78,7 +78,7 @@ public class SearchHTTP {
 
         //URI 만들기
         CloseableHttpClient client = HttpClients.createDefault();
-        HttpPost httpPost = new HttpPost(SingleTon.getBaseURL() + "/store/search-overwall");
+        HttpPost httpPost = new HttpPost(SingleTon.getBaseURL() + "/store/serch-overwall");
 
         String json = gson.toJson(store);
         StringEntity entity = new StringEntity(json, "UTF-8");

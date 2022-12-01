@@ -34,7 +34,7 @@ public class ReviewHTTP extends ArrayList<ReviewDTO> {
 
         // DTO Body에 담기
         String json = gson.toJson(reviewDTO);
-        StringEntity entity = new StringEntity(json);
+        StringEntity entity = new StringEntity(json,"UTF-8");
         httpPost.setEntity(entity);
         httpPost.setHeader("Content-Type", "application/json");
 
@@ -60,7 +60,7 @@ public class ReviewHTTP extends ArrayList<ReviewDTO> {
 
         // DTO Body에 담기
         String json = gson.toJson(reviewDTO);
-        StringEntity entity = new StringEntity(json);
+        StringEntity entity = new StringEntity(json,"UTF-8");
         httpPost.setEntity(entity);
         httpPost.setHeader("Content-Type", "application/json");
 
@@ -117,7 +117,7 @@ public class ReviewHTTP extends ArrayList<ReviewDTO> {
 
         // DTO Body에 담기
         String json = gson.toJson(reviewDTO);
-        StringEntity entity = new StringEntity(json);
+        StringEntity entity = new StringEntity(json,"UTF-8");
         httpPost.setEntity(entity);
         httpPost.setHeader("Content-Type", "application/json");
 
@@ -138,7 +138,7 @@ public class ReviewHTTP extends ArrayList<ReviewDTO> {
         // TODO : 리뷰 하나 읽는 메소드 작성
         // DTO Body에 담기
         String json = gson.toJson(reviewDTO);
-        StringEntity entity = new StringEntity(json);
+        StringEntity entity = new StringEntity(json,"UTF-8");
         httpPost.setEntity(entity);
         httpPost.setHeader("Content-Type", "application/json");
 

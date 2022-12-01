@@ -30,6 +30,7 @@ public class App {
         LoginPage LT = new LoginPage();
         //ReviewPage RP = new ReviewPage();
         //MainPage temp = new MainPage();
+        //ReviewEditPage RE=new ReviewEditPage();
         //StoreList SL = new StoreList();
         //StoreDetail SD = new StoreDetail();
         //StoreList SL = new StoreList();

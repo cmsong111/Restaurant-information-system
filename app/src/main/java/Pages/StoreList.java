@@ -46,7 +46,7 @@ public class StoreList extends JFrame implements ActionListener, ListSelectionLi
 
         setLocationRelativeTo(null);
         getContentPane().setLayout(null);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
         Font mainFont40 = new Font("배달의민족 도현",Font.PLAIN,40);   //폰트 설정
         Font mainFont30 = new Font("배달의민족 도현",Font.PLAIN,30);

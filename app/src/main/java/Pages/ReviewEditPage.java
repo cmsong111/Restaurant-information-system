@@ -10,12 +10,14 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-public class ReviewPage extends JFrame implements ActionListener{
+
+public class ReviewEditPage extends JFrame implements ActionListener {
     ReviewHTTP httpReview=new ReviewHTTP();
     JTextArea textTitle;
     ReviewDTO myReview;
     JTextArea textReview;
-    public ReviewPage(){
+    static ReviewDTO originReview;
+    public ReviewEditPage(){
         try{
             ReviewPage();
         } catch (Exception e){
@@ -24,7 +26,6 @@ public class ReviewPage extends JFrame implements ActionListener{
     public void ReviewPage(){
         setTitle("ReviewPage");
         setSize(1280,720);
-
 
         setLocationRelativeTo(null);
         getContentPane().setLayout(null);
@@ -52,7 +53,7 @@ public class ReviewPage extends JFrame implements ActionListener{
         mainLabel.setBounds(382,30,500,70);         //나머지 페이지들도 적용
         mainLabel.setFont(mainFont40);
 
-        JLabel labelStore = new JLabel(StoreDetail.currentStore.getName());
+        JLabel labelStore = new JLabel("edit");
         labelStore.setHorizontalAlignment(JLabel.CENTER);
         labelStore.setBounds(382,100,500,100);
         labelStore.setFont(mainFont22);
@@ -61,7 +62,7 @@ public class ReviewPage extends JFrame implements ActionListener{
         panelReviewWhiteTitle.setBounds(284,182,696,50);
         panelReviewWhiteTitle.setBackground(Color.white);
 
-        textTitle = new JTextArea("제목");
+        textTitle = new JTextArea(originReview.getTitle());
         textTitle.setBounds(288,190,688,42);
         textTitle.setFont(mainFont22);
         textTitle.setForeground(gray1);
@@ -70,7 +71,7 @@ public class ReviewPage extends JFrame implements ActionListener{
         panelReviewWhiteReview.setBounds(284,234,696,244);
         panelReviewWhiteReview.setBackground(Color.white);
 
-        textReview = new JTextArea("리뷰 내용");
+        textReview = new JTextArea(originReview.getContent());
         textReview.setBounds(288,238,688,240);
         textReview.setFont(mainFont22);
         textReview.setForeground(gray1);
@@ -80,14 +81,21 @@ public class ReviewPage extends JFrame implements ActionListener{
         panelReviewGray.setBackground(gray1);
 
 
-        JButton buttonDone = new JButton("-리뷰 작성-");
-        buttonDone.setBounds(532,510,200,34);
-        buttonDone.setFont(mainFont22);
-        buttonDone.setBorderPainted(false);         //버튼 테두리 없에기
-        buttonDone.setContentAreaFilled(false);     //버튼 내부 색 채움 여부
-        //buttonDone.setFocusPainted(false);        //버튼 포커스(클릭시 테두리)
-        buttonDone.setActionCommand("Write");
-        buttonDone.addActionListener(this);
+        JButton updateReview=new JButton("수정");
+        updateReview.setBounds(482,510,100,34);
+        updateReview.setFont(mainFont22);
+        updateReview.setBackground(mint);
+        updateReview.setBorderPainted(false);         //버튼 테두리 없에기
+        updateReview.setActionCommand("UpdateReview");
+        updateReview.addActionListener(this);
+
+        JButton deleteReview=new JButton("삭제");
+        deleteReview.setBounds(590,510,100,34);
+        deleteReview.setFont(mainFont22);
+        deleteReview.setBackground(mint);
+        deleteReview.setBorderPainted(false);         //버튼 테두리 없에기
+        deleteReview.setActionCommand("DeleteReview");
+        deleteReview.addActionListener(this);
 
         JButton buttonBack = new JButton("뒤로가기");
         buttonBack.setBounds(572,560,120,30);
@@ -100,7 +108,8 @@ public class ReviewPage extends JFrame implements ActionListener{
 
         getContentPane().add(buttonBack);
         getContentPane().add(labelStore);
-        getContentPane().add(buttonDone);
+        getContentPane().add(updateReview);
+        getContentPane().add(deleteReview);
         getContentPane().add(textReview);
         getContentPane().add(mainLabel);
         getContentPane().add(textTitle);
@@ -113,13 +122,12 @@ public class ReviewPage extends JFrame implements ActionListener{
 
         setResizable(false);    //화면 크기 고정
         setVisible(true);
-
     }
     public void actionPerformed(ActionEvent e) {
 
         String event = e.getActionCommand();
 
-        if (event.equals("Write")) {
+        if (event.equals("UpdateReview")) {
             try {
                 ReviewDTO wr = ReviewDTO.builder()
                         .title(textTitle.getText())
@@ -133,7 +141,21 @@ public class ReviewPage extends JFrame implements ActionListener{
                 }
             } catch (IOException t) {}
         }
-        if (event.equals("BackPage")) {
+        else if(event.equals("DeleteReview")){
+            try {
+                ReviewDTO wr = ReviewDTO.builder()
+                        .title(textTitle.getText())
+                        .content(textReview.getText())
+                        .upk(SingleTon.getUser().getUpk())
+                        .spk(StoreDetail.currentStore.getSpk())
+                        .build();
+                myReview=(httpReview.createReview(wr));
+                if(myReview!=null) {
+                    JOptionPane.showMessageDialog(null, "내 리뷰가 등록되었습니다.");
+                }
+            } catch (IOException t) {}
+        }
+        else if (event.equals("BackPage")) {
             dispose();
             StoreDetail SD=new StoreDetail();
         }
