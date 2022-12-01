@@ -93,4 +93,22 @@ public class StoreHTTP {
         // HTTP POST 요청하기
         HttpResponse response = client.execute(httpPost);
     }
+    public StoreDTO readStoreByUPK(Long upk) throws IOException, URISyntaxException {
+        CloseableHttpClient client = HttpClients.createDefault();
+        HttpGet httpGet = new HttpGet(SingleTon.getBaseURL() + "/store/searchByUPK");
+
+        // URI 제작
+        URI uri = new URIBuilder(httpGet.getURI())
+                .addParameter("id", String.valueOf(upk))
+                .build();
+        httpGet.setURI(uri);
+        httpGet.setHeader("Content-Type", "application/json");
+
+        // HTTP POST 요청하기
+        HttpResponse response = client.execute(httpGet);
+
+        // 결과 반환
+        String result = EntityUtils.toString(response.getEntity());
+        return gson.fromJson(result, StoreDTO.class);
+    }
 }
