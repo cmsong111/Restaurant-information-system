@@ -29,7 +29,7 @@ public class MainPage extends JFrame implements ActionListener, ItemListener {
     Font mainFont30;
     Font mainFont20;
     Font searchFont;
-
+    JComboBox<String> selectLocation;
     JTextField textMainSearch; //search_bar
     JButton quickSearch; // bar_button
     JButton mainButton_kr; //한식버튼
@@ -43,6 +43,7 @@ public class MainPage extends JFrame implements ActionListener, ItemListener {
     JCheckBox mainButton_ZC; // 모범음식점
     HowSearch search_State; // 검색 조건
     StoreDTO store;
+    String selectedlocation;
     SearchHTTP httpStore = new SearchHTTP();
     static public ArrayList<StoreDTO> storeList = new ArrayList<>(); //스토어 목록
     //체크박스
@@ -91,6 +92,12 @@ public class MainPage extends JFrame implements ActionListener, ItemListener {
         labelMain.setBounds(382, 34, 500, 100);
         labelMain.setHorizontalAlignment(JLabel.CENTER);
         labelMain.setFont(mainFont40);
+
+        String locations[]={"부산진구", "사상구","해운대구","북구"};
+        selectLocation=new JComboBox<String>(locations);
+        selectLocation.setBounds(370,105,100,20);
+        selectLocation.addActionListener(this);
+        selectLocation.setActionCommand("location");
 
         textMainSearch = new JTextField("상호명 검색");
         textMainSearch.setBounds(378, 125, 420, 43);
@@ -245,7 +252,7 @@ public class MainPage extends JFrame implements ActionListener, ItemListener {
         getContentPane().add(labelMain);
         getContentPane().add(textMainSearch);
         getContentPane().add(quickSearch);
-
+        getContentPane().add(selectLocation);
         getContentPane().add(buttonEditUser);
 
         getContentPane().add(mainButton_kr);
@@ -274,7 +281,6 @@ public class MainPage extends JFrame implements ActionListener, ItemListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         String event = e.getActionCommand();
-
         //검색버튼 및 음식 카테고리(라디오버튼)
         switch (event) {
             case "editUser":
@@ -282,6 +288,9 @@ public class MainPage extends JFrame implements ActionListener, ItemListener {
                 break;
             case "ViewAdminPage":
                 AdminPage AP = new AdminPage();
+                break;
+            case "location":
+                selectedlocation=selectLocation.getSelectedItem().toString();
                 break;
             case "bSearch":
                 search_State = HowSearch.SEARCH_BY_NAME;
@@ -339,7 +348,7 @@ public class MainPage extends JFrame implements ActionListener, ItemListener {
                 store = StoreDTO.builder()
                         .name(textMainSearch.getText())
                         .location1("부산광역시")
-                        .location2("부산진구")
+                        .location2(selectedlocation)
                         .build();
                 storeList = (httpStore.searchStoreByNameWithLocation(store));
                 //반환값이 여러개임
@@ -357,7 +366,7 @@ public class MainPage extends JFrame implements ActionListener, ItemListener {
                 else if (search_State.equals(HowSearch.SEARCH_SNACKFOOD)) temp = "일반대중음식";
                 store = StoreDTO.builder()
                         .location1("부산광역시")
-                        .location2("부산진구")
+                        .location2(selectedlocation)
                         .category(temp)
                         .kids(forChild)
                         .roleModel(roleModel)
