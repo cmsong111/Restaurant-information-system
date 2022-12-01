@@ -216,15 +216,16 @@ public class AdminCreateStorePage extends JFrame implements ActionListener, Item
 
             if (myStore!=null) {
                 JOptionPane.showMessageDialog(null, "Store "+textStoreName.getText()+" 생성 성공!");
-                SingleTon.getUser().getSpk().add(0,myStore.getSpk());
-                AdminPage AP = new AdminPage();
+                //SingleTon.getUser().getSpk().add(0,myStore.getSpk());
                 dispose();
+                AdminPage AP = new AdminPage();
             } else {
                 JOptionPane.showMessageDialog(null, "생성 실패");
             }
         }
         else if (event.equals("BackPage")) {
             dispose();
+            AdminPage AP = new AdminPage();
         }
     }
 

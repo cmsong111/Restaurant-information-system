@@ -27,15 +27,15 @@ public class AdminDeleteStorePage extends JFrame implements ActionListener{
     StoreHTTP updateMine=new StoreHTTP();
     StoreDTO getMyStore;
 
-    public AdminDeleteStorePage(){
+    public AdminDeleteStorePage(StoreDTO store){
         try{
-            AdminCreateStorePage();
+            AdminDeleteStorePage(store);
         } catch (Exception e){
         }
     }
 
-    public void AdminCreateStorePage(){
-        setMyStore();
+    public void AdminDeleteStorePage(StoreDTO store){
+        setMyStore(store);
         setTitle("TestMain Screen");
         setSize(1280, 720);
 
@@ -165,18 +165,20 @@ public class AdminDeleteStorePage extends JFrame implements ActionListener{
                 updateMine.deleteStore(erase);
                 JOptionPane.showMessageDialog(null, "Store "+textStoreName.getText()+" 삭제되었습니다");
                 dispose();
+                AdminPage AP = new AdminPage();
             } catch (IOException t) {}
 
 
         }
         else if (event.equals("BackPage")) {
             dispose();
+            AdminPage AP = new AdminPage();
         }
     }
 
-    public void setMyStore(){
+    public void setMyStore(StoreDTO store){
         try {
-            getMyStore = updateMine.readStoreBySPK(SingleTon.getUser().getSpk().get(0));
+            getMyStore = store;
             if(getMyStore==null){
                 JOptionPane.showMessageDialog(null, "가게 정보가 없습니다");
                 dispose();

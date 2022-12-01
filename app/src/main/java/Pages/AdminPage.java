@@ -19,12 +19,13 @@ JScrollPane scrollPane;
 StoreComponent renderer;
 StoreModel listvalues;
 StoreHTTP httpStore=new StoreHTTP();
+StoreDTO selectedStore;
 int index;//선택 리스트 인덱스
 public static ArrayList<StoreDTO> myStores=new ArrayList<>(); //내 가게들
 JList list;
     public class StoreModel extends DefaultListModel{ //리스트에 객체추가 , renderer는 StoreComponent
         public StoreModel(){
-            for(StoreDTO store:MainPage.storeList){ //TODO:upk로 상점들 로드하여 연결
+            for(StoreDTO store:MainPage.storeList){
                 addElement(store);
             }
         }
@@ -117,7 +118,7 @@ JList list;
         myStoreButton.setFocusPainted(false);
         myStoreButton.setForeground(darkModeText);
         myStoreButton.setBackground(darkModeBack);
-        myStoreButton.setActionCommand("MyStore");
+        myStoreButton.setActionCommand("My StorePage");
         myStoreButton.addActionListener(this);
 
         JButton deleteStoreButton = new JButton("Delete Store");
@@ -161,22 +162,22 @@ JList list;
         String event = e.getActionCommand();
 
         if (event.equals("CreateStore")) {
-            //TODO:선택된 가게 정보 넘기기
+            dispose();
             AdminCreateStorePage ACSP = new AdminCreateStorePage();
         }
         else if (event.equals("UpdateStore")) {
-            //TODO:선택된 가게 정보 넘기기
-            AdminUpdateStorePage AUSP = new AdminUpdateStorePage();
+            dispose();
+            AdminUpdateStorePage AUSP = new AdminUpdateStorePage(selectedStore);
         }
         else if (event.equals("My StorePage")) {
 
             StoreDetail.currentStore=MainPage.storeList.get(index); //가게 정보 넘김
-            this.setVisible(false);
+            dispose();
             StoreDetail SD = new StoreDetail();
         }
         else if (event.equals("DeleteStore")) {
-            //TODO:선택된 가게 정보 넘기기
-            AdminDeleteStorePage ADSP = new AdminDeleteStorePage();
+            dispose();
+            AdminDeleteStorePage ADSP = new AdminDeleteStorePage(selectedStore);
         }
         else if(event.equals("ExitAdminPage")){
             dispose();
@@ -186,7 +187,7 @@ JList list;
     @Override
     public void valueChanged(ListSelectionEvent e){
         index = list.getSelectedIndex();
-
+        selectedStore=MainPage.storeList.get(index);
     }
     public void set_storeList(){
         try {

@@ -35,15 +35,15 @@ public class AdminUpdateStorePage extends JFrame implements ActionListener, Item
     StoreHTTP updateMine=new StoreHTTP();
     StoreDTO getMyStore;
 
-    public AdminUpdateStorePage(){
+    public AdminUpdateStorePage(StoreDTO store){
         try{
-            AdminCreateStorePage();
+            AdminUpdateStorePage(store);
         } catch (Exception e){
         }
     }
 
-    public void AdminCreateStorePage(){
-        setMyStore();
+    public void AdminUpdateStorePage(StoreDTO store){
+        setMyStore(store);
         setTitle("TestMain Screen");
         setSize(1280, 720);
 
@@ -217,14 +217,15 @@ public class AdminUpdateStorePage extends JFrame implements ActionListener, Item
 
             if (myStore!=null) {
                 JOptionPane.showMessageDialog(null, "Store "+textStoreName.getText()+" 업데이트 성공!");
-                AdminPage AP = new AdminPage();
                 dispose();
+                AdminPage AP = new AdminPage();
             } else {
                 JOptionPane.showMessageDialog(null, "업데이트 실패");
             }
         }
         else if (event.equals("BackPage")) {
             dispose();
+            AdminPage AP = new AdminPage();
         }
     }
 
@@ -236,9 +237,10 @@ public class AdminUpdateStorePage extends JFrame implements ActionListener, Item
         else if (e.getSource() == roleModel) model = (e.getStateChange() == 1) ? true : false;
 
     }
-    public void setMyStore(){
+    public void setMyStore(StoreDTO store){
         try {
-            getMyStore = updateMine.readStoreBySPK(SingleTon.getUser().getSpk().get(0));
+            //getMyStore = updateMine.readStoreBySPK(SingleTon.getUser().getSpk().get(0));
+            getMyStore=store;
             if(getMyStore==null){
                 JOptionPane.showMessageDialog(null, "가게 정보가 없습니다");
                 dispose();
