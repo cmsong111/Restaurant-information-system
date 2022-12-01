@@ -43,7 +43,7 @@ public class MainPage extends JFrame implements ActionListener, ItemListener {
     JCheckBox mainButton_ZC; // 모범음식점
     HowSearch search_State; // 검색 조건
     StoreDTO store;
-    String selectedlocation;
+    String selectedlocation="부산진구";
     SearchHTTP httpStore = new SearchHTTP();
     static public ArrayList<StoreDTO> storeList = new ArrayList<>(); //스토어 목록
     //체크박스

@@ -39,7 +39,7 @@ public class ReviewComponent extends JLabel implements ListCellRenderer {
         itemPanel.add(icon);
         itemPanel.add(content);
 
-        if(item.getUpk().equals(SingleTon.getUser().getUpk())) {
+        if(item.getUpk().equals(SingleTon.getUser().getUpk())||item.getSpk().equals(SingleTon.getUser().getSpk())) {
             JButton updateReview = new JButton("리뷰 수정/삭제");
             updateReview.setBounds(400, 10, 50, 30);
             //updateReview.setFont(mainFont18);

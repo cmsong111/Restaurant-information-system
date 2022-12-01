@@ -14,11 +14,12 @@ import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemListener;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 
-public class StoreDetail extends JFrame implements ActionListener, ListSelectionListener {
+public class StoreDetail extends JFrame implements ActionListener{
     JPanel panelMainWhite;
     JPanel panelMainMint;
     JLabel mainLabel;
@@ -42,6 +43,7 @@ public class StoreDetail extends JFrame implements ActionListener, ListSelection
     ReviewInfo reviewInfo;
     MenuComponent menuRenderer; //메뉴 렌더링
     ReviewComponent reviewRenderer; //리뷰 렌더링
+    boolean isMaster=false;
     public class StoreInfo extends DefaultListModel{ //리스트에 객체추가 , renderer는 StoreComponent
         public StoreInfo(){
             for (MenuDTO menu : allMenus) {
@@ -63,6 +65,9 @@ public class StoreDetail extends JFrame implements ActionListener, ListSelection
         }
     }
     public void StoreDetail(){
+        if(currentStore.getUpk().equals(SingleTon.getUser().getUpk())){
+            isMaster=true;
+        }
         setTitle("StoreDetailPage");
         setSize(1280,720);
 
@@ -239,7 +244,18 @@ public class StoreDetail extends JFrame implements ActionListener, ListSelection
         menuList.setVisibleRowCount(allMenus.size());
         menuList.setFixedCellWidth(500); //컴포넌트 너비
         menuList.setFixedCellHeight(100); //컴포넌트 높이
-
+        menuList.addListSelectionListener(new ListSelectionListener() {
+                @Override
+                public void valueChanged(ListSelectionEvent e) {
+                    int index=menuList.getSelectedIndex();
+                    if(isMaster){
+                        dispose();
+                        if(e.getValueIsAdjusting()){
+                            //TODO:메뉴 CRDU페이지 생성 후 연결
+                            }
+                    }
+                }
+            });
         reviewList=new JList(reviewInfo);
         reviewList.setCellRenderer(reviewRenderer);
         reviewList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -247,9 +263,20 @@ public class StoreDetail extends JFrame implements ActionListener, ListSelection
         reviewList.setVisibleRowCount(allReviews.size());
         reviewList.setFixedCellWidth(500); //컴포넌트 너비
         reviewList.setFixedCellHeight(100); //컴포넌트 높이
-        reviewList.addListSelectionListener(this);
+        reviewList.addListSelectionListener(new ListSelectionListener() {
+             @Override
+            public void valueChanged(ListSelectionEvent e) {
+                int index = reviewList.getSelectedIndex();
+                long userUpk=SingleTon.getUser().getUpk();
+                if(allReviews.get(index).getUpk().equals(userUpk)||isMaster){
+                    dispose();
+                    if(e.getValueIsAdjusting()){
+                        ReviewEditPage RP=new ReviewEditPage(allReviews.get(index));}
+                }
+        }});
 
     }
+    @Override
     public void actionPerformed(ActionEvent e) {
         String event = e.getActionCommand();
         if (event.equals("MenuPage")) {
@@ -277,14 +304,5 @@ public class StoreDetail extends JFrame implements ActionListener, ListSelection
         }
     }
 
-    @Override
-    public void valueChanged(ListSelectionEvent e){
-        int index = reviewList.getSelectedIndex();
-        long userUpk=SingleTon.getUser().getUpk();
-        if(allReviews.get(index).getUpk().equals(userUpk)){
-            this.setVisible(false);
-            if(e.getValueIsAdjusting()){
-                ReviewEditPage RP=new ReviewEditPage(allReviews.get(index));}
-        }
     }
-}
+

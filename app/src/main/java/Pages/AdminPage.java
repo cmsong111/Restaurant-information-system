@@ -69,8 +69,19 @@ public class AdminPage extends JFrame implements ActionListener{
         updateStoreButton.setActionCommand("UpdateStore");
         updateStoreButton.addActionListener(this);
 
+        JButton myStoreButton = new JButton("My StorePage");
+        myStoreButton.setBounds(542, 400, 180, 40);
+        myStoreButton.setFont(mainFont22);
+        myStoreButton.setBorderPainted(false);      //버튼 테두리 없에기
+        //updateStoreButton.setContentAreaFilled(false);
+        myStoreButton.setFocusPainted(false);
+        myStoreButton.setForeground(darkModeText);
+        myStoreButton.setBackground(darkModeBack);
+        myStoreButton.setActionCommand("MyStore");
+        myStoreButton.addActionListener(this);
+
         JButton deleteStoreButton = new JButton("Delete Store");
-        deleteStoreButton.setBounds(542, 400, 180, 40);
+        deleteStoreButton.setBounds(542, 500, 180, 40);
         deleteStoreButton.setFont(mainFont22);
         deleteStoreButton.setBorderPainted(false);      //버튼 테두리 없에기
         //deleteStoreButton.setContentAreaFilled(false);
@@ -94,9 +105,9 @@ public class AdminPage extends JFrame implements ActionListener{
         getContentPane().add(labelAdmin);
         getContentPane().add(createStoreButton);
         getContentPane().add(updateStoreButton);
+        getContentPane().add(myStoreButton);
         getContentPane().add(deleteStoreButton);
         getContentPane().add(buttonExit);
-
         getContentPane().add(mainLabel);
         getContentPane().setBackground(darkMode);
 
