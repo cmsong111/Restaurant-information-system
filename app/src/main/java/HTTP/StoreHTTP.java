@@ -37,7 +37,7 @@ public class StoreHTTP {
 
         // HTTP POST 요청하기
         HttpResponse response = client.execute(httpPost);
-
+        System.out.println(response);
         // 결과 반환
         String result = EntityUtils.toString(response.getEntity());
         return gson.fromJson(result, StoreDTO.class);
