@@ -264,7 +264,8 @@ public class StoreDetail extends JFrame implements ActionListener, ListSelection
         }
         else if (event.equals("BackPage")) {
             dispose();
-            StoreList.SD=null;
+            StoreList SL=new StoreList();
+            SL.setVisible(true);
         }
         else if(event.equals(("WriteReview"))){
             ReviewPage RP=new ReviewPage();
@@ -275,16 +276,15 @@ public class StoreDetail extends JFrame implements ActionListener, ListSelection
 
         }
     }
-    //TODO:내 리뷰이면 수정/삭제 버튼 활성화
+
     @Override
     public void valueChanged(ListSelectionEvent e){
         int index = reviewList.getSelectedIndex();
         long userUpk=SingleTon.getUser().getUpk();
         if(allReviews.get(index).getUpk().equals(userUpk)){
-            ReviewEditPage RP=new ReviewEditPage();
-            ReviewEditPage.originReview=allReviews.get(index);
             this.setVisible(false);
+            if(e.getValueIsAdjusting()){
+                ReviewEditPage RP=new ReviewEditPage(allReviews.get(index));}
         }
-
     }
 }

@@ -2,7 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7b49a731-8e25-4625-a0c8-3478fdffbc77" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/java/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/java/App.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../location_Image.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/java/HTTP/NaverMapAPI.java" beforeDir="false" afterPath="$PROJECT_DIR$/java/HTTP/NaverMapAPI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/java/Pages/ViewMap.java" beforeDir="false" afterPath="$PROJECT_DIR$/java/Pages/ViewMap.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,14 +24,14 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/Users/sea51/Documents/GitHub/Restaurant-information-system"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/sea51/Documents/GitHub/Restaurant-information-system&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration default="true" type="JetRunConfigurationType">
       <module name="main" />
@@ -53,6 +56,7 @@
       <option name="presentableId" value="Default" />
       <updated>1669474266855</updated>
       <workItem from="1669474269518" duration="64000" />
+      <workItem from="1669866279538" duration="69000" />
     </task>
     <servers />
   </component>

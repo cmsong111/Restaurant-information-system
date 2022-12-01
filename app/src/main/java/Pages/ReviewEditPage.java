@@ -15,15 +15,17 @@ public class ReviewEditPage extends JFrame implements ActionListener {
     ReviewHTTP httpReview=new ReviewHTTP();
     JTextArea textTitle;
     ReviewDTO myReview;
+    ReviewDTO originReview;
     JTextArea textReview;
-    static ReviewDTO originReview;
-    public ReviewEditPage(){
+    //static ReviewDTO originReview;
+    public ReviewEditPage(ReviewDTO originReview){
         try{
-            ReviewPage();
+            ReviewPage(originReview);
         } catch (Exception e){
         }
     }
-    public void ReviewPage(){
+    public void ReviewPage(ReviewDTO originReview){
+        this.originReview=originReview;
         setTitle("ReviewPage");
         setSize(1280,720);
 
@@ -53,7 +55,7 @@ public class ReviewEditPage extends JFrame implements ActionListener {
         mainLabel.setBounds(382,30,500,70);         //나머지 페이지들도 적용
         mainLabel.setFont(mainFont40);
 
-        JLabel labelStore = new JLabel("edit");
+        JLabel labelStore = new JLabel("EDIT");
         labelStore.setHorizontalAlignment(JLabel.CENTER);
         labelStore.setBounds(382,100,500,100);
         labelStore.setFont(mainFont22);
@@ -82,7 +84,7 @@ public class ReviewEditPage extends JFrame implements ActionListener {
 
 
         JButton updateReview=new JButton("수정");
-        updateReview.setBounds(482,510,100,34);
+        updateReview.setBounds(520,510,100,34);
         updateReview.setFont(mainFont22);
         updateReview.setBackground(mint);
         updateReview.setBorderPainted(false);         //버튼 테두리 없에기
@@ -90,7 +92,7 @@ public class ReviewEditPage extends JFrame implements ActionListener {
         updateReview.addActionListener(this);
 
         JButton deleteReview=new JButton("삭제");
-        deleteReview.setBounds(590,510,100,34);
+        deleteReview.setBounds(630,510,100,34);
         deleteReview.setFont(mainFont22);
         deleteReview.setBackground(mint);
         deleteReview.setBorderPainted(false);         //버튼 테두리 없에기
@@ -129,30 +131,23 @@ public class ReviewEditPage extends JFrame implements ActionListener {
 
         if (event.equals("UpdateReview")) {
             try {
-                ReviewDTO wr = ReviewDTO.builder()
+                ReviewDTO ur = ReviewDTO.builder()
                         .title(textTitle.getText())
                         .content(textReview.getText())
-                        .upk(SingleTon.getUser().getUpk())
-                        .spk(StoreDetail.currentStore.getSpk())
+                        .upk(originReview.getUpk())
+                        .spk(originReview.getSpk())
+                        .rpk(originReview.getRpk())
                         .build();
-                myReview=(httpReview.createReview(wr));
+                myReview=(httpReview.updateeview(ur));
                 if(myReview!=null) {
-                    JOptionPane.showMessageDialog(null, "내 리뷰가 등록되었습니다.");
+                    JOptionPane.showMessageDialog(null, "내 리뷰가 수정되었습니다.");
                 }
             } catch (IOException t) {}
         }
         else if(event.equals("DeleteReview")){
             try {
-                ReviewDTO wr = ReviewDTO.builder()
-                        .title(textTitle.getText())
-                        .content(textReview.getText())
-                        .upk(SingleTon.getUser().getUpk())
-                        .spk(StoreDetail.currentStore.getSpk())
-                        .build();
-                myReview=(httpReview.createReview(wr));
-                if(myReview!=null) {
-                    JOptionPane.showMessageDialog(null, "내 리뷰가 등록되었습니다.");
-                }
+                httpReview.deleteReview(originReview);
+                JOptionPane.showMessageDialog(null, "리뷰가 삭제되었습니다.");
             } catch (IOException t) {}
         }
         else if (event.equals("BackPage")) {

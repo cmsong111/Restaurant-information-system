@@ -25,7 +25,6 @@ public class StoreList extends JFrame implements ActionListener, ListSelectionLi
     StoreComponent renderer;
     JScrollPane scrollPane;
     JButton buttonBack;
-    static StoreDetail SD;
     public StoreList(){
         try{
             StoreList();
@@ -128,13 +127,16 @@ public class StoreList extends JFrame implements ActionListener, ListSelectionLi
         String event = e.getActionCommand();
         if(event.equals("BackPage")){
             dispose();
+            MainPage MP=new MainPage();
+            MP.setVisible(true);
         }
     }
     @Override
     public void valueChanged(ListSelectionEvent e){
         int index = list.getSelectedIndex();
         StoreDetail.currentStore=MainPage.storeList.get(index); //가게 정보 넘김
-        if(SD==null)
-            SD = new StoreDetail();
+        if(e.getValueIsAdjusting()){
+            this.setVisible(false);
+            StoreDetail SD = new StoreDetail();}
     }
 }

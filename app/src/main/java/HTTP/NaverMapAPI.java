@@ -35,7 +35,7 @@ public class NaverMapAPI {
                 .addParameter("h", "600")
                 .addParameter("center", String.valueOf(locationX) + "," + String.valueOf(locationY))
                 .addParameter("level", "14")
-                .addParameter("scale", "2")
+                .addParameter("scale", "1")
                 .addParameter("markers","pos:"+String.valueOf(locationX) + " " + String.valueOf(locationY))
                 .build();
         httpget.setURI(uri);

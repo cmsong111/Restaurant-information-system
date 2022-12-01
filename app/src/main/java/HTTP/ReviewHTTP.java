@@ -123,6 +123,7 @@ public class ReviewHTTP extends ArrayList<ReviewDTO> {
 
         // HTTP POST 요청하기
         HttpResponse response = client.execute(httpPost);
+
     }
 
     /**
