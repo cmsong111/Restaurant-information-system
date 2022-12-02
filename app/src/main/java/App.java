@@ -46,6 +46,6 @@ public class App {
         //AdminUpdateStorePage AUSP = new AdminUpdateStorePage();
         //AdminDeleteStorePage ADSP = new AdminDeleteStorePage();
 
-        SuperAdminPage SAP = new SuperAdminPage();
+        //SuperAdminPage SAP = new SuperAdminPage();
     }
 }

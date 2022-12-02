@@ -170,6 +170,7 @@ public class StoreDetail extends JFrame implements ActionListener{
         buttonReview.setActionCommand("ReviewPage");
         buttonReview.addActionListener(this);
 
+        //TODO:일반 사용자면 리뷰 작성 버튼 visible, 관리자면 메뉴 추가 버튼 visible
         JButton writeReview = new JButton("리뷰 작성");
         writeReview.setBounds(572,550,120,30);
         writeReview.setFont(mainFont18);

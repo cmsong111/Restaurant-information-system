@@ -129,6 +129,8 @@ public class MenuEditPage extends JFrame implements ActionListener {
                 MenuDTO menu = MenuDTO.builder()
                         .name(menuName.getText())
                         .price(updatedprice)
+                        .mpk(selectedMenu.getMpk())
+                        .spk(selectedMenu.getSpk())
                         .build();
                 updatedMenu = myMenu.updateMenu(menu);
             } catch (IOException t) {}
@@ -140,7 +142,14 @@ public class MenuEditPage extends JFrame implements ActionListener {
                 JOptionPane.showMessageDialog(null, "메뉴 업데이트 실패");
             }
         }
-
+        else if(event.equals("DeleteMenu")){
+            try{
+            myMenu.deleteMenu(selectedMenu);
+            JOptionPane.showMessageDialog(null, "메뉴가 삭제되었습니다.");
+            dispose();
+            StoreDetail SD = new StoreDetail();
+            } catch (IOException t){}
+        }
         else if (event.equals("BackPage")) {
             dispose();
             StoreDetail SD = new StoreDetail();
