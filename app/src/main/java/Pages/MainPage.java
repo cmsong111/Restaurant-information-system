@@ -29,7 +29,8 @@ public class MainPage extends JFrame implements ActionListener, ItemListener {
     Font mainFont40;
     Font mainFont30;
     Font mainFont20;
-    Font searchFont;
+    Font searchIconFont;
+    Font searchFont30;
     JComboBox<String> selectLocation;
     JTextField textMainSearch; //search_bar
     JButton quickSearch; // bar_button
@@ -71,7 +72,8 @@ public class MainPage extends JFrame implements ActionListener, ItemListener {
         mainFont40 = new Font("배달의민족 도현", Font.PLAIN, 40);   //폰트 설정
         mainFont30 = new Font("배달의민족 도현", Font.PLAIN, 30);
         mainFont20 = new Font("배달의민족 도현", Font.PLAIN, 22);
-        searchFont = new Font("맑은 고딕", Font.BOLD, 22);
+        searchFont30 = new Font("맑은 고딕", Font.BOLD, 30);
+        searchIconFont = new Font("Segoe MDL2 Assets",Font.PLAIN, 20);
 
         Color mint = new Color(62, 185, 180);
         Color gray1 = new Color(192, 192, 192);
@@ -107,10 +109,10 @@ public class MainPage extends JFrame implements ActionListener, ItemListener {
         textMainSearch.setFont(mainFont30);
         textMainSearch.setForeground(gray1);
 
-        quickSearch = new JButton(">");
-        quickSearch.setBounds(831, 128, 50, 34);
-        quickSearch.setFont(searchFont);
-        quickSearch.setBorderPainted(false);      //버튼 테두리 없에기
+        quickSearch = new JButton("\uE71E");
+        quickSearch.setBounds(831, 130, 60, 34);
+        quickSearch.setFont(searchIconFont);
+        //quickSearch.setBorderPainted(false);      //버튼 테두리 없에기
         quickSearch.setContentAreaFilled(false);
         quickSearch.setActionCommand("bSearch");
         quickSearch.addActionListener(this);

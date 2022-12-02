@@ -65,37 +65,74 @@ public class EditUserPage extends JFrame implements ActionListener {
         labelUnderMain.setFont(mainFont26);
 
         textName = new JTextField(SingleTon.getUser().getName());
-        textName.setBounds(482, 220, 300, 43);
+        textName.setBounds(532, 220, 250, 43);
         textName.setFont(mainFont22);
         textName.setBackground(Color.white);
         textName.setForeground(gray1);
         textName.setBorder(javax.swing.BorderFactory.createEmptyBorder());
 
+        JLabel labelName = new JLabel("이름");
+        labelName.setHorizontalAlignment(JLabel.RIGHT);
+        labelName.setForeground(gray1);
+        labelName.setBounds(322, 220, 200, 43);
+        labelName.setFont(mainFont22);
+
+        JPanel panelLineName = new JPanel();
+        panelLineName.setBounds(532, 265, 250, 2);
+
         textPassWord = new JPasswordField("비밀번호");
-        textPassWord.setBounds(482, 280, 300, 43);
+        textPassWord.setBounds(532, 280, 250, 43);
         textPassWord.setFont(passWordFont);
         textPassWord.setForeground(gray1);
         textPassWord.setBackground(Color.white);
         textPassWord.setBorder(javax.swing.BorderFactory.createEmptyBorder());
 
-        textPassWord2 = new JPasswordField("비밀번호 재입력");
-        textPassWord2.setBounds(482, 340, 300, 43);
+        JLabel labelPassWord = new JLabel("비밀번호 변경");
+        labelPassWord.setHorizontalAlignment(JLabel.RIGHT);
+        labelPassWord.setForeground(gray1);
+        labelPassWord.setBounds(322, 280, 200, 43);
+        labelPassWord.setFont(mainFont22);
+
+        JPanel panelLinePassWord = new JPanel();
+        panelLinePassWord.setBounds(532, 325, 250, 2);
+
+        textPassWord2 = new JPasswordField("비밀번호");
+        textPassWord2.setBounds(532, 340, 250, 43);
         textPassWord2.setFont(passWordFont);
         textPassWord2.setForeground(gray1);
         textPassWord2.setBackground(Color.white);
         textPassWord2.setBorder(javax.swing.BorderFactory.createEmptyBorder());
 
+        JLabel labelPassWord2 = new JLabel("비밀번호 재입력");
+        labelPassWord2.setHorizontalAlignment(JLabel.RIGHT);
+        labelPassWord2.setForeground(gray1);
+        labelPassWord2.setBounds(322, 340, 200, 43);
+        labelPassWord2.setFont(mainFont22);
+
+        JPanel panelLinePassWord2 = new JPanel();
+        panelLinePassWord2.setBounds(532, 385, 250, 2);
+
         textAge = new JTextField(String.valueOf(SingleTon.getUser().getAge()));
-        textAge.setBounds(482, 400, 300, 43);
+        textAge.setBounds(532, 400, 250, 43);
         textAge.setFont(mainFont22);
         textAge.setForeground(gray1);
         textAge.setBackground(Color.white);
         textAge.setBorder(javax.swing.BorderFactory.createEmptyBorder());
 
-        JPanel lineName = new JPanel();
+        JLabel labelAge = new JLabel("나이");
+        labelAge.setHorizontalAlignment(JLabel.RIGHT);
+        labelAge.setForeground(gray1);
+        labelAge.setBounds(322, 400, 200, 43);
+        labelAge.setFont(mainFont22);
+
+        JPanel panelLineAge = new JPanel();
+        panelLineAge.setBounds(532, 445, 250, 2);
+
+        /*JPanel lineName = new JPanel();
         lineName.setBounds(482, 265, 300, 2);
         JPanel linePassWord = new JPanel();
-        linePassWord.setBounds(482, 325, 300, 2);
+        linePassWord.setBounds(482, 325, 300, 2);*/
+
 
         checkBoxAdmin = new JCheckBox("관리자 지정");
         checkBoxAdmin.setSelected(SingleTon.getUser().isAdmin());
@@ -137,12 +174,24 @@ public class EditUserPage extends JFrame implements ActionListener {
         buttonWithdraw.addActionListener(this);
 
 
+        getContentPane().add(textName);
+        getContentPane().add(labelName);
+        getContentPane().add(panelLineName);
+
+        getContentPane().add(textPassWord);
+        getContentPane().add(labelPassWord);
+        getContentPane().add(panelLinePassWord);
+
+        getContentPane().add(textPassWord2);
+        getContentPane().add(labelPassWord2);
+        getContentPane().add(panelLinePassWord2);
+
+        getContentPane().add(textAge);
+        getContentPane().add(labelAge);
+        getContentPane().add(panelLineAge);
+
         getContentPane().add(labelMain);
         getContentPane().add(labelUnderMain);
-        getContentPane().add(textName);
-        getContentPane().add(textPassWord);
-        getContentPane().add(textPassWord2);
-        getContentPane().add(textAge);
         getContentPane().add(checkBoxAdmin);
         getContentPane().add(buttonBack);
         getContentPane().add(buttonSave);
