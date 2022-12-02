@@ -49,6 +49,7 @@ public class LoginPage extends JFrame implements ActionListener {
         Font mainFont40 = new Font("배달의민족 도현", Font.PLAIN, 40);   //폰트 설정
         Font mainFont20 = new Font("배달의민족 도현", Font.PLAIN, 22);
         Font mainFont30 = new Font("배달의민족 도현", Font.PLAIN, 30);
+        Font passWordFont = new Font("맑은 고딕",Font.BOLD,22);
 
         Color mint = new Color(62, 185, 180); //색상 정하기
         Color gray1 = new Color(192, 192, 192);
@@ -65,7 +66,7 @@ public class LoginPage extends JFrame implements ActionListener {
 
         tx_PassWord = new JPasswordField("비밀번호");
         tx_PassWord.setBounds(200, 380, 300, 43);
-        tx_PassWord.setFont(mainFont20);
+        tx_PassWord.setFont(passWordFont);
         tx_PassWord.setForeground(gray1);
 
         tx_ID.setBorder(javax.swing.BorderFactory.createEmptyBorder());

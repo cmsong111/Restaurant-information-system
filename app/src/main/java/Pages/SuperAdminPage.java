@@ -1,5 +1,8 @@
 package Pages;
 
+import HTTP.ReviewHTTP;
+import HTTP.ServerHTTP;
+
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -10,7 +13,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class SuperAdminPage extends JFrame implements ActionListener{
-
+    ServerHTTP server=new ServerHTTP();
+    String result;
     public SuperAdminPage(){
         try{
             SuperAdminPage();
@@ -115,16 +119,42 @@ public class SuperAdminPage extends JFrame implements ActionListener{
         String event = e.getActionCommand();
 
         if (event.equals("UpdateKids")) {
-            SuperAdminUpdateKidsPage SA_UpKidsP = new SuperAdminUpdateKidsPage();
+            try{
+            result=server.updateKids();}
+            catch (IOException t){}
+            if(!result.equals(null)){
+                JOptionPane.showMessageDialog(null, "아동급식 가맹점 갱신 완료");
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "아동급식 가맹점 갱신 실패");
+            }
+
         }
         if (event.equals("UpdatePrice")) {
-            SuperAdminUpdatePricePage SA_UpPriceP = new SuperAdminUpdatePricePage();
+            try{
+                result=server.updatePrice();}
+            catch (IOException t){}
+            if(!result.equals(null)){
+                JOptionPane.showMessageDialog(null, "착한가격 대상 지점 갱신 완료");
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "착한가격 대상 지점 갱신 실패");
+            }
         }
         if (event.equals("UpdateTasty")) {
-            SuperAdminUpdateTastyPage SA_UpTastyP = new SuperAdminUpdateTastyPage();
+            try{
+                result=server.updateTasty();}
+            catch (IOException t){}
+            if(!result.equals(null)){
+                JOptionPane.showMessageDialog(null, "지역맛집 리스트 갱신 완료");
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "지역맛집 리스트 갱신 실패");
+            }
         }
         if(event.equals("ExitAdminPage")){
             dispose();
+            MainPage MP=new MainPage();
         }
     }
 }

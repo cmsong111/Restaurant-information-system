@@ -41,6 +41,7 @@ public class EditUserPage extends JFrame implements ActionListener {
         Font mainFont26 = new Font("배달의민족 도현", Font.PLAIN, 26);
         Font mainFont22 = new Font("배달의민족 도현", Font.PLAIN, 22);
         Font mainFont18 = new Font("배달의민족 도현", Font.PLAIN, 18);
+        Font passWordFont = new Font("맑은 고딕",Font.BOLD,22);
 
         Color mint = new Color(62, 185, 180);   //색상 정하기
         Color gray1 = new Color(192, 192, 192);
@@ -72,14 +73,14 @@ public class EditUserPage extends JFrame implements ActionListener {
 
         textPassWord = new JPasswordField("비밀번호");
         textPassWord.setBounds(482, 280, 300, 43);
-        textPassWord.setFont(mainFont22);
+        textPassWord.setFont(passWordFont);
         textPassWord.setForeground(gray1);
         textPassWord.setBackground(Color.white);
         textPassWord.setBorder(javax.swing.BorderFactory.createEmptyBorder());
 
         textPassWord2 = new JPasswordField("비밀번호 재입력");
         textPassWord2.setBounds(482, 340, 300, 43);
-        textPassWord2.setFont(mainFont22);
+        textPassWord2.setFont(passWordFont);
         textPassWord2.setForeground(gray1);
         textPassWord2.setBackground(Color.white);
         textPassWord2.setBorder(javax.swing.BorderFactory.createEmptyBorder());
@@ -163,7 +164,9 @@ public class EditUserPage extends JFrame implements ActionListener {
         }
         if (event.equals("BackPage")) {
             dispose();
-            MainPage MP=new MainPage();
+
+            MainPage MP = new MainPage();
+
         }
         if (event.equals("Save")) {
             if (textPassWord.getText().equals(textPassWord2.getText())) {
