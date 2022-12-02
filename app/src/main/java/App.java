@@ -27,8 +27,12 @@ public class App {
         }*/
 
 
+
         LoginPage LT = new LoginPage();
         //MenuEditPage ME=new MenuEditPage();
+
+        //LoginPage LT = new LoginPage();
+
         //ReviewPage RP = new ReviewPage();
         //MainPage temp = new MainPage();
         //ReviewEditPage RE=new ReviewEditPage();
@@ -41,5 +45,7 @@ public class App {
         //AdminCreateStorePage ACSP = new AdminCreateStorePage();
         //AdminUpdateStorePage AUSP = new AdminUpdateStorePage();
         //AdminDeleteStorePage ADSP = new AdminDeleteStorePage();
+
+        SuperAdminPage SAP = new SuperAdminPage();
     }
 }

@@ -27,7 +27,7 @@ public class ServerHTTP {
      * @throws IOException
      * @author 김남주
      */
-    public String updadeKids() throws IOException {
+    public String updateKids() throws IOException {
         CloseableHttpClient client = HttpClients.createDefault();
         HttpPost httpPost = new HttpPost(SingleTon.getBaseURL() + "/store/update-kids");
         httpPost.setHeader("Content-Type", "application/json");
@@ -47,7 +47,7 @@ public class ServerHTTP {
      * @throws IOException
      * @author 김남주
      */
-    public String updadePrice() throws IOException {
+    public String updatePrice() throws IOException {
         CloseableHttpClient client = HttpClients.createDefault();
         HttpPost httpPost = new HttpPost(SingleTon.getBaseURL() + "/store/update-price");
         httpPost.setHeader("Content-Type", "application/json");
@@ -67,7 +67,7 @@ public class ServerHTTP {
      * @throws IOException
      * @author 김남주
      */
-    public String updadeTasty() throws IOException {
+    public String updateTasty() throws IOException {
         CloseableHttpClient client = HttpClients.createDefault();
         HttpPost httpPost = new HttpPost(SingleTon.getBaseURL() + "/store/update-tasty");
         httpPost.setHeader("Content-Type", "application/json");
