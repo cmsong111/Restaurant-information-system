@@ -28,10 +28,10 @@ public class App {
 
 
 
-        LoginPage LT = new LoginPage();
+        //LoginPage LT = new LoginPage();
         //MenuEditPage ME=new MenuEditPage();
 
-        //LoginPage LT = new LoginPage();
+        LoginPage LT = new LoginPage();
 
         //ReviewPage RP = new ReviewPage();
         //MainPage temp = new MainPage();

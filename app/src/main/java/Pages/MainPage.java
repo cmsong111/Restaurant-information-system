@@ -94,7 +94,7 @@ public class MainPage extends JFrame implements ActionListener, ItemListener {
         labelMain.setHorizontalAlignment(JLabel.CENTER);
         labelMain.setFont(mainFont40);
 
-        String locations[]={"부산진구", "사상구","해운대구","북구"};
+        String locations[]={"부산진구", "사상구","해운대구","북구", "사하구","남구", "서구","동구","연제구", "중구","기장군","수영구", "금정구","영도구", "강서구"};
         selectLocation=new JComboBox<String>(locations);
         selectLocation.setBounds(370,105,100,20);
         selectLocation.addActionListener(this);
@@ -411,6 +411,25 @@ public class MainPage extends JFrame implements ActionListener, ItemListener {
         else if(search_State.equals(HowSearch.SEARCH_TODAYSPECIAL)){
             try {
                 storeList = (httpStore.searchStoreByLocation("부산광역시",selectedlocation));
+                //반환값이 여러개임
+            } catch (IOException t) {
+            }
+        }
+        else if(!search_State.equals(HowSearch.SEARCH_BY_NAME)&&!search_State.equals(HowSearch.SEARCH_TODAYSPECIAL)&&roleModel==false&&forChild==false&&local_Currency==false){
+            try {
+                String temp = "한식";
+                if (search_State.equals(HowSearch.SEARCH_KOREAN)) temp = "한식";
+                else if (search_State.equals(HowSearch.SEARCH_CHINESE)) temp = "중식";
+                else if (search_State.equals(HowSearch.SEARCH_JAPANESE)) temp = "일식";
+                else if (search_State.equals(HowSearch.SEARCH_DESSERT)) temp = "제과점";
+                else if (search_State.equals(HowSearch.SEARCH_FASTFOOD)) temp = "패스트푸드";
+                else if (search_State.equals(HowSearch.SEARCH_SNACKFOOD)) temp = "일반대중음식";
+                store = StoreDTO.builder()
+                        .location1("부산광역시")
+                        .location2(selectedlocation)
+                        .category(temp)
+                        .build();
+                storeList = (httpStore.searchStoreByCategory(store));
                 //반환값이 여러개임
             } catch (IOException t) {
             }

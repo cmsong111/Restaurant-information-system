@@ -102,6 +102,37 @@ public class SearchHTTP {
 
     }
 
+    public ArrayList<StoreDTO> searchStoreByCategory(StoreDTO store) throws IOException {
+
+        CloseableHttpClient Client = HttpClientBuilder.create().build();
+        String baseURL = SingleTon.getBaseURL() + "/store/search-category";
+
+        // 파라메터 설정
+        HttpGet httpget = new HttpGet(baseURL);
+        try {
+            URI uri = new URIBuilder(httpget.getURI())
+                    .addParameter("location1", store.getLocation1())
+                    .addParameter("location2", store.getLocation2()) //콤보박스로 지역 수정할 수 있게
+                    .addParameter("category", store.getCategory()).build();
+            httpget.setURI(uri);
+        } catch (URISyntaxException t) {
+        }
+        // HTTP GET method 실행
+        HttpResponse response = Client.execute(httpget);
+
+        // 객체화
+        if (response.getStatusLine().getStatusCode() == 200) {
+            HttpEntity entity = response.getEntity();
+            String responseBody = EntityUtils.toString(entity);
+            ArrayList<StoreDTO> results = gson.fromJson(responseBody, new TypeToken<ArrayList<StoreDTO>>() {
+            }.getType());
+            System.out.println(results);
+            return results;
+        } else {
+            return null;
+        }
+    }
+
     /**
      * Store SPK로 겁색하는 메소드
      * @param spk Long 타입의 Store SPK 번호
