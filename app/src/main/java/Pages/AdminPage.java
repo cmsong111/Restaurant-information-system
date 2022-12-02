@@ -20,7 +20,7 @@ StoreComponent renderer;
 StoreModel listvalues;
 StoreHTTP httpStore=new StoreHTTP();
 StoreDTO selectedStore;
-int index;//선택 리스트 인덱스
+int index=-1;//선택 리스트 인덱스
 public static ArrayList<StoreDTO> myStores=new ArrayList<>(); //내 가게들
 JList list;
     public class StoreModel extends DefaultListModel{ //리스트에 객체추가 , renderer는 StoreComponent
@@ -166,18 +166,28 @@ JList list;
             AdminCreateStorePage ACSP = new AdminCreateStorePage();
         }
         else if (event.equals("UpdateStore")) {
+            if(index!=-1){
             dispose();
-            AdminUpdateStorePage AUSP = new AdminUpdateStorePage(selectedStore);
-        }
-        else if (event.equals("My StorePage")) {
+            AdminUpdateStorePage AUSP = new AdminUpdateStorePage(selectedStore);}
+            else{
+                JOptionPane.showMessageDialog(null, "가게를 선택해주십시오");}
+            }
 
+        else if (event.equals("My StorePage")) {
+            if(index!=-1){
             StoreDetail.currentStore=MainPage.storeList.get(index); //가게 정보 넘김
             dispose();
-            StoreDetail SD = new StoreDetail();
+            StoreDetail SD = new StoreDetail();}
+            else{
+                JOptionPane.showMessageDialog(null, "가게를 선택해주십시오");}
+
         }
         else if (event.equals("DeleteStore")) {
+            if(index!=-1){
             dispose();
-            AdminDeleteStorePage ADSP = new AdminDeleteStorePage(selectedStore);
+            AdminDeleteStorePage ADSP = new AdminDeleteStorePage(selectedStore);}
+            else{
+                JOptionPane.showMessageDialog(null, "가게를 선택해주십시오");}
         }
         else if(event.equals("ExitAdminPage")){
             dispose();
@@ -188,9 +198,9 @@ JList list;
     @Override
     public void valueChanged(ListSelectionEvent e){
         index = list.getSelectedIndex();
-        selectedStore=MainPage.storeList.get(index);
+        selectedStore=MainPage.storeList.get(index);}
 
-    }
+
     public void set_storeList(){
         try {
             MainPage.storeList = (httpStore.readStoreByUPK(SingleTon.getUser().getUpk()));

@@ -251,7 +251,7 @@ public class MainPage extends JFrame implements ActionListener, ItemListener {
         }
 
         JButton buttonSuperAdminPage = new JButton("슈퍼 관리자 페이지");
-        buttonSuperAdminPage.setBounds(1000, 150, 180, 40);
+        buttonSuperAdminPage.setBounds(1000, 200, 180, 40);
         buttonSuperAdminPage.setFont(mainFont20);
         buttonSuperAdminPage.setForeground(Color.darkGray);
         buttonSuperAdminPage.setBackground(mint);
@@ -261,12 +261,12 @@ public class MainPage extends JFrame implements ActionListener, ItemListener {
         buttonSuperAdminPage.addActionListener(this);
         buttonSuperAdminPage.setVisible(false);      //관리자 페이지 버튼 기본 비활성
 
-        if (SingleTon.getUser().isAdmin() == true) {   //어드민 계정일 경우, 관리자 페이지 버튼 표시
+        if (SingleTon.getUser().getUpk()==1L) {   //어드민 계정일 경우, 관리자 페이지 버튼 표시
             buttonSuperAdminPage.setVisible(true);
         }
 
         JButton buttonLogout = new JButton("로그아웃");
-        buttonLogout.setBounds(1000, 210, 180, 40);
+        buttonLogout.setBounds(1000, 250, 180, 40);
         buttonLogout.setFont(mainFont20);
         buttonLogout.setForeground(Color.darkGray);
         buttonLogout.setBackground(mint);
@@ -321,10 +321,11 @@ public class MainPage extends JFrame implements ActionListener, ItemListener {
                 EditUserPage EU = new EditUserPage();
                 break;
             case "ViewAdminPage":
-                this.setVisible(false);
+                dispose();
                 AdminPage AP = new AdminPage();
                 break;
             case "ViewSuperAdminPage":
+                dispose();
                 SuperAdminPage SAP = new SuperAdminPage();
                 break;
             case "location":
