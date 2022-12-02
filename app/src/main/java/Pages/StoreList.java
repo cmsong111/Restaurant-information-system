@@ -128,7 +128,6 @@ public class StoreList extends JFrame implements ActionListener, ListSelectionLi
         if(event.equals("BackPage")){
             dispose();
             MainPage MP=new MainPage();
-            MP.setVisible(true);
         }
     }
     @Override

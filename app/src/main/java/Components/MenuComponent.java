@@ -13,6 +13,8 @@ import java.net.URL;
 public class MenuComponent extends JLabel implements ListCellRenderer {
     private JLabel icon=new JLabel();
     private JLabel content=new JLabel();
+    private boolean isMaster;
+    public MenuComponent(boolean isMater){this.isMaster=isMater;}
     @Override
     public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
         MenuDTO item = (MenuDTO) value;
@@ -36,7 +38,7 @@ public class MenuComponent extends JLabel implements ListCellRenderer {
         itemPanel.add(icon);
         itemPanel.add(content);
 
-        if(item.getSpk().equals(SingleTon.getUser().getSpk())) {
+        if(isMaster) {
             JButton updateMenu = new JButton("메뉴 수정/삭제");
             updateMenu.setBounds(400, 10, 50, 30);
             updateMenu.setBackground(Color.CYAN);

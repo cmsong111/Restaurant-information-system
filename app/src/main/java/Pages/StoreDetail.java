@@ -234,8 +234,8 @@ public class StoreDetail extends JFrame implements ActionListener{
     public void createList(){ //리스트 생성 메서드
         storeInfo=new StoreInfo();
         reviewInfo=new ReviewInfo();
-        menuRenderer=new MenuComponent();
-        reviewRenderer=new ReviewComponent();
+        menuRenderer=new MenuComponent(isMaster);
+        reviewRenderer=new ReviewComponent(isMaster);
 
         menuList=new JList(storeInfo);
         menuList.setCellRenderer(menuRenderer);

@@ -181,6 +181,7 @@ JList list;
         }
         else if(event.equals("ExitAdminPage")){
             dispose();
+            
         }
     }
 
@@ -188,6 +189,7 @@ JList list;
     public void valueChanged(ListSelectionEvent e){
         index = list.getSelectedIndex();
         selectedStore=MainPage.storeList.get(index);
+
     }
     public void set_storeList(){
         try {

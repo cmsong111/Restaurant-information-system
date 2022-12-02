@@ -13,7 +13,8 @@ import java.net.URL;
 public class ReviewComponent extends JLabel implements ListCellRenderer {
     private JLabel icon=new JLabel();
     private JLabel content=new JLabel();
-
+    private boolean isMaster;
+    public ReviewComponent(boolean isMaster){this.isMaster=isMaster;}
     //TODO:패널 생성하여 반환
     @Override
     public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
@@ -39,12 +40,19 @@ public class ReviewComponent extends JLabel implements ListCellRenderer {
         itemPanel.add(icon);
         itemPanel.add(content);
 
-        if(item.getUpk().equals(SingleTon.getUser().getUpk())||item.getSpk().equals(SingleTon.getUser().getSpk())) {
+        if(item.getUpk().equals(SingleTon.getUser().getUpk())) {
             JButton updateReview = new JButton("리뷰 수정/삭제");
             updateReview.setBounds(400, 10, 50, 30);
             //updateReview.setFont(mainFont18);
             updateReview.setBackground(Color.CYAN);
             itemPanel.add(updateReview);
+        }
+
+        else if(isMaster){
+            JButton updateMenu = new JButton("리뷰 삭제");
+            updateMenu.setBounds(400, 10, 50, 30);
+            updateMenu.setBackground(Color.CYAN);
+            itemPanel.add(updateMenu);
         }
 
       /* this.setText(item.getTitle());
