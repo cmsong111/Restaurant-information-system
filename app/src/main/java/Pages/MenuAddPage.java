@@ -1,6 +1,8 @@
 package Pages;
 
+
 import DTO.MenuDTO;
+import DTO.StoreDTO;
 import HTTP.MenuHTTP;
 import Setting.SingleTon;
 import javax.swing.*;
@@ -11,24 +13,24 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class MenuEditPage extends JFrame implements ActionListener {
+public class MenuAddPage extends JFrame implements ActionListener {
     JTextArea menuName;
     JTextArea menuPrice;
     MenuHTTP myMenu=new MenuHTTP();
     MenuDTO updatedMenu;
-    MenuDTO selectedMenu;
+    StoreDTO selectedStore;
     ImageIcon image;
     JLabel menuImage;
     //static ReviewDTO originReview;
-    public MenuEditPage(MenuDTO menu){
+    public MenuAddPage(StoreDTO store){
         try{
-            MenuEditPage(menu);
+            MenuAddPage(store);
         } catch (Exception e){
         }
     }
-    public void MenuEditPage(MenuDTO menu){
-        this.selectedMenu=menu;
-        setTitle("MenuEditPage");
+    public void MenuAddPage(StoreDTO store){
+        this.selectedStore=store;
+        setTitle("MenuAddPage");
         setSize(1280,720);
 
         setLocationRelativeTo(null);
@@ -57,7 +59,7 @@ public class MenuEditPage extends JFrame implements ActionListener {
         mainLabel.setBounds(382,30,500,70);         //나머지 페이지들도 적용
         mainLabel.setFont(mainFont40);
 
-        JLabel labelStore = new JLabel("EDIT");
+        JLabel labelStore = new JLabel("ADD");
         labelStore.setHorizontalAlignment(JLabel.CENTER);
         labelStore.setBounds(382,100,500,100);
         labelStore.setFont(mainFont22);
@@ -67,14 +69,14 @@ public class MenuEditPage extends JFrame implements ActionListener {
         backPane.setBackground(Color.LIGHT_GRAY);
         GridLayout layout=new GridLayout(2,2);
         backPane.setLayout(layout);
-        menuName = new JTextArea(selectedMenu.getName());
+        menuName = new JTextArea("메뉴명");
         //menuName.setBounds(100,100,200,100);
         menuName.setFont(mainFont22);
         menuName.setForeground(gray1);
         backPane.add(menuName);
 
 
-        menuPrice = new JTextArea(Integer.toString(selectedMenu.getPrice()));
+        menuPrice = new JTextArea("메뉴 가격");
         //menuPrice.setBounds(288,238,688,240);
         menuPrice.setFont(mainFont22);
         menuPrice.setForeground(gray1);
@@ -84,29 +86,21 @@ public class MenuEditPage extends JFrame implements ActionListener {
         imagePane.setBounds(360,230,120,120);
         imagePane.setBackground(Color.LIGHT_GRAY);
 
-        try{
-        image = new ImageIcon(new URL(selectedMenu.getImage()));}
+       /* try{
+            image = new ImageIcon(new URL(selectedMenu.getImage()));}
         catch (MalformedURLException t){}
         menuImage=new JLabel();
         menuImage.setBounds(10,10,50,50);
         menuImage.setIcon(image);
-        imagePane.add(menuImage);
+        imagePane.add(menuImage);*/
 
-        JButton updateReview=new JButton("수정");
-        updateReview.setBounds(520,510,100,34);
-        updateReview.setFont(mainFont22);
-        updateReview.setBackground(mint);
-        updateReview.setBorderPainted(false);         //버튼 테두리 없에기
-        updateReview.setActionCommand("UpdateMenu");
-        updateReview.addActionListener(this);
-
-        JButton deleteReview=new JButton("삭제");
-        deleteReview.setBounds(630,510,100,34);
-        deleteReview.setFont(mainFont22);
-        deleteReview.setBackground(mint);
-        deleteReview.setBorderPainted(false);         //버튼 테두리 없에기
-        deleteReview.setActionCommand("DeleteMenu");
-        deleteReview.addActionListener(this);
+        JButton addMenu=new JButton("메뉴 추가");
+        addMenu.setBounds(535,510,200,34);
+        addMenu.setFont(mainFont22);
+        addMenu.setBackground(mint);
+        addMenu.setBorderPainted(false);         //버튼 테두리 없에기
+        addMenu.setActionCommand("AddMenu");
+        addMenu.addActionListener(this);
 
         JButton buttonBack = new JButton("뒤로가기");
         buttonBack.setBounds(572,560,120,30);
@@ -119,8 +113,7 @@ public class MenuEditPage extends JFrame implements ActionListener {
 
         getContentPane().add(buttonBack);
         getContentPane().add(labelStore);
-        getContentPane().add(updateReview);
-        getContentPane().add(deleteReview);
+        getContentPane().add(addMenu);
         getContentPane().add(mainLabel);
         getContentPane().add(backPane);
         getContentPane().add(imagePane);
@@ -137,31 +130,22 @@ public class MenuEditPage extends JFrame implements ActionListener {
         String event = e.getActionCommand();
         int updatedprice = Integer.parseInt(menuPrice.getText());
 
-        if (event.equals("UpdateMenu")) {
+        if (event.equals("AddMenu")) {
             try {
                 MenuDTO menu = MenuDTO.builder()
                         .name(menuName.getText())
                         .price(updatedprice)
-                        .mpk(selectedMenu.getMpk())
-                        .spk(selectedMenu.getSpk())
+                        .spk(selectedStore.getSpk())
                         .build();
-                updatedMenu = myMenu.updateMenu(menu);
+                updatedMenu = myMenu.createMenu(menu);
             } catch (IOException t) {}
             if (updatedMenu != null) {
-                JOptionPane.showMessageDialog(null, "메뉴 정보가 수정되었습니다.");
+                JOptionPane.showMessageDialog(null, "메뉴 정보가 추가되었습니다.");
                 dispose();
                 StoreDetail SD = new StoreDetail();
             } else {
-                JOptionPane.showMessageDialog(null, "메뉴 업데이트 실패");
+                JOptionPane.showMessageDialog(null, "메뉴 추가 실패");
             }
-        }
-        else if(event.equals("DeleteMenu")){
-            try{
-            myMenu.deleteMenu(selectedMenu);
-            JOptionPane.showMessageDialog(null, "메뉴가 삭제되었습니다.");
-            dispose();
-            StoreDetail SD = new StoreDetail();
-            } catch (IOException t){}
         }
         else if (event.equals("BackPage")) {
             dispose();

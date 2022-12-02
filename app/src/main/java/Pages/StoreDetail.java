@@ -150,8 +150,33 @@ public class StoreDetail extends JFrame implements ActionListener{
         panelLineTap.setBackground(gray1);
         getContentPane().add(panelLineTap);
 
+        if(isMaster) {
+            JButton addMenu = new JButton("메뉴 추가");
+            addMenu.setBounds(572,550,120,30);
+            addMenu.setFont(mainFont18);
+            addMenu.setBackground(mint);
+            addMenu.setBorderPainted(false);         //버튼 테두리 없에기
+            //writeReview.setContentAreaFilled(false);     //버튼 내부 색 채움 여부
+            //buttonBack.setFocusPainted(false);        //버튼 포커스(클릭시 테두리)
+            addMenu.setActionCommand("AddMenu");
+            addMenu.addActionListener(this);
+            getContentPane().add(addMenu);
+        }
+        else {
+            JButton writeReview = new JButton("리뷰 작성");
+            writeReview.setBounds(572,550,120,30);
+            writeReview.setFont(mainFont18);
+            writeReview.setBackground(mint);
+            writeReview.setBorderPainted(false);         //버튼 테두리 없에기
+            //writeReview.setContentAreaFilled(false);     //버튼 내부 색 채움 여부
+            //buttonBack.setFocusPainted(false);        //버튼 포커스(클릭시 테두리)
+            writeReview.setActionCommand("WriteReview");
+            writeReview.addActionListener(this);
+            getContentPane().add(writeReview);
+        }
+
         buttonMenu = new JButton("메뉴");
-        buttonMenu.setBounds(432,300,70,30);
+        buttonMenu.setBounds(432, 300, 70, 30);
         buttonMenu.setFont(mainFont18);
         buttonMenu.setBackground(mint);
         buttonMenu.setBorderPainted(false);         //버튼 테두리 없에기
@@ -160,8 +185,9 @@ public class StoreDetail extends JFrame implements ActionListener{
         buttonMenu.setActionCommand("MenuPage");
         buttonMenu.addActionListener(this);
 
+
         buttonReview = new JButton("리뷰");
-        buttonReview.setBounds(762,300,70,30);
+        buttonReview.setBounds(762, 300, 70, 30);
         buttonReview.setFont(mainFont18);
         buttonReview.setBackground(mint);
         buttonReview.setBorderPainted(false);         //버튼 테두리 없에기
@@ -170,16 +196,6 @@ public class StoreDetail extends JFrame implements ActionListener{
         buttonReview.setActionCommand("ReviewPage");
         buttonReview.addActionListener(this);
 
-        //TODO:일반 사용자면 리뷰 작성 버튼 visible, 관리자면 메뉴 추가 버튼 visible
-        JButton writeReview = new JButton("리뷰 작성");
-        writeReview.setBounds(572,550,120,30);
-        writeReview.setFont(mainFont18);
-        writeReview.setBackground(mint);
-        writeReview.setBorderPainted(false);         //버튼 테두리 없에기
-        //writeReview.setContentAreaFilled(false);     //버튼 내부 색 채움 여부
-        //buttonBack.setFocusPainted(false);        //버튼 포커스(클릭시 테두리)
-        writeReview.setActionCommand("WriteReview");
-        writeReview.addActionListener(this);
 
         buttonBack = new JButton("뒤로가기");
         buttonBack.setBounds(572,600,120,30);
@@ -205,16 +221,15 @@ public class StoreDetail extends JFrame implements ActionListener{
         listPanel2.add(Rscroll);
         listPanel2.setVisible(false);
 
-        getContentPane().add(buttonReview);
-        getContentPane().add(buttonMenu);
 
+        getContentPane().add(buttonMenu);
+        getContentPane().add(buttonReview);
         getContentPane().add(textGenNumber);
         getContentPane().add(textGen);
         getContentPane().add(textAddress);
         getContentPane().add(textStoreName);
         getContentPane().add(buttonBack);
         getContentPane().add(mainLabel);
-        getContentPane().add(writeReview);
         getContentPane().add(labelImageS1);
         getContentPane().add(view_map);
         getContentPane().add(panelMainMint);
@@ -252,7 +267,6 @@ public class StoreDetail extends JFrame implements ActionListener{
                     if(isMaster){
                         dispose();
                         if(e.getValueIsAdjusting()){
-                            //TODO:메뉴 CRDU페이지 생성 후 연결
                             MenuEditPage ME=new MenuEditPage(allMenus.get(index));
                             }
                     }
@@ -303,6 +317,10 @@ public class StoreDetail extends JFrame implements ActionListener{
         else if(event.equals(("WriteReview"))){
             ReviewPage RP=new ReviewPage();
             this.setVisible(false);
+        }
+        else if(event.equals(("AddMenu"))){
+           dispose();
+           MenuAddPage MA=new MenuAddPage(currentStore);
         }
         else if(event.equals("Map")){
             ViewMap VM = new ViewMap();

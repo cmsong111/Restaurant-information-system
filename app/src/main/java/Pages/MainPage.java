@@ -20,7 +20,8 @@ enum HowSearch {
     SEARCH_JAPANESE,
     SEARCH_DESSERT,
     SEARCH_SNACKFOOD,
-    SEARCH_FASTFOOD
+    SEARCH_FASTFOOD,
+    SEARCH_TODAYSPECIAL
 }
 
 public class MainPage extends JFrame implements ActionListener, ItemListener {
@@ -114,8 +115,8 @@ public class MainPage extends JFrame implements ActionListener, ItemListener {
         quickSearch.addActionListener(this);
         quickSearch.setFocusPainted(false);
 
-        JButton buttonEditUser = new JButton("USER");
-        buttonEditUser.setBounds(1140, 50, 70, 70);
+        JButton buttonEditUser = new JButton("개인정보수정");
+        buttonEditUser.setBounds(1000, 50, 180, 40);
         buttonEditUser.setVerticalTextPosition(JButton.BOTTOM);
         buttonEditUser.setHorizontalTextPosition(JButton.CENTER);
         buttonEditUser.setFont(mainFont20);
@@ -231,6 +232,8 @@ public class MainPage extends JFrame implements ActionListener, ItemListener {
         mainButton_Random.setForeground(Color.YELLOW);
         mainButton_Random.setBackground(mint);
         mainButton_Random.setBorderPainted(false);
+        mainButton_Random.setActionCommand("TODAY'S MENU");
+        mainButton_Random.addActionListener(this);
 
         JButton buttonAdminPage = new JButton("관리자 페이지");
         buttonAdminPage.setBounds(1000, 150, 180, 40);
@@ -368,6 +371,17 @@ public class MainPage extends JFrame implements ActionListener, ItemListener {
                     StoreList SN = new StoreList();
                 }
                 break;
+
+            case "TODAY'S MENU":
+                search_State=HowSearch.SEARCH_TODAYSPECIAL;
+                Set_Storelist();
+                if (this.storeList.size() == 0)
+                    JOptionPane.showMessageDialog(null, "검색 결과가 없습니다.");
+                else {
+                    this.setVisible(false);
+                    StoreList SN = new StoreList();
+                }
+                break;
         }
 
     }
@@ -394,6 +408,13 @@ public class MainPage extends JFrame implements ActionListener, ItemListener {
             } catch (IOException t) {
             }
         }
+        else if(search_State.equals(HowSearch.SEARCH_TODAYSPECIAL)){
+            try {
+                storeList = (httpStore.searchStoreByLocation("부산광역시",selectedlocation));
+                //반환값이 여러개임
+            } catch (IOException t) {
+            }
+        }
         else { //카테고리별 검색
             try {
                 String temp = "한식";
@@ -416,6 +437,5 @@ public class MainPage extends JFrame implements ActionListener, ItemListener {
             } catch (Exception t) {
             }
         }
-
     }
 }
