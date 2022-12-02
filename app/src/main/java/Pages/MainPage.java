@@ -298,16 +298,18 @@ public class MainPage extends JFrame implements ActionListener, ItemListener {
         //검색버튼 및 음식 카테고리(라디오버튼)
         switch (event) {
             case "editUser":
+                dispose();
                 EditUserPage EU = new EditUserPage();
                 break;
             case "ViewAdminPage":
+                this.setVisible(false);
                 AdminPage AP = new AdminPage();
                 break;
             case "location":
                 selectedlocation=selectLocation.getSelectedItem().toString();
                 break;
             case "Logout":
-                this.setVisible(false);
+                dispose();
                 LoginPage NP = new LoginPage();
                 break;
             case "bSearch":

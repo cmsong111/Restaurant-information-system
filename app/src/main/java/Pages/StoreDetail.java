@@ -252,6 +252,7 @@ public class StoreDetail extends JFrame implements ActionListener{
                         dispose();
                         if(e.getValueIsAdjusting()){
                             //TODO:메뉴 CRDU페이지 생성 후 연결
+                            MenuEditPage ME=new MenuEditPage(allMenus.get(index));
                             }
                     }
                 }
@@ -290,9 +291,13 @@ public class StoreDetail extends JFrame implements ActionListener{
             this.repaint();
         }
         else if (event.equals("BackPage")) {
+            if(isMaster){
+                dispose();
+                AdminPage AP=new AdminPage();}
+            else{
             dispose();
             StoreList SL=new StoreList();
-            SL.setVisible(true);
+            SL.setVisible(true);}
         }
         else if(event.equals(("WriteReview"))){
             ReviewPage RP=new ReviewPage();

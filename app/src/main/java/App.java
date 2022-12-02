@@ -28,6 +28,7 @@ public class App {
 
 
         LoginPage LT = new LoginPage();
+        //MenuEditPage ME=new MenuEditPage();
         //ReviewPage RP = new ReviewPage();
         //MainPage temp = new MainPage();
         //ReviewEditPage RE=new ReviewEditPage();

@@ -181,7 +181,7 @@ JList list;
         }
         else if(event.equals("ExitAdminPage")){
             dispose();
-            
+            MainPage MP=new MainPage();
         }
     }
 
