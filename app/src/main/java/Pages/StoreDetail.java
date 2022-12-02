@@ -61,18 +61,19 @@ public class StoreDetail extends JFrame implements ActionListener{
     }
     public StoreDetail(){
         try{
-            StoreDetail();
+            StoreDetailview();
         } catch (Exception e){
         }
     }
-    public StoreDetail(boolean TODAYSPECIAL){
+    public StoreDetail(StoreDTO store){
         try{
-            isSpecial=TODAYSPECIAL;
-            StoreDetail();
+            currentStore=store;
+            isSpecial=true;
+            StoreDetailview();
         } catch (Exception e){
         }
     }
-    public void StoreDetail(){
+    public void StoreDetailview(){
         if(currentStore.getUpk().equals(SingleTon.getUser().getUpk())){
             isMaster=true;
         }
@@ -120,12 +121,12 @@ public class StoreDetail extends JFrame implements ActionListener{
         textStoreName.setFont(mainFont22);
 
 
-        ImageIcon iconStore =storeLogo;  //이미지 불러오기
+       /* ImageIcon iconStore =storeLogo;  //이미지 불러오기
         Image imgS1 = iconStore.getImage();
         Image changeImgS1 = imgS1.getScaledInstance(120,120,Image.SCALE_SMOOTH);
         ImageIcon changeIconS1 = new ImageIcon(changeImgS1);
         JLabel labelImageS1 = new JLabel(changeIconS1);
-        labelImageS1.setBounds(322, 150, 120, 120);
+        labelImageS1.setBounds(322, 150, 120, 120);*/
 
         JLabel textAddress = new JLabel(currentStore.getLocation2()+" "+currentStore.getLocation3());
         textAddress.setBounds(470,160,400,43);
@@ -238,7 +239,7 @@ public class StoreDetail extends JFrame implements ActionListener{
         getContentPane().add(textStoreName);
         getContentPane().add(buttonBack);
         getContentPane().add(mainLabel);
-        getContentPane().add(labelImageS1);
+        //getContentPane().add(labelImageS1);
         getContentPane().add(view_map);
         getContentPane().add(panelMainMint);
         getContentPane().add(panelMainWhite);

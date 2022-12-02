@@ -380,10 +380,8 @@ public class MainPage extends JFrame implements ActionListener, ItemListener {
                 if (today.equals(null)){
                     JOptionPane.showMessageDialog(null, "검색 결과가 없습니다.");}
                 else {
-                    StoreDetail.currentStore=today;
-                    this.setVisible(false);
-                    StoreDetail SD = new StoreDetail(true);
-                    SD.setVisible(true);
+                    dispose();
+                    StoreDetail SF = new StoreDetail(today);
                 }
                 break;
         }
