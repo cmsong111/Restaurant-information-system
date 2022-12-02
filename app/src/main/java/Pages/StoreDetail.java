@@ -44,6 +44,7 @@ public class StoreDetail extends JFrame implements ActionListener{
     MenuComponent menuRenderer; //메뉴 렌더링
     ReviewComponent reviewRenderer; //리뷰 렌더링
     boolean isMaster=false;
+    boolean isSpecial=false;
     public class StoreInfo extends DefaultListModel{ //리스트에 객체추가 , renderer는 StoreComponent
         public StoreInfo(){
             for (MenuDTO menu : allMenus) {
@@ -60,6 +61,13 @@ public class StoreDetail extends JFrame implements ActionListener{
     }
     public StoreDetail(){
         try{
+            StoreDetail();
+        } catch (Exception e){
+        }
+    }
+    public StoreDetail(boolean TODAYSPECIAL){
+        try{
+            isSpecial=TODAYSPECIAL;
             StoreDetail();
         } catch (Exception e){
         }
@@ -309,6 +317,10 @@ public class StoreDetail extends JFrame implements ActionListener{
             if(isMaster){
                 dispose();
                 AdminPage AP=new AdminPage();}
+            else if(isSpecial){
+                dispose();
+                MainPage AP=new MainPage();}
+
             else{
             dispose();
             StoreList SL=new StoreList();

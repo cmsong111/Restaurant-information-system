@@ -44,6 +44,7 @@ public class MainPage extends JFrame implements ActionListener, ItemListener {
     JCheckBox mainButton_ZC; // 모범음식점
     HowSearch search_State; // 검색 조건
     StoreDTO store;
+    StoreDTO today;
     String selectedlocation="부산진구";
     SearchHTTP httpStore = new SearchHTTP();
     static public ArrayList<StoreDTO> storeList = new ArrayList<>(); //스토어 목록
@@ -376,11 +377,12 @@ public class MainPage extends JFrame implements ActionListener, ItemListener {
             case "TODAY'S MENU":
                 search_State=HowSearch.SEARCH_TODAYSPECIAL;
                 Set_Storelist();
-                if (this.storeList.size() == 0)
+                if (today.equals(null))
                     JOptionPane.showMessageDialog(null, "검색 결과가 없습니다.");
                 else {
-                    this.setVisible(false);
-                    StoreList SN = new StoreList();
+                    StoreDetail.currentStore=today;
+                    //this.setVisible(false);
+                    StoreDetail SD = new StoreDetail(true);
                 }
                 break;
         }
@@ -411,7 +413,7 @@ public class MainPage extends JFrame implements ActionListener, ItemListener {
         }
         else if(search_State.equals(HowSearch.SEARCH_TODAYSPECIAL)){
             try {
-                storeList = (httpStore.searchStoreByLocation("부산광역시",selectedlocation));
+                 today= (httpStore.searchStoreByLocation("부산광역시",selectedlocation));
                 //반환값이 여러개임
             } catch (IOException t) {
             }

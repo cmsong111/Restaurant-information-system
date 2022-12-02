@@ -177,10 +177,10 @@ public class SearchHTTP {
      * @throws IOException
      * @author 김남주
      */
-    public ArrayList<StoreDTO> searchStoreByLocation(String location1, String location2) throws IOException {
+    public StoreDTO searchStoreByLocation(String location1, String location2) throws IOException {
         // URL 생성
         CloseableHttpClient Client = HttpClientBuilder.create().build();
-        String baseURL = SingleTon.getBaseURL() + "/store/search-location";
+        String baseURL = SingleTon.getBaseURL() + "/store/search-location-random-one";
 
         // 파라메터 설정
         HttpGet httpget = new HttpGet(baseURL);
@@ -200,11 +200,11 @@ public class SearchHTTP {
         if (response.getStatusLine().getStatusCode() == 200) {
             HttpEntity entity = response.getEntity();
             String responseBody = EntityUtils.toString(entity);
-            ArrayList<StoreDTO> results = gson.fromJson(responseBody, new TypeToken<ArrayList<StoreDTO>>() {
-            }.getType());
+            StoreDTO results = gson.fromJson(responseBody,StoreDTO.class);
             System.out.println(results);
             return results;
         } else {
+
             return null;
         }
     }
