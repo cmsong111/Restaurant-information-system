@@ -141,6 +141,8 @@ public class ReviewEditPage extends JFrame implements ActionListener {
                 myReview=(httpReview.updateeview(ur));
                 if(myReview!=null) {
                     JOptionPane.showMessageDialog(null, "내 리뷰가 수정되었습니다.");
+                    dispose();
+                    StoreDetail SD=new StoreDetail();
                 }
             } catch (IOException t) {}
         }
@@ -148,6 +150,8 @@ public class ReviewEditPage extends JFrame implements ActionListener {
             try {
                 httpReview.deleteReview(originReview);
                 JOptionPane.showMessageDialog(null, "리뷰가 삭제되었습니다.");
+                dispose();
+                StoreDetail SD=new StoreDetail();
             } catch (IOException t) {}
         }
         else if (event.equals("BackPage")) {

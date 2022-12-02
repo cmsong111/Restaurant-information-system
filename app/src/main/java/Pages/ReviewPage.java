@@ -130,6 +130,8 @@ public class ReviewPage extends JFrame implements ActionListener{
                 myReview=(httpReview.createReview(wr));
                 if(myReview!=null) {
                     JOptionPane.showMessageDialog(null, "내 리뷰가 등록되었습니다.");
+                    dispose();
+                    StoreDetail SD=new StoreDetail();
                 }
             } catch (IOException t) {}
         }

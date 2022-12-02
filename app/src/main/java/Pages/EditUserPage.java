@@ -13,19 +13,20 @@ import java.security.NoSuchAlgorithmException;
 import java.security.Signature;
 
 public class EditUserPage extends JFrame implements ActionListener {
+    JTextField textName;
+    JPasswordField textPassWord;
+    JPasswordField textPassWord2;
+    JTextField textAge;
+    JCheckBox checkBoxAdmin;
+    UserDTO myInfo;
+    UserHTTP user=new UserHTTP();
+    boolean result;
     public EditUserPage() {
         try {
             EditUserPage();
         } catch (Exception e) {
         }
     }
-
-    JTextField textName;
-    JPasswordField textPassWord;
-    JPasswordField textPassWord2;
-    JTextField textAge;
-    JCheckBox checkBoxAdmin;
-
 
     public void EditUserPage() {
         setTitle("EditUser Screen");
@@ -97,8 +98,8 @@ public class EditUserPage extends JFrame implements ActionListener {
 
         checkBoxAdmin = new JCheckBox("관리자 지정");
         checkBoxAdmin.setSelected(SingleTon.getUser().isAdmin());
-        checkBoxAdmin.setBounds(557, 450, 170, 34);
-        checkBoxAdmin.setFont(mainFont22);
+        checkBoxAdmin.setBounds(482, 450, 170, 34);
+        checkBoxAdmin.setFont(mainFont18);
         checkBoxAdmin.setBorderPainted(false);      //버튼 테두리 없에기
         //checkBoxAdmin.setFocusPainted(false);
         checkBoxAdmin.setContentAreaFilled(false);
@@ -106,7 +107,7 @@ public class EditUserPage extends JFrame implements ActionListener {
         checkBoxAdmin.addActionListener(this);
 
         JButton buttonBack = new JButton("뒤로가기");
-        buttonBack.setBounds(572, 540, 120, 30);
+        buttonBack.setBounds(572, 600, 120, 30);
         buttonBack.setFont(mainFont22);
         buttonBack.setBorderPainted(false);         //버튼 테두리 없에기
         buttonBack.setContentAreaFilled(false);     //버튼 내부 색 채움 여부
@@ -115,29 +116,36 @@ public class EditUserPage extends JFrame implements ActionListener {
         buttonBack.addActionListener(this);
 
         JButton buttonSave = new JButton("저장하기");
-        buttonSave.setBounds(572, 600, 120, 30);
+        buttonSave.setBounds(500, 540, 120, 30);
         buttonSave.setFont(mainFont22);
+        buttonSave.setBackground(mint);
         buttonSave.setBorderPainted(false);         //버튼 테두리 없에기
         buttonSave.setContentAreaFilled(false);     //버튼 내부 색 채움 여부
-        //buttonBack.setFocusPainted(false);        //버튼 포커스(클릭시 테두리)
+        buttonSave.setBackground(mint);
         buttonSave.setActionCommand("Save");
         buttonSave.addActionListener(this);
+
+        JButton buttonWithdraw = new JButton("탈퇴하기");
+        buttonWithdraw.setBounds(630, 540, 120, 30);
+        buttonWithdraw.setFont(mainFont22);
+        buttonWithdraw.setBackground(mint);
+        buttonWithdraw.setBorderPainted(false);         //버튼 테두리 없에기
+        buttonWithdraw.setContentAreaFilled(false);     //버튼 내부 색 채움 여부
+        buttonWithdraw.setBackground(mint);
+        buttonWithdraw.setActionCommand("Withdraw");
+        buttonWithdraw.addActionListener(this);
 
 
         getContentPane().add(labelMain);
         getContentPane().add(labelUnderMain);
-
         getContentPane().add(textName);
         getContentPane().add(textPassWord);
-
         getContentPane().add(textPassWord2);
-
         getContentPane().add(textAge);
-
         getContentPane().add(checkBoxAdmin);
         getContentPane().add(buttonBack);
         getContentPane().add(buttonSave);
-
+        getContentPane().add(buttonWithdraw);
         getContentPane().add(panelMainMint);
         getContentPane().add(panelMainWhite);
         getContentPane().setBackground(mint);
@@ -155,6 +163,7 @@ public class EditUserPage extends JFrame implements ActionListener {
         }
         if (event.equals("BackPage")) {
             dispose();
+            MainPage MP=new MainPage();
         }
         if (event.equals("Save")) {
             if (textPassWord.getText().equals(textPassWord2.getText())) {
@@ -188,8 +197,24 @@ public class EditUserPage extends JFrame implements ActionListener {
             } else {
                 JOptionPane.showMessageDialog(null, "패스워드가 일치하지 않습니다.");
             }
-
-
+        }
+        if(event.equals("Withdraw")){
+            try {
+                myInfo = UserDTO.builder()
+                        .name(SingleTon.getUser().getName())
+                        .id(SingleTon.getUser().getId())
+                        .upk(SingleTon.getUser().getUpk())
+                        .build();
+                result=user.withdrawal(myInfo);
+            }catch (IOException t){}
+            if(result) {
+                JOptionPane.showMessageDialog(null, "계정이 성공적으로 삭제되었습니다");
+                dispose();
+                LoginPage LP = new LoginPage();
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "삭제 실패");
+            }
         }
     }
 }

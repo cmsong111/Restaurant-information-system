@@ -138,7 +138,7 @@ public class UserHTTP {
         // HTTP POST 요청하기
         HttpResponse response = client.execute(httpPost);
         String body = EntityUtils.toString(response.getEntity());
-
+        System.out.println(body);
         if (body.equals("Delete Done")) {
             return true;
         } else {
