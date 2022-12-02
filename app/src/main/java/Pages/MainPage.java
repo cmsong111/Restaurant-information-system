@@ -44,7 +44,7 @@ public class MainPage extends JFrame implements ActionListener, ItemListener {
     JCheckBox mainButton_ZC; // 모범음식점
     HowSearch search_State; // 검색 조건
     StoreDTO store;
-    StoreDTO today;
+    StoreDTO today=new StoreDTO();
     String selectedlocation="부산진구";
     SearchHTTP httpStore = new SearchHTTP();
     static public ArrayList<StoreDTO> storeList = new ArrayList<>(); //스토어 목록
@@ -233,7 +233,7 @@ public class MainPage extends JFrame implements ActionListener, ItemListener {
         mainButton_Random.setForeground(Color.YELLOW);
         mainButton_Random.setBackground(mint);
         mainButton_Random.setBorderPainted(false);
-        mainButton_Random.setActionCommand("TODAY'S MENU");
+        mainButton_Random.setActionCommand("TODAY MENU");
         mainButton_Random.addActionListener(this);
 
         JButton buttonAdminPage = new JButton("관리자 페이지");
@@ -374,15 +374,16 @@ public class MainPage extends JFrame implements ActionListener, ItemListener {
                 }
                 break;
 
-            case "TODAY'S MENU":
+            case "TODAY MENU":
                 search_State=HowSearch.SEARCH_TODAYSPECIAL;
                 Set_Storelist();
-                if (today.equals(null))
-                    JOptionPane.showMessageDialog(null, "검색 결과가 없습니다.");
+                if (today.equals(null)){
+                    JOptionPane.showMessageDialog(null, "검색 결과가 없습니다.");}
                 else {
                     StoreDetail.currentStore=today;
-                    //this.setVisible(false);
+                    this.setVisible(false);
                     StoreDetail SD = new StoreDetail(true);
+                    SD.setVisible(true);
                 }
                 break;
         }
@@ -414,7 +415,6 @@ public class MainPage extends JFrame implements ActionListener, ItemListener {
         else if(search_State.equals(HowSearch.SEARCH_TODAYSPECIAL)){
             try {
                  today= (httpStore.searchStoreByLocation("부산광역시",selectedlocation));
-                //반환값이 여러개임
             } catch (IOException t) {
             }
         }
@@ -437,7 +437,7 @@ public class MainPage extends JFrame implements ActionListener, ItemListener {
             } catch (IOException t) {
             }
         }
-        else { //카테고리별 검색
+        else { //필터링 검색
             try {
                 String temp = "한식";
                 if (search_State.equals(HowSearch.SEARCH_KOREAN)) temp = "한식";
