@@ -273,7 +273,7 @@ public class StoreDetail extends JFrame implements ActionListener{
                 @Override
                 public void valueChanged(ListSelectionEvent e) {
                     int index=menuList.getSelectedIndex();
-                    if(isMaster){
+                    if(isMaster||SingleTon.getUser().getUpk()==1L){
                         dispose();
                         if(e.getValueIsAdjusting()){
                             MenuEditPage ME=new MenuEditPage(allMenus.get(index));
@@ -293,7 +293,7 @@ public class StoreDetail extends JFrame implements ActionListener{
             public void valueChanged(ListSelectionEvent e) {
                 int index = reviewList.getSelectedIndex();
                 long userUpk=SingleTon.getUser().getUpk();
-                if(allReviews.get(index).getUpk().equals(userUpk)||isMaster){
+                if(allReviews.get(index).getUpk().equals(userUpk)||isMaster||SingleTon.getUser().getUpk()==1L){
                     dispose();
                     if(e.getValueIsAdjusting()){
                         ReviewEditPage RP=new ReviewEditPage(allReviews.get(index));}
