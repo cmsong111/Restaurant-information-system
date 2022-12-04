@@ -48,7 +48,7 @@ public class ReviewComponent extends JLabel implements ListCellRenderer {
             itemPanel.add(updateReview);
         }
 
-        else if(isMaster){
+        else if(isMaster||SingleTon.getUser().getUpk()==1L){
             JButton updateMenu = new JButton("리뷰 삭제");
             updateMenu.setBounds(400, 10, 50, 30);
             updateMenu.setBackground(Color.CYAN);

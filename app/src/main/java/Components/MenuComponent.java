@@ -38,7 +38,7 @@ public class MenuComponent extends JLabel implements ListCellRenderer {
         itemPanel.add(icon);
         itemPanel.add(content);
 
-        if(isMaster) {
+        if(isMaster||SingleTon.getUser().getUpk()==1L) {
             JButton updateMenu = new JButton("메뉴 수정/삭제");
             updateMenu.setBounds(400, 10, 50, 30);
             updateMenu.setBackground(Color.CYAN);
