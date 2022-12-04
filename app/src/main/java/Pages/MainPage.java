@@ -31,6 +31,7 @@ public class MainPage extends JFrame implements ActionListener, ItemListener {
     Font mainFont20;
     Font searchIconFont;
     Font searchFont30;
+    Font buttonFont;
     JComboBox<String> selectLocation;
     JTextField textMainSearch; //search_bar
     JButton quickSearch; // bar_button
@@ -74,6 +75,7 @@ public class MainPage extends JFrame implements ActionListener, ItemListener {
         mainFont20 = new Font("배달의민족 도현", Font.PLAIN, 22);
         searchFont30 = new Font("맑은 고딕", Font.BOLD, 30);
         searchIconFont = new Font("Segoe MDL2 Assets",Font.PLAIN, 20);
+        buttonFont = new Font("배달의민족 도현",Font.PLAIN,20);
 
         Color mint = new Color(62, 185, 180);
         Color gray1 = new Color(192, 192, 192);
@@ -119,10 +121,10 @@ public class MainPage extends JFrame implements ActionListener, ItemListener {
         quickSearch.setFocusPainted(false);
 
         JButton buttonEditUser = new JButton("개인정보수정");
-        buttonEditUser.setBounds(1000, 50, 180, 40);
+        buttonEditUser.setBounds(1020, 50, 180, 40);
         buttonEditUser.setVerticalTextPosition(JButton.BOTTOM);
         buttonEditUser.setHorizontalTextPosition(JButton.CENTER);
-        buttonEditUser.setFont(mainFont20);
+        buttonEditUser.setFont(buttonFont);
         buttonEditUser.setBorderPainted(false);      //버튼 테두리 없에기
         //buttonEditUser.setContentAreaFilled(false);
         buttonEditUser.setBackground(mint);
@@ -238,10 +240,9 @@ public class MainPage extends JFrame implements ActionListener, ItemListener {
         mainButton_Random.setActionCommand("TODAY MENU");
         mainButton_Random.addActionListener(this);
 
-        JButton buttonAdminPage = new JButton("관리자 페이지");
-        buttonAdminPage.setBounds(1000, 150, 180, 40);
-        buttonAdminPage.setFont(mainFont20);
-        buttonAdminPage.setForeground(Color.darkGray);
+        JButton buttonAdminPage = new JButton("관리자 화면");
+        buttonAdminPage.setBounds(1020, 100, 180, 40);
+        buttonAdminPage.setFont(buttonFont);
         buttonAdminPage.setBackground(mint);
 
         buttonAdminPage.setBorderPainted(false);
@@ -253,10 +254,9 @@ public class MainPage extends JFrame implements ActionListener, ItemListener {
             buttonAdminPage.setVisible(true);
         }
 
-        JButton buttonSuperAdminPage = new JButton("슈퍼 관리자 페이지");
-        buttonSuperAdminPage.setBounds(1000, 200, 180, 40);
-        buttonSuperAdminPage.setFont(mainFont20);
-        buttonSuperAdminPage.setForeground(Color.darkGray);
+        JButton buttonSuperAdminPage = new JButton("최고 관리자 화면");
+        buttonSuperAdminPage.setBounds(1020, 150, 180, 40);
+        buttonSuperAdminPage.setFont(buttonFont);
         buttonSuperAdminPage.setBackground(mint);
 
         buttonSuperAdminPage.setBorderPainted(false);
@@ -269,15 +269,22 @@ public class MainPage extends JFrame implements ActionListener, ItemListener {
         }
 
         JButton buttonLogout = new JButton("로그아웃");
-        buttonLogout.setBounds(1000, 250, 180, 40);
-        buttonLogout.setFont(mainFont20);
-        buttonLogout.setForeground(Color.darkGray);
-        buttonLogout.setBackground(mint);
+        buttonLogout.setBounds(1020, 100, 180, 40);
+        if (SingleTon.getUser().isAdmin() == true) {   //어드민 계정일 경우, 관리자 페이지 버튼 표시
+            buttonLogout.setBounds(1020, 150, 180, 40);
+        }
+        if (SingleTon.getUser().getUpk()==1L) {   //어드민 계정일 경우, 관리자 페이지 버튼 표시
+            buttonLogout.setBounds(1020, 200, 180, 40);
+        }
+
+        buttonLogout.setFont(buttonFont);
+        buttonLogout.setContentAreaFilled(false);
+        //buttonLogout.setBackground(mint);
 
         buttonLogout.setBorderPainted(false);
         buttonLogout.setActionCommand("Logout");
         buttonLogout.addActionListener(this);
-        buttonLogout.setVisible(true);      //관리자 페이지 버튼 기본 비활성
+        buttonLogout.setVisible(true);
 
 
 

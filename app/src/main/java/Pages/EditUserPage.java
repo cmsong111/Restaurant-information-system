@@ -136,7 +136,7 @@ public class EditUserPage extends JFrame implements ActionListener {
 
         checkBoxAdmin = new JCheckBox("관리자 지정");
         checkBoxAdmin.setSelected(SingleTon.getUser().isAdmin());
-        checkBoxAdmin.setBounds(482, 450, 170, 34);
+        checkBoxAdmin.setBounds(532, 460, 170, 34);
         checkBoxAdmin.setFont(mainFont18);
         checkBoxAdmin.setBorderPainted(false);      //버튼 테두리 없에기
         //checkBoxAdmin.setFocusPainted(false);

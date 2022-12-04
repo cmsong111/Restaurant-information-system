@@ -19,33 +19,6 @@ public class App {
 
     public static void main(String[] args) throws URISyntaxException, IOException, ParseException, NoSuchAlgorithmException {
 
-
-       /* ReviewHTTP reviewHTTP = new ReviewHTTP();
-        ArrayList<ReviewDTO> results=  reviewHTTP.readReviewbyStore(StoreDTO.builder().spk(1L).build());
-        for (ReviewDTO item : results){
-            System.out.println(item.toString());
-        }*/
-
-
-
         LoginPage LT = new LoginPage();
-        //MenuEditPage ME=new MenuEditPage();
-
-        //LoginPage LT = new LoginPage();
-
-        //ReviewPage RP = new ReviewPage();
-        //MainPage temp = new MainPage();
-        //ReviewEditPage RE=new ReviewEditPage();
-        //StoreList SL = new StoreList();
-        //StoreDetail SD = new StoreDetail();
-        //StoreList SL = new StoreList();
-        //StoreDetail SD = new StoreDetail();
-        //SignUpPage SP = new SignUpPage();
-        //AdminPage AP = new AdminPage();
-        //AdminCreateStorePage ACSP = new AdminCreateStorePage();
-        //AdminUpdateStorePage AUSP = new AdminUpdateStorePage();
-        //AdminDeleteStorePage ADSP = new AdminDeleteStorePage();
-
-        //SuperAdminPage SAP = new SuperAdminPage();
     }
 }
