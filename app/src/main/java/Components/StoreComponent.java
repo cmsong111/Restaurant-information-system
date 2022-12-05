@@ -23,6 +23,7 @@ public class StoreComponent extends DefaultListCellRenderer {
             else{
                 image=new ImageIcon("app/res/bibimbap.png");
                 StoreDetail.storeLogo=image;
+
             }
            /* temp=image.getImage();
             temp=temp.getScaledInstance(100,100,Image.SCALE_SMOOTH);

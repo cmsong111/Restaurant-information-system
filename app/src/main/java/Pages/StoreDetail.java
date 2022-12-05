@@ -2,6 +2,7 @@ package Pages;
 
 import Components.ReviewComponent;
 import Components.MenuComponent;
+import Components.StoreComponent;
 import DTO.MenuDTO;
 import DTO.ReviewDTO;
 import DTO.StoreDTO;
@@ -84,6 +85,8 @@ public class StoreDetail extends JFrame implements ActionListener{
         getContentPane().setLayout(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+
+
         Font mainFont40 = new Font("배달의민족 도현",Font.PLAIN,40);   //폰트 설정
         Font mainFont30 = new Font("배달의민족 도현",Font.PLAIN,30);
         Font mainFont26 = new Font("배달의민족 도현",Font.PLAIN,26);
@@ -120,13 +123,8 @@ public class StoreDetail extends JFrame implements ActionListener{
         textStoreName.setHorizontalAlignment(JLabel.CENTER);
         textStoreName.setFont(mainFont22);
 
-
-       /* ImageIcon iconStore =storeLogo;  //이미지 불러오기
-        Image imgS1 = iconStore.getImage();
-        Image changeImgS1 = imgS1.getScaledInstance(120,120,Image.SCALE_SMOOTH);
-        ImageIcon changeIconS1 = new ImageIcon(changeImgS1);
-        JLabel labelImageS1 = new JLabel(changeIconS1);
-        labelImageS1.setBounds(322, 150, 120, 120);*/
+        JLabel labelImageS1 = new JLabel(storeLogo);
+        labelImageS1.setBounds(322, 150, 120, 120);
 
         JLabel textAddress = new JLabel(currentStore.getLocation2()+" "+currentStore.getLocation3());
         textAddress.setBounds(470,160,400,43);
@@ -134,7 +132,7 @@ public class StoreDetail extends JFrame implements ActionListener{
         textAddress.setFont(mainFont18);
 
         JButton view_map = new JButton("지도보기");
-        view_map.setBounds(850,160,110,30);
+        view_map.setBounds(870,160,110,30);
         view_map.setFont(mainFont18);
         view_map.setBackground(mint);
         view_map.setBorderPainted(false);         //버튼 테두리 없에기
@@ -239,7 +237,7 @@ public class StoreDetail extends JFrame implements ActionListener{
         getContentPane().add(textStoreName);
         getContentPane().add(buttonBack);
         getContentPane().add(mainLabel);
-        //getContentPane().add(labelImageS1);
+        getContentPane().add(labelImageS1);
         getContentPane().add(view_map);
         getContentPane().add(panelMainMint);
         getContentPane().add(panelMainWhite);
