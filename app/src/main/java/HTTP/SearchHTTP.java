@@ -135,6 +135,7 @@ public class SearchHTTP {
 
     /**
      * Store SPK로 겁색하는 메소드
+     *
      * @param spk Long 타입의 Store SPK 번호
      * @return storeDTO 검색된 StoreDTO
      * @throws IOException
@@ -200,7 +201,7 @@ public class SearchHTTP {
         if (response.getStatusLine().getStatusCode() == 200) {
             HttpEntity entity = response.getEntity();
             String responseBody = EntityUtils.toString(entity);
-            StoreDTO results = gson.fromJson(responseBody,StoreDTO.class);
+            StoreDTO results = gson.fromJson(responseBody, StoreDTO.class);
             System.out.println(results);
             return results;
         } else {

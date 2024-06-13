@@ -1,6 +1,7 @@
 package HTTP;
 
-import DTO.*;
+import DTO.MenuDTO;
+import DTO.StoreDTO;
 import Setting.SingleTon;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -14,7 +15,6 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
@@ -28,7 +28,7 @@ public class MenuHTTP {
 
         // DTO Body에 담기
         String json = gson.toJson(menu);
-        StringEntity entity = new StringEntity(json,"UTF-8");
+        StringEntity entity = new StringEntity(json, "UTF-8");
         httpPost.setEntity(entity);
         httpPost.setHeader("Content-Type", "application/json");
 
@@ -68,7 +68,7 @@ public class MenuHTTP {
 
         // DTO Body에 담기
         String json = gson.toJson(menu);
-        StringEntity entity = new StringEntity(json,"UTF-8");
+        StringEntity entity = new StringEntity(json, "UTF-8");
         httpPost.setEntity(entity);
         httpPost.setHeader("Content-Type", "application/json");
 

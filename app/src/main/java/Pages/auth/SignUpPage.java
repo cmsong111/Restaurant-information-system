@@ -1,28 +1,31 @@
-package Pages;
+package Pages.auth;
 
-import DTO.UserDTO;
-import Setting.SingleTon;
+import DTO.UserInfoDto;
+import DTO.UserRequestDto;
+import Setting.Fonts;
+import Setting.RetrofitProvider;
+import api.UserRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import retrofit2.Response;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
-
-import HTTP.UserHTTP;
 
 
 public class SignUpPage extends JFrame implements ActionListener {
 
-    UserDTO userDTO;
-    UserHTTP http = new UserHTTP();
 
     JTextField textID;
     JTextField textPassWord;
     JTextField tx_Age;
     JButton RegisterButton;
     JTextField textName;
+
+    private final UserRepository userRepository = RetrofitProvider.INSTANCE.getUserRetrofit();
+    private final Logger logger = LoggerFactory.getLogger(SignUpPage.class);
 
 
     public SignUpPage() {
@@ -35,11 +38,11 @@ public class SignUpPage extends JFrame implements ActionListener {
         getContentPane().setLayout(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        Font mainFont40 = new Font("배달의민족 도현", Font.PLAIN, 40);   //폰트 설정
-        Font mainFont30 = new Font("배달의민족 도현", Font.PLAIN, 30);
-        Font mainFont26 = new Font("배달의민족 도현", Font.PLAIN, 26);
-        Font mainFont22 = new Font("배달의민족 도현", Font.PLAIN, 22);
-        Font mainFont18 = new Font("배달의민족 도현", Font.PLAIN, 18);
+        Font mainFont40 = Fonts.INSTANCE.getMainFont40();   //폰트 설정
+        Font mainFont30 = Fonts.INSTANCE.getMainFont30();
+        Font mainFont26 = Fonts.INSTANCE.getMainFont26();
+        Font mainFont22 = Fonts.INSTANCE.getMainFont22();
+        Font mainFont18 = Fonts.INSTANCE.getMainFont18();
 
         Color mint = new Color(62, 185, 180); //색상 정하기
         Color gray1 = new Color(192, 192, 192);
@@ -66,25 +69,25 @@ public class SignUpPage extends JFrame implements ActionListener {
         textName.setBounds(482, 220, 300, 43);
         textName.setFont(mainFont22);
         textName.setForeground(gray1);
-        textName.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+        textName.setBorder(BorderFactory.createEmptyBorder());
 
         textID = new JTextField("아이디");
         textID.setBounds(482, 280, 300, 43);
         textID.setFont(mainFont22);
         textID.setForeground(gray1);
-        textID.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+        textID.setBorder(BorderFactory.createEmptyBorder());
 
         textPassWord = new JTextField("비밀번호");
         textPassWord.setBounds(482, 340, 300, 43);
         textPassWord.setFont(mainFont22);
         textPassWord.setForeground(gray1);
-        textPassWord.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+        textPassWord.setBorder(BorderFactory.createEmptyBorder());
 
         tx_Age = new JTextField("나이");
         tx_Age.setBounds(482, 400, 300, 43);
         tx_Age.setFont(mainFont22);
         tx_Age.setForeground(gray1);
-        tx_Age.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+        tx_Age.setBorder(BorderFactory.createEmptyBorder());
 
         RegisterButton = new JButton("회원가입");
         RegisterButton.setBounds(563, 503, 138, 43);
@@ -98,14 +101,13 @@ public class SignUpPage extends JFrame implements ActionListener {
         RegisterButton.addActionListener(this);
 
         JButton buttonBack = new JButton("뒤로가기");
-        buttonBack.setBounds(572,560,120,30);
+        buttonBack.setBounds(572, 560, 120, 30);
         buttonBack.setFont(mainFont18);
         buttonBack.setBorderPainted(false);         //버튼 테두리 없에기
         buttonBack.setContentAreaFilled(false);     //버튼 내부 색 채움 여부
         //buttonBack.setFocusPainted(false);        //버튼 포커스(클릭시 테두리)
         buttonBack.setActionCommand("BackPage");
         buttonBack.addActionListener(this);
-
 
 
         JPanel lineName = new JPanel();
@@ -146,35 +148,36 @@ public class SignUpPage extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         String event = e.getActionCommand();
 
-        if (event.equals("Register")) {
-            UserDTO UserInput = UserDTO.builder()
-                    .id(textID.getText())
-                    .password(textPassWord.getText())
-                    .name(textName.getText())
-                    .age(Integer.parseInt(tx_Age.getText()))
-                    .build();
-            System.out.println("유저가 입력한 값: " + UserInput.toString());
-
-            try {
-                SingleTon.setUser(http.create(UserInput));
-            } catch (IOException t) {
-            } catch (NoSuchAlgorithmException ex) {
-                throw new RuntimeException(ex);
+        try {
+            switch (event) {
+                // 회원가입 요청
+                case "Register":
+                    UserRequestDto userRequestDto = new UserRequestDto(
+                            textName.getText(),
+                            textID.getText(),
+                            textPassWord.getText()
+                    );
+                    logger.info("회원가입 요청: {}", userRequestDto.toString());
+                    Response<UserInfoDto> response = userRepository.register(userRequestDto).execute();
+                    if (response.code() == 200) {
+                        JOptionPane.showMessageDialog(null, "SIGNUP Successes.\nhello\n" + response.body().getName());
+                        this.setVisible(false);
+                        new LoginPage();
+                    } else {
+                        JOptionPane.showMessageDialog(null, "SIGNUP fail.");
+                    }
+                    break;
+                // 뒤로가기
+                case "BackPage":
+                    dispose();
+                    new LoginPage();
+                    break;
+                // 예외처리
+                default:
+                    logger.error("actionPerformed: {}", event);
             }
-            if (SingleTon.getUser().getUpk() != 0L) {
-                JOptionPane.showMessageDialog(null, "SIGNUP Successes.\nhello\n" + SingleTon.getUser().getName());
-                this.setVisible(false);
-                //로그인 창 생성
-                LoginPage LP = new LoginPage();
-
-            } else {
-                JOptionPane.showMessageDialog(null, "SIGNUP fail.");
-            }
+        } catch (Exception exception) {
+            logger.error(exception.getMessage());
         }
-        if (event.equals("BackPage")) {
-            dispose();
-            LoginPage LP = new LoginPage();
-        }
-
     }
 }

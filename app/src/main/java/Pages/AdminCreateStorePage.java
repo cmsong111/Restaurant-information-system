@@ -1,7 +1,6 @@
 package Pages;
 
 import DTO.StoreDTO;
-import DTO.UserDTO;
 import HTTP.StoreHTTP;
 import Setting.SingleTon;
 
@@ -12,10 +11,11 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
-import java.util.List;
 
 public class AdminCreateStorePage extends JFrame implements ActionListener, ItemListener {
+    public static boolean resonable = false;
+    public static boolean child = false;
+    public static boolean model = false;
     JTextField textStoreLocation1;
     JTextField textStoreName;
     JTextField textStoreLocation2;
@@ -24,24 +24,20 @@ public class AdminCreateStorePage extends JFrame implements ActionListener, Item
     JButton buttonBack;
     StoreDTO myStore;
     JComboBox<String> setCategory;
-    String[] cate={"--카테고리 설정--","한식", "중식", "일식", "제과점", "패스트푸드", "일반대중음식"};
-
+    String[] cate = {"--카테고리 설정--", "한식", "중식", "일식", "제과점", "패스트푸드", "일반대중음식"};
     JCheckBox resonable_Price; // 착한가격
     JCheckBox forChild; // 아동급식카드
     JCheckBox roleModel; // 모범음식점
-    public static boolean resonable = false;
-    public static boolean child = false;
-    public static boolean model = false;
-    StoreHTTP createMine=new StoreHTTP();
+    StoreHTTP createMine = new StoreHTTP();
 
-    public AdminCreateStorePage(){
-        try{
+    public AdminCreateStorePage() {
+        try {
             AdminCreateStorePage();
-        } catch (Exception e){
+        } catch (Exception e) {
         }
     }
 
-    public void AdminCreateStorePage(){
+    public void AdminCreateStorePage() {
 
         setTitle("TestMain Screen");
         setSize(1280, 720);
@@ -50,34 +46,34 @@ public class AdminCreateStorePage extends JFrame implements ActionListener, Item
         getContentPane().setLayout(null);
         //setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        Font mainFont40 = new Font("Consolas",Font.PLAIN,40);   //폰트 설정
-        Font mainFont30 = new Font("Consolas",Font.PLAIN,30);
-        Font mainFont26 = new Font("Consolas",Font.PLAIN,26);
-        Font textFont22 = new Font("배달의민족 도현",Font.PLAIN,22);
-        Font mainFont22 = new Font("Consolas",Font.PLAIN,22);
-        Font mainFont18 = new Font("맑은 고딕",Font.PLAIN,18);
-        Font mainFont14 = new Font("맑은 고딕",Font.PLAIN,14);
+        Font mainFont40 = new Font("Consolas", Font.PLAIN, 40);   //폰트 설정
+        Font mainFont30 = new Font("Consolas", Font.PLAIN, 30);
+        Font mainFont26 = new Font("Consolas", Font.PLAIN, 26);
+        Font textFont22 = new Font("배달의민족 도현", Font.PLAIN, 22);
+        Font mainFont22 = new Font("Consolas", Font.PLAIN, 22);
+        Font mainFont18 = new Font("맑은 고딕", Font.PLAIN, 18);
+        Font mainFont14 = new Font("맑은 고딕", Font.PLAIN, 14);
 
-        Color mint = new Color(62,185,180); //색상 정하기
-        Color gray1 = new Color(192,192,192);
-        Color darkMode = new Color(43,43,43);
-        Color darkModeBack = new Color(60,63,65);
-        Color darkModeText = new Color(135,147,154);
+        Color mint = new Color(62, 185, 180); //색상 정하기
+        Color gray1 = new Color(192, 192, 192);
+        Color darkMode = new Color(43, 43, 43);
+        Color darkModeBack = new Color(60, 63, 65);
+        Color darkModeText = new Color(135, 147, 154);
 
         JLabel mainLabel = new JLabel("Restaurant Information System");
         mainLabel.setHorizontalAlignment(JLabel.CENTER);
-        mainLabel.setBounds(282,30,700,70);         //나머지 페이지들도 적용
+        mainLabel.setBounds(282, 30, 700, 70);         //나머지 페이지들도 적용
         mainLabel.setFont(mainFont40);
         mainLabel.setForeground(Color.white);
 
         JLabel labelAdmin = new JLabel("-Admin Store Create Page-");
         labelAdmin.setHorizontalAlignment(JLabel.CENTER);
-        labelAdmin.setBounds(382,100,500,100);
+        labelAdmin.setBounds(382, 100, 500, 100);
         labelAdmin.setFont(mainFont26);
         labelAdmin.setForeground(darkModeText);
 
-        setCategory=new JComboBox<String>(cate);
-        setCategory.setBounds(382,190,200,20);
+        setCategory = new JComboBox<String>(cate);
+        setCategory.setBounds(382, 190, 200, 20);
         setCategory.addActionListener(this);
         setCategory.setActionCommand("location");
 
@@ -145,7 +141,7 @@ public class AdminCreateStorePage extends JFrame implements ActionListener, Item
         createStoreButton.addActionListener(this);
 
         buttonBack = new JButton("Cancel");
-        buttonBack.setBounds(572,560,120,30);
+        buttonBack.setBounds(572, 560, 120, 30);
         buttonBack.setFont(mainFont22);
         buttonBack.setBorderPainted(false);         //버튼 테두리 없에기
         //buttonBack.setContentAreaFilled(false);     //버튼 내부 색 채움 여부
@@ -192,6 +188,7 @@ public class AdminCreateStorePage extends JFrame implements ActionListener, Item
         setResizable(false);    //화면 크기 고정
         setVisible(true);
     }
+
     public void actionPerformed(ActionEvent e) {
 
         String event = e.getActionCommand();
@@ -211,19 +208,19 @@ public class AdminCreateStorePage extends JFrame implements ActionListener, Item
                     .build();
             //System.out.println("유저가 입력한 값: " + UserInput.toString());
             try {
-                myStore=createMine.createStore(mine);
-            } catch (IOException t) {}
+                myStore = createMine.createStore(mine);
+            } catch (IOException t) {
+            }
 
-            if (myStore!=null) {
-                JOptionPane.showMessageDialog(null, "Store "+textStoreName.getText()+" 생성 성공!");
+            if (myStore != null) {
+                JOptionPane.showMessageDialog(null, "Store " + textStoreName.getText() + " 생성 성공!");
                 //SingleTon.getUser().getSpk().add(0,myStore.getSpk());
                 dispose();
                 AdminPage AP = new AdminPage();
             } else {
                 JOptionPane.showMessageDialog(null, "생성 실패");
             }
-        }
-        else if (event.equals("BackPage")) {
+        } else if (event.equals("BackPage")) {
             dispose();
             AdminPage AP = new AdminPage();
         }

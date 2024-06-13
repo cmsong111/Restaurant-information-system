@@ -2,7 +2,11 @@ package Pages;
 
 import DTO.StoreDTO;
 import HTTP.SearchHTTP;
-import Setting.SingleTon;
+import Pages.auth.LoginPage;
+import Setting.Auth;
+import Setting.Fonts;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,6 +16,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.io.IOException;
 import java.util.ArrayList;
+
 
 enum HowSearch {
     SEARCH_BY_NAME,
@@ -26,12 +31,13 @@ enum HowSearch {
 
 public class MainPage extends JFrame implements ActionListener, ItemListener {
 
-    Font mainFont40;
-    Font mainFont30;
-    Font mainFont20;
-    Font searchIconFont;
-    Font searchFont30;
-    Font buttonFont;
+    private static final Logger log = LoggerFactory.getLogger(MainPage.class);
+    static public ArrayList<StoreDTO> storeList = new ArrayList<>(); //스토어 목록
+    //체크박스
+    public static boolean local_Currency = false;
+    public static boolean forChild = false;
+    public static boolean roleModel = false;
+
     JComboBox<String> selectLocation;
     JTextField textMainSearch; //search_bar
     JButton quickSearch; // bar_button
@@ -46,19 +52,15 @@ public class MainPage extends JFrame implements ActionListener, ItemListener {
     JCheckBox mainButton_ZC; // 모범음식점
     HowSearch search_State; // 검색 조건
     StoreDTO store;
-    StoreDTO today=new StoreDTO();
-    String selectedlocation="부산진구";
+    StoreDTO today = new StoreDTO();
+    String selectedlocation = "부산진구";
     SearchHTTP httpStore = new SearchHTTP();
-    static public ArrayList<StoreDTO> storeList = new ArrayList<>(); //스토어 목록
-    //체크박스
-    public static boolean local_Currency = false;
-    public static boolean forChild = false;
-    public static boolean roleModel = false;
 
     public MainPage() {
         try {
             init();
         } catch (Exception e) {
+            log.error("MainPage error", e);
         }
     }
 
@@ -70,12 +72,6 @@ public class MainPage extends JFrame implements ActionListener, ItemListener {
         getContentPane().setLayout(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        mainFont40 = new Font("배달의민족 도현", Font.PLAIN, 40);   //폰트 설정
-        mainFont30 = new Font("배달의민족 도현", Font.PLAIN, 30);
-        mainFont20 = new Font("배달의민족 도현", Font.PLAIN, 22);
-        searchFont30 = new Font("맑은 고딕", Font.BOLD, 30);
-        searchIconFont = new Font("Segoe MDL2 Assets",Font.PLAIN, 20);
-        buttonFont = new Font("배달의민족 도현",Font.PLAIN,20);
 
         Color mint = new Color(62, 185, 180);
         Color gray1 = new Color(192, 192, 192);
@@ -97,23 +93,23 @@ public class MainPage extends JFrame implements ActionListener, ItemListener {
         JLabel labelMain = new JLabel("오점뭐 (오늘 점심 뭐 먹지)");
         labelMain.setBounds(382, 34, 500, 100);
         labelMain.setHorizontalAlignment(JLabel.CENTER);
-        labelMain.setFont(mainFont40);
+        labelMain.setFont(Fonts.INSTANCE.getMainFont40());
 
-        String locations[]={"부산진구", "사상구","해운대구","북구", "사하구","남구", "서구","동구","연제구", "중구","기장군","수영구", "금정구","영도구", "강서구"};
-        selectLocation=new JComboBox<String>(locations);
-        selectLocation.setBounds(370,105,100,20);
+        String locations[] = {"부산진구", "사상구", "해운대구", "북구", "사하구", "남구", "서구", "동구", "연제구", "중구", "기장군", "수영구", "금정구", "영도구", "강서구"};
+        selectLocation = new JComboBox<String>(locations);
+        selectLocation.setBounds(370, 105, 100, 20);
         selectLocation.addActionListener(this);
         selectLocation.setActionCommand("location");
 
         textMainSearch = new JTextField("상호명 검색");
         textMainSearch.setBounds(378, 125, 420, 43);
         textMainSearch.setBorder(javax.swing.BorderFactory.createEmptyBorder());
-        textMainSearch.setFont(mainFont30);
+        textMainSearch.setFont(Fonts.INSTANCE.getMainFont30());
         textMainSearch.setForeground(gray1);
 
         quickSearch = new JButton("\uE71E");
         quickSearch.setBounds(831, 130, 60, 34);
-        quickSearch.setFont(searchIconFont);
+        quickSearch.setFont(Fonts.INSTANCE.getMainFont30());
         //quickSearch.setBorderPainted(false);      //버튼 테두리 없에기
         quickSearch.setContentAreaFilled(false);
         quickSearch.setActionCommand("bSearch");
@@ -124,7 +120,7 @@ public class MainPage extends JFrame implements ActionListener, ItemListener {
         buttonEditUser.setBounds(1020, 50, 180, 40);
         buttonEditUser.setVerticalTextPosition(JButton.BOTTOM);
         buttonEditUser.setHorizontalTextPosition(JButton.CENTER);
-        buttonEditUser.setFont(buttonFont);
+        buttonEditUser.setFont(Fonts.INSTANCE.getButtonFont());
         buttonEditUser.setBorderPainted(false);      //버튼 테두리 없에기
         //buttonEditUser.setContentAreaFilled(false);
         buttonEditUser.setBackground(mint);
@@ -137,7 +133,7 @@ public class MainPage extends JFrame implements ActionListener, ItemListener {
         mainButton_kr.setBounds(411, 210, 107, 100);
         mainButton_kr.setVerticalTextPosition(JButton.BOTTOM);
         mainButton_kr.setHorizontalTextPosition(JButton.CENTER);
-        mainButton_kr.setFont(mainFont20);
+        mainButton_kr.setFont(Fonts.INSTANCE.getMainFont22());
         mainButton_kr.setBorderPainted(false);      //버튼 테두리 없에기
         mainButton_kr.setContentAreaFilled(false);
         mainButton_kr.setActionCommand("bKorean");
@@ -148,7 +144,7 @@ public class MainPage extends JFrame implements ActionListener, ItemListener {
         mainButton_ch.setBounds(575, 210, 107, 100);
         mainButton_ch.setVerticalTextPosition(JButton.BOTTOM);
         mainButton_ch.setHorizontalTextPosition(JButton.CENTER);
-        mainButton_ch.setFont(mainFont20);
+        mainButton_ch.setFont(Fonts.INSTANCE.getMainFont22());
         mainButton_ch.setBorderPainted(false);      //버튼 테두리 없에기
         mainButton_ch.setContentAreaFilled(false);
         mainButton_ch.setActionCommand("bChinese");
@@ -159,7 +155,7 @@ public class MainPage extends JFrame implements ActionListener, ItemListener {
         mainButton_jp.setBounds(721, 210, 107, 100);
         mainButton_jp.setVerticalTextPosition(JButton.BOTTOM);
         mainButton_jp.setHorizontalTextPosition(JButton.CENTER);
-        mainButton_jp.setFont(mainFont20);
+        mainButton_jp.setFont(Fonts.INSTANCE.getMainFont22());
         mainButton_jp.setBorderPainted(false);      //버튼 테두리 없에기
         mainButton_jp.setContentAreaFilled(false);
         mainButton_jp.setActionCommand("bJapanese");
@@ -170,7 +166,7 @@ public class MainPage extends JFrame implements ActionListener, ItemListener {
         mainButton_DS.setBounds(406, 307, 115, 100);
         mainButton_DS.setVerticalTextPosition(JButton.BOTTOM);
         mainButton_DS.setHorizontalTextPosition(JButton.CENTER);
-        mainButton_DS.setFont(mainFont20);
+        mainButton_DS.setFont(Fonts.INSTANCE.getMainFont22());
         mainButton_DS.setBorderPainted(false);      //버튼 테두리 없에기
         mainButton_DS.setContentAreaFilled(false);
         mainButton_DS.setActionCommand("bDessert");
@@ -181,7 +177,7 @@ public class MainPage extends JFrame implements ActionListener, ItemListener {
         mainButton_FD.setBounds(558, 307, 140, 100);
         mainButton_FD.setVerticalTextPosition(JButton.BOTTOM);
         mainButton_FD.setHorizontalTextPosition(JButton.CENTER);
-        mainButton_FD.setFont(mainFont20);
+        mainButton_FD.setFont(Fonts.INSTANCE.getMainFont22());
         mainButton_FD.setBorderPainted(false);      //버튼 테두리 없에기
         mainButton_FD.setContentAreaFilled(false);
         mainButton_FD.setActionCommand("bFastfood");
@@ -192,7 +188,7 @@ public class MainPage extends JFrame implements ActionListener, ItemListener {
         mainButton_SB.setBounds(721, 307, 107, 100);
         mainButton_SB.setVerticalTextPosition(JButton.BOTTOM);
         mainButton_SB.setHorizontalTextPosition(JButton.CENTER);
-        mainButton_SB.setFont(mainFont20);
+        mainButton_SB.setFont(Fonts.INSTANCE.getMainFont22());
         mainButton_SB.setBorderPainted(false);      //버튼 테두리 없에기
         mainButton_SB.setContentAreaFilled(false);
         mainButton_SB.setActionCommand("bSnackfood");
@@ -201,7 +197,7 @@ public class MainPage extends JFrame implements ActionListener, ItemListener {
 
         mainButton_DC = new JCheckBox("착한가격");
         mainButton_DC.setBounds(406, 450, 110, 34);
-        mainButton_DC.setFont(mainFont20);
+        mainButton_DC.setFont(Fonts.INSTANCE.getMainFont22());
         mainButton_DC.setBorderPainted(false);      //버튼 테두리 없에기
         mainButton_DC.setContentAreaFilled(false);
         mainButton_DC.addItemListener(this);
@@ -209,7 +205,7 @@ public class MainPage extends JFrame implements ActionListener, ItemListener {
 
         mainButton_CC = new JCheckBox("아동급식카드");
         mainButton_CC.setBounds(543, 450, 170, 34);
-        mainButton_CC.setFont(mainFont20);
+        mainButton_CC.setFont(Fonts.INSTANCE.getMainFont22());
         mainButton_CC.setBorderPainted(false);      //버튼 테두리 없에기
         mainButton_CC.setContentAreaFilled(false);
         mainButton_CC.addItemListener(this);
@@ -217,7 +213,7 @@ public class MainPage extends JFrame implements ActionListener, ItemListener {
 
         mainButton_ZC = new JCheckBox("모범음식점");
         mainButton_ZC.setBounds(709, 450, 130, 34);
-        mainButton_ZC.setFont(mainFont20);
+        mainButton_ZC.setFont(Fonts.INSTANCE.getMainFont22());
         mainButton_ZC.setBorderPainted(false);      //버튼 테두리 없에기
         mainButton_ZC.setContentAreaFilled(false);
         mainButton_ZC.addItemListener(this);
@@ -225,15 +221,15 @@ public class MainPage extends JFrame implements ActionListener, ItemListener {
 
         JButton mainButton_Search = new JButton("식당 찾기");
         mainButton_Search.setBounds(563, 503, 138, 43);
-        mainButton_Search.setFont(mainFont20);
+        mainButton_Search.setFont(Fonts.INSTANCE.getMainFont22());
         mainButton_Search.setBackground(mint);
         mainButton_Search.setBorderPainted(false);
         mainButton_Search.setActionCommand("VIEW_LIST");
         mainButton_Search.addActionListener(this);
 
         JButton mainButton_Random = new JButton("오늘의 추천 메뉴");
-        mainButton_Random.setBounds(502, 570, 260, 53);
-        mainButton_Random.setFont(mainFont30);
+        mainButton_Random.setBounds(482, 570, 300, 53);
+        mainButton_Random.setFont(Fonts.INSTANCE.getMainFont30());
         mainButton_Random.setForeground(Color.YELLOW);
         mainButton_Random.setBackground(mint);
         mainButton_Random.setBorderPainted(false);
@@ -242,7 +238,7 @@ public class MainPage extends JFrame implements ActionListener, ItemListener {
 
         JButton buttonAdminPage = new JButton("관리자 화면");
         buttonAdminPage.setBounds(1020, 100, 180, 40);
-        buttonAdminPage.setFont(buttonFont);
+        buttonAdminPage.setFont(Fonts.INSTANCE.getButtonFont());
         buttonAdminPage.setBackground(mint);
 
         buttonAdminPage.setBorderPainted(false);
@@ -250,13 +246,13 @@ public class MainPage extends JFrame implements ActionListener, ItemListener {
         buttonAdminPage.addActionListener(this);
         buttonAdminPage.setVisible(false);      //관리자 페이지 버튼 기본 비활성
 
-        if (SingleTon.getUser().isAdmin() == true) {   //어드민 계정일 경우, 관리자 페이지 버튼 표시
+        if (Auth.INSTANCE.getUser().getRole().contains("ADMIN")) {  //어드민 계정일 경우, 관리자 페이지 버튼 표시
             buttonAdminPage.setVisible(true);
         }
 
         JButton buttonSuperAdminPage = new JButton("최고 관리자 화면");
         buttonSuperAdminPage.setBounds(1020, 150, 180, 40);
-        buttonSuperAdminPage.setFont(buttonFont);
+        buttonSuperAdminPage.setFont(Fonts.INSTANCE.getButtonFont());
         buttonSuperAdminPage.setBackground(mint);
 
         buttonSuperAdminPage.setBorderPainted(false);
@@ -264,20 +260,20 @@ public class MainPage extends JFrame implements ActionListener, ItemListener {
         buttonSuperAdminPage.addActionListener(this);
         buttonSuperAdminPage.setVisible(false);      //관리자 페이지 버튼 기본 비활성
 
-        if (SingleTon.getUser().getUpk()==1L) {   //어드민 계정일 경우, 관리자 페이지 버튼 표시
+        if (Auth.INSTANCE.getUser().getRole().contains("ADMIN")) {   //어드민 계정일 경우, 관리자 페이지 버튼 표시
             buttonSuperAdminPage.setVisible(true);
         }
 
         JButton buttonLogout = new JButton("로그아웃");
         buttonLogout.setBounds(1020, 100, 180, 40);
-        if (SingleTon.getUser().isAdmin() == true) {   //어드민 계정일 경우, 관리자 페이지 버튼 표시
+        if (Auth.INSTANCE.getUser().getRole().contains("ADMIN")) {   //어드민 계정일 경우, 관리자 페이지 버튼 표시
             buttonLogout.setBounds(1020, 150, 180, 40);
         }
-        if (SingleTon.getUser().getUpk()==1L) {   //어드민 계정일 경우, 관리자 페이지 버튼 표시
+        if (Auth.INSTANCE.getUser().getRole().contains("ADMIN")) {   //어드민 계정일 경우, 관리자 페이지 버튼 표시
             buttonLogout.setBounds(1020, 200, 180, 40);
         }
 
-        buttonLogout.setFont(buttonFont);
+        buttonLogout.setFont(Fonts.INSTANCE.getButtonFont());
         buttonLogout.setContentAreaFilled(false);
         //buttonLogout.setBackground(mint);
 
@@ -285,7 +281,6 @@ public class MainPage extends JFrame implements ActionListener, ItemListener {
         buttonLogout.setActionCommand("Logout");
         buttonLogout.addActionListener(this);
         buttonLogout.setVisible(true);
-
 
 
         getContentPane().setBackground(mint);
@@ -339,7 +334,7 @@ public class MainPage extends JFrame implements ActionListener, ItemListener {
                 SuperAdminPage SAP = new SuperAdminPage();
                 break;
             case "location":
-                selectedlocation=selectLocation.getSelectedItem().toString();
+                selectedlocation = selectLocation.getSelectedItem().toString();
                 break;
             case "Logout":
                 dispose();
@@ -384,13 +379,13 @@ public class MainPage extends JFrame implements ActionListener, ItemListener {
                 break;
 
             case "TODAY MENU":
-                search_State=HowSearch.SEARCH_TODAYSPECIAL;
+                search_State = HowSearch.SEARCH_TODAYSPECIAL;
                 Set_Storelist();
-                if (today.equals(null)){
-                    JOptionPane.showMessageDialog(null, "검색 결과가 없습니다.");}
-                else {
+                if (today.equals(null)) {
+                    JOptionPane.showMessageDialog(null, "검색 결과가 없습니다.");
+                } else {
                     dispose();
-                    StoreDetail SF = new StoreDetail(today);
+                     new StoreDetail(today);
                 }
                 break;
         }
@@ -418,14 +413,12 @@ public class MainPage extends JFrame implements ActionListener, ItemListener {
                 //반환값이 여러개임
             } catch (IOException t) {
             }
-        }
-        else if(search_State.equals(HowSearch.SEARCH_TODAYSPECIAL)){
+        } else if (search_State.equals(HowSearch.SEARCH_TODAYSPECIAL)) {
             try {
-                 today= (httpStore.searchStoreByLocation("부산광역시",selectedlocation));
+                today = (httpStore.searchStoreByLocation("부산광역시", selectedlocation));
             } catch (IOException t) {
             }
-        }
-        else if(!search_State.equals(HowSearch.SEARCH_BY_NAME)&&!search_State.equals(HowSearch.SEARCH_TODAYSPECIAL)&&roleModel==false&&forChild==false&&local_Currency==false){
+        } else if (!search_State.equals(HowSearch.SEARCH_BY_NAME) && !search_State.equals(HowSearch.SEARCH_TODAYSPECIAL) && roleModel == false && forChild == false && local_Currency == false) {
             try {
                 String temp = "한식";
                 if (search_State.equals(HowSearch.SEARCH_KOREAN)) temp = "한식";
@@ -443,8 +436,7 @@ public class MainPage extends JFrame implements ActionListener, ItemListener {
                 //반환값이 여러개임
             } catch (IOException t) {
             }
-        }
-        else { //필터링 검색
+        } else { //필터링 검색
             try {
                 String temp = "한식";
                 if (search_State.equals(HowSearch.SEARCH_KOREAN)) temp = "한식";

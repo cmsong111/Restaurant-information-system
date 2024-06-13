@@ -1,22 +1,19 @@
 package Setting;
 
+import DTO.UserDTO;
 import lombok.Getter;
 import lombok.Setter;
-import DTO.*;
-
-import java.util.ArrayList;
 
 public class SingleTon {
 
-    private SingleTon() {
-    }
-
     @Getter
-    private static final String BaseURL = "http://113.198.230.14:5001";
-
+    private static final String BaseURL = "http://127.0.0.1:8080";
     @Getter
     @Setter
     private static UserDTO user;
+
+    private SingleTon() {
+    }
 
 
 }

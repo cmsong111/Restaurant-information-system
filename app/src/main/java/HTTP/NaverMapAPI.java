@@ -11,7 +11,10 @@ import org.json.simple.parser.ParseException;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.io.*;
+import java.io.BufferedInputStream;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.Reader;
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -36,11 +39,11 @@ public class NaverMapAPI {
                 .addParameter("center", String.valueOf(locationX) + "," + String.valueOf(locationY))
                 .addParameter("level", "14")
                 .addParameter("scale", "1")
-                .addParameter("markers","pos:"+String.valueOf(locationX) + " " + String.valueOf(locationY))
+                .addParameter("markers", "pos:" + String.valueOf(locationX) + " " + String.valueOf(locationY))
                 .build();
         httpget.setURI(uri);
-        httpget.setHeader("X-NCP-APIGW-API-KEY-ID",jsonObject.get("X-NCP-APIGW-API-KEY-ID").toString());
-        httpget.setHeader("X-NCP-APIGW-API-KEY",jsonObject.get("X-NCP-APIGW-API-KEY").toString());
+        httpget.setHeader("X-NCP-APIGW-API-KEY-ID", jsonObject.get("X-NCP-APIGW-API-KEY-ID").toString());
+        httpget.setHeader("X-NCP-APIGW-API-KEY", jsonObject.get("X-NCP-APIGW-API-KEY").toString());
 
         // HTTP GET method 실행
         HttpResponse response = Client.execute(httpget);

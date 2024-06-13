@@ -1,36 +1,37 @@
-package Pages;
+package Pages.auth;
 
 
-import DTO.UserDTO;
-import Setting.SingleTon;
+import DTO.TokenDto;
+import DTO.UserInfoDto;
+import Pages.MainPage;
+import Setting.Auth;
+import Setting.Fonts;
+import Setting.RetrofitProvider;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import retrofit2.Response;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
 
-import HTTP.UserHTTP;
-
+/**
+ * 로그인 페이지
+ */
 public class LoginPage extends JFrame implements ActionListener {
+    private final Logger logger = LoggerFactory.getLogger(LoginPage.class);
+
     JLabel mainlabel1;
     JTextField tx_ID;
     JPasswordField tx_PassWord;
-    UserDTO userSingIn;
-    UserHTTP httpLogIn = new UserHTTP();
     JButton LoginButton;
     JButton RegisterButton;
 
+    /**
+     * 생성자
+     */
     public LoginPage() {
-        try {
-            init();
-        } catch (Exception e) {
-        }
-
-    }
-
-    public void init() {
         setTitle("LoginTest Screen");
         setSize(1280, 720);
 
@@ -46,10 +47,6 @@ public class LoginPage extends JFrame implements ActionListener {
         lineID.setBounds(200, 330, 300, 2);
         linePW.setBounds(200, 430, 300, 2);
 
-        Font mainFont40 = new Font("배달의민족 도현", Font.PLAIN, 40);   //폰트 설정
-        Font mainFont20 = new Font("배달의민족 도현", Font.PLAIN, 22);
-        Font mainFont30 = new Font("배달의민족 도현", Font.PLAIN, 30);
-        Font passWordFont = new Font("맑은 고딕",Font.BOLD,22);
 
         Color mint = new Color(62, 185, 180); //색상 정하기
         Color gray1 = new Color(192, 192, 192);
@@ -57,16 +54,16 @@ public class LoginPage extends JFrame implements ActionListener {
 
         mainlabel1 = new JLabel("오점뭐 (오늘 점심 뭐 먹지)");
         mainlabel1.setBounds(140, 56, 619, 61);
-        mainlabel1.setFont(mainFont40);
+        mainlabel1.setFont(Fonts.INSTANCE.getMainFont40());
 
-        tx_ID = new JTextField("아이디");
+        tx_ID = new JTextField("email");
         tx_ID.setBounds(200, 280, 300, 43);
-        tx_ID.setFont(mainFont20);
+        tx_ID.setFont(Fonts.INSTANCE.getMainFont20());
         tx_ID.setForeground(gray1);
 
-        tx_PassWord = new JPasswordField("비밀번호");
+        tx_PassWord = new JPasswordField("password");
         tx_PassWord.setBounds(200, 380, 300, 43);
-        tx_PassWord.setFont(passWordFont);
+        tx_PassWord.setFont(Fonts.INSTANCE.getPassWordFont());
         tx_PassWord.setForeground(gray1);
 
         tx_ID.setBorder(javax.swing.BorderFactory.createEmptyBorder());
@@ -74,7 +71,7 @@ public class LoginPage extends JFrame implements ActionListener {
 
         LoginButton = new JButton("로그인");
         LoginButton.setBounds(290, 490, 115, 34);
-        LoginButton.setFont(mainFont20);
+        LoginButton.setFont(Fonts.INSTANCE.getMainFont20());
 
         LoginButton.setBorderPainted(false);      //버튼 테두리 없에기
         LoginButton.setContentAreaFilled(false);
@@ -84,7 +81,7 @@ public class LoginPage extends JFrame implements ActionListener {
 
         RegisterButton = new JButton("회원가입");
         RegisterButton.setBounds(285, 540, 130, 34);
-        RegisterButton.setFont(mainFont20);
+        RegisterButton.setFont(Fonts.INSTANCE.getMainFont20());
 
         RegisterButton.setBorderPainted(false);      //버튼 테두리 없에기
         RegisterButton.setActionCommand("signUp");
@@ -115,41 +112,58 @@ public class LoginPage extends JFrame implements ActionListener {
         setVisible(true);
     }
 
-    ;
 
+    /**
+     * 이벤트 처리
+     *
+     * @param e the event to be processed
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
-
         String event = e.getActionCommand();
+        try {
+            switch (event) {
+                case "signIn":
+                    Response<TokenDto> response = RetrofitProvider.INSTANCE.getUserRetrofit().login(tx_ID.getText(), tx_PassWord.getText()).execute();
 
+                    //  로그인 실패
+                    if (response.code() != 200) {
+                        JOptionPane.showMessageDialog(null, "로그인 실패");
+                        return;
+                    }
 
-        if (event.equals("signIn")) {
-            try {
-                userSingIn = UserDTO.builder()
-                        .id(tx_ID.getText())
-                        .password(tx_PassWord.getText())
-                        .build();
-                SingleTon.setUser(httpLogIn.login(userSingIn));
-                System.out.println(SingleTon.getUser().toString());
+                    // Auth 싱글턴 객체에 아이디, 비밀번호, 토큰 저장
+                    Auth.INSTANCE.setEmail(tx_ID.getText());
+                    Auth.INSTANCE.setPassword(tx_PassWord.getText());
+                    Auth.INSTANCE.setToken("Bearer " + response.body().getToken());
 
-            }catch (IOException t){}
-            catch (NoSuchAlgorithmException ex) {
-                throw new RuntimeException(ex);
+                    // 사용자 정보 요청
+                    Response<UserInfoDto> response2 = RetrofitProvider.INSTANCE.getUserRetrofit().getUser("Bearer " + response.body().getToken()).execute();
+
+                    //  사용자 정보 저장
+                    if (response2.code() != 200) {
+                        JOptionPane.showMessageDialog(null, "사용자 정보 요청 실패");
+                        return;
+                    }
+                    // 사용자 정보 저장
+                    Auth.INSTANCE.setUser(response2.body());
+
+                    // 메인 페이지로 이동
+                    new MainPage();
+                    this.dispose();
+                    break;
+                case "signUp":
+                    dispose();
+                    new SignUpPage();
+                    break;
+                default:
+                    logger.error("알 수 없는 이벤트 발생");
+                    break;
             }
-            if (SingleTon.getUser().getUpk()!=0L) {
-
-                JOptionPane.showMessageDialog(null, "Welcome. " + SingleTon.getUser().getName());
-                this.setVisible(false);
-                MainPage LP = new MainPage();
-
-            } else {
-                JOptionPane.showMessageDialog(null, "아이디/비밀번호가 일치하지 않습니다");
-            }
-        } else if (event.equals("signUp")) {
-            dispose();
-            SignUpPage SP = new SignUpPage();
+        } catch (Exception t) {
+            logger.error(t.getMessage());
         }
-
     }
 }
+
 
