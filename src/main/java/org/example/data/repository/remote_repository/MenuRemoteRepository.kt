@@ -2,7 +2,7 @@ package org.example.data.repository.remote_repository
 
 import org.example.data.dto.menu.MenuRequestDto
 import org.example.data.dto.menu.MenuResponseDto
-import org.example.data.repository.local_repository.UserRepository
+import org.example.data.repository.local_repository.UserLocalRepository
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -31,7 +31,7 @@ interface MenuRemoteRepository {
     fun registerMenu(
         @Path("storeId") storeId: Long,
         @Body menuRequestDto: MenuRequestDto,
-        @Header("Authorization") token: String = UserRepository.token!!
+        @Header("Authorization") token: String = UserLocalRepository.token!!
     ): Call<MenuResponseDto>
 
     /**
@@ -45,7 +45,7 @@ interface MenuRemoteRepository {
     fun deleteMenu(
         @Path("storeId") storeId: Long,
         @Path("menuId") menuId: Long,
-        @Header("Authorization") token: String = UserRepository.token!!
+        @Header("Authorization") token: String = UserLocalRepository.token!!
     ): Call<Unit>
 
     /**
@@ -61,6 +61,6 @@ interface MenuRemoteRepository {
         @Path("storeId") storeId: Long,
         @Path("menuId") menuId: Long,
         @Body menuRequestDto: MenuRequestDto,
-        @Header("Authorization") token: String = UserRepository.token!!
+        @Header("Authorization") token: String = UserLocalRepository.token!!
     ): Call<MenuResponseDto>
 }

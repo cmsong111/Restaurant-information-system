@@ -3,7 +3,7 @@ package org.example.data.repository.remote_repository
 import org.example.data.dto.user.TokenDto
 import org.example.data.dto.user.UserInfoDto
 import org.example.data.dto.user.UserRequestDto
-import org.example.data.repository.local_repository.UserRepository
+import org.example.data.repository.local_repository.UserLocalRepository
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -40,7 +40,7 @@ interface UserRemoteRepository {
      */
     @GET("/user")
     fun getUser(
-        @Header("Authorization") token: String = UserRepository.token!!
+        @Header("Authorization") token: String = UserLocalRepository.token!!
     ): Call<UserInfoDto>
 
     /**
@@ -48,7 +48,7 @@ interface UserRemoteRepository {
      */
     @DELETE("/user")
     fun deleteUser(
-        @Header("Authorization") token: String = UserRepository.token!!
+        @Header("Authorization") token: String = UserLocalRepository.token!!
     ): Call<String>
 
     /**
@@ -56,7 +56,7 @@ interface UserRemoteRepository {
      */
     @PATCH("/user")
     fun updateUser(
-        @Header("Authorization") token: String = UserRepository.token!!,
+        @Header("Authorization") token: String = UserLocalRepository.token!!,
         @Body userRequestDto: UserRequestDto
     ): Call<UserInfoDto>
 }

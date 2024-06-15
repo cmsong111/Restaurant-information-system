@@ -4,7 +4,7 @@ import org.example.data.dto.store.FoodType
 import org.example.data.dto.store.StoreHeaderDto
 import org.example.data.dto.store.StoreRequestDto
 import org.example.data.dto.store.StoreResponseDto
-import org.example.data.repository.local_repository.UserRepository
+import org.example.data.repository.local_repository.UserLocalRepository
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -26,8 +26,8 @@ interface StoreRemoteRepository {
      */
     @GET("/store")
     fun getStoreList(
-        @Query("latitude") latitude: Double? = UserRepository.location!!.latitude,
-        @Query("longitude") longitude: Double? = UserRepository.location!!.longitude,
+        @Query("latitude") latitude: Double? = UserLocalRepository.location!!.latitude,
+        @Query("longitude") longitude: Double? = UserLocalRepository.location!!.longitude,
         @Query("name") name: String? = null,
         @Query("category") category: FoodType? = null,
     ): Call<MutableList<StoreHeaderDto>>
@@ -39,7 +39,7 @@ interface StoreRemoteRepository {
      */
     @POST("/store")
     fun registerStore(
-        @Header("Authorization") token: String = UserRepository.token!!,
+        @Header("Authorization") token: String = UserLocalRepository.token!!,
         @Body storeRequestDto: StoreRequestDto
     ): Call<StoreHeaderDto>
 
@@ -60,7 +60,7 @@ interface StoreRemoteRepository {
     @DELETE("/store/{id}")
     fun deleteStore(
         @Path("id") id: Long,
-        @Header("Authorization") token: String = UserRepository.token!!
+        @Header("Authorization") token: String = UserLocalRepository.token!!
     ): Call<String>
 
     /**
@@ -71,8 +71,8 @@ interface StoreRemoteRepository {
      */
     @GET("/store/random")
     fun getRandomStore(
-        @Query("latitude") latitude: Double? = UserRepository.location!!.latitude,
-        @Query("longitude") longitude: Double? = UserRepository.location!!.longitude
+        @Query("latitude") latitude: Double? = UserLocalRepository.location!!.latitude,
+        @Query("longitude") longitude: Double? = UserLocalRepository.location!!.longitude
     ): Call<StoreResponseDto>
 
     /**
@@ -81,6 +81,6 @@ interface StoreRemoteRepository {
      */
     @GET("/store/myStore")
     fun getMyStore(
-        @Header("Authorization") token: String = UserRepository.token!!
+        @Header("Authorization") token: String = UserLocalRepository.token!!
     ): Call<List<StoreHeaderDto>>
 }

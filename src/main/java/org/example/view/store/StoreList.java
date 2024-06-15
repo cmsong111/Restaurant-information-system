@@ -1,7 +1,8 @@
 package org.example.view.store;
 
+import lombok.extern.slf4j.Slf4j;
 import org.example.data.dto.store.StoreHeaderDto;
-import org.example.data.repository.local_repository.UserRepository;
+import org.example.data.repository.local_repository.UserLocalRepository;
 import org.example.data.repository.remote_repository.RetrofitProvider;
 import org.example.data.repository.remote_repository.StoreRemoteRepository;
 import org.example.view.components.StoreComponent;
@@ -18,9 +19,8 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.List;
 
+@Slf4j
 public class StoreList extends JFrame implements ActionListener, ListSelectionListener {
-
-    private final Logger logger = LoggerFactory.getLogger(StoreList.class);
 
     JList list;
     JPanel panelMainWhite;
@@ -39,11 +39,11 @@ public class StoreList extends JFrame implements ActionListener, ListSelectionLi
 
     public StoreList() {
         try {
-            Response<List<StoreHeaderDto>> response = storeRemoteRepository.getStoreList(UserRepository.INSTANCE.getLocation().getLatitude(), UserRepository.INSTANCE.getLocation().getLongitude(), null, null).execute();
+            Response<List<StoreHeaderDto>> response = storeRemoteRepository.getStoreList(UserLocalRepository.INSTANCE.getLocation().getLatitude(), UserLocalRepository.INSTANCE.getLocation().getLongitude(), null, null).execute();
             if (response.isSuccessful()) {
                 storeList = response.body();
             } else{
-                logger.error("Failed to get store list: {}", response.errorBody().string());
+                log.error("Failed to get store list: {}", response.errorBody().string());
             }
 
         } catch (IOException e) {
@@ -95,7 +95,8 @@ public class StoreList extends JFrame implements ActionListener, ListSelectionLi
         list.setCellRenderer(renderer);
         list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         list.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
-        list.setVisibleRowCount(MainPage.storeList.size());
+        // TODO: Fix
+//        list.setVisibleRowCount(MainPage.storeList.size());
 
         list.setFixedCellWidth(500); //컴포넌트 너비
         list.setFixedCellHeight(100); //컴포넌트 높이

@@ -2,7 +2,7 @@ package org.example.data.repository.remote_repository
 
 import org.example.data.dto.review.ReviewRequestDto
 import org.example.data.dto.review.ReviewResponseDto
-import org.example.data.repository.local_repository.UserRepository
+import org.example.data.repository.local_repository.UserLocalRepository
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -19,7 +19,7 @@ interface ReviewRemoteRepository {
     fun createReview(
         @Path("storeId") storeId: Long,
         @Body reviewRequestDto: ReviewRequestDto,
-        @Header("Authorization") token: String = UserRepository.token!!
+        @Header("Authorization") token: String = UserLocalRepository.token!!
     ): Call<ReviewResponseDto>
 
     /**
@@ -32,7 +32,7 @@ interface ReviewRemoteRepository {
     fun modifyReview(
         @Path("reviewId") reviewId: Long,
         @Body reviewRequestDto: ReviewRequestDto,
-        @Header("Authorization") token: String = UserRepository.token!!
+        @Header("Authorization") token: String = UserLocalRepository.token!!
     ): Call<ReviewResponseDto>
 
     /**
@@ -43,7 +43,7 @@ interface ReviewRemoteRepository {
     @DELETE("/review/{reviewId}")
     fun deleteReview(
         @Path("reviewId") reviewId: Long,
-        @Header("Authorization") token: String = UserRepository.token!!
+        @Header("Authorization") token: String = UserLocalRepository.token!!
     ): Call<Unit>
 
     /**
@@ -53,6 +53,6 @@ interface ReviewRemoteRepository {
      */
     @GET("/review")
     fun getMyReviewList(
-        @Header("Authorization") token: String = UserRepository.token!!
+        @Header("Authorization") token: String = UserLocalRepository.token!!
     ): Call<MutableList<ReviewResponseDto>>
 }

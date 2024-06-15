@@ -25,6 +25,11 @@ enum class FoodType {
     WESTERN,
 
     /**
+     * 패스트푸드
+     */
+    FASTFOOD,
+
+    /**
      * 분식
      */
     SNACK,

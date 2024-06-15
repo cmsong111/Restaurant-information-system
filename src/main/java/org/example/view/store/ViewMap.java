@@ -20,9 +20,9 @@ public class ViewMap extends JFrame implements ActionListener {
             setLocationRelativeTo(null);
             getContentPane().setLayout(null);
             //setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            NaverMapAPI ds = new NaverMapAPI();
 
-            BufferedImage image = ds.getStaticMAP(latitude, longitude);
+
+            BufferedImage image = NaverMapAPI.INSTANCE.getStaticMAP(latitude, longitude);
 
 
             JLabel labelImageS1 = new JLabel(new ImageIcon(image));

@@ -1,6 +1,7 @@
 package org.example.view.store;
 
 
+import lombok.extern.slf4j.Slf4j;
 import org.example.data.dto.menu.MenuDTO;
 import org.example.data.dto.review.ReviewDTO;
 import org.example.data.dto.store.StoreResponseDto;
@@ -25,8 +26,8 @@ import java.awt.event.ActionListener;
 import java.net.URL;
 import java.util.ArrayList;
 
+@Slf4j
 public class StoreDetail extends JFrame implements ActionListener {
-    private static final Logger log = LoggerFactory.getLogger(StoreDetail.class);
 
     private ImageIcon imageIcon;
     private StoreResponseDto storeResponseDto;

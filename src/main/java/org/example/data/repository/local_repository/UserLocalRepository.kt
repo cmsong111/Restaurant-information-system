@@ -7,7 +7,7 @@ import org.example.data.dto.user.UserInfoDto
  * 인증 정보를 저장하는 싱글톤 객체
 
  */
-object UserRepository {
+object UserLocalRepository {
     var email: String? = null
     var password: String? = null
 

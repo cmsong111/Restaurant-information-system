@@ -1,15 +1,12 @@
 package org.example.view.auth;
 
+import lombok.extern.slf4j.Slf4j;
 import org.example.common.FontConfig;
 import org.example.data.dto.user.UserDTO;
-import org.example.data.dto.user.UserInfoDto;
-import org.example.data.dto.user.UserRequestDto;
-import org.example.data.repository.local_repository.UserRepository;
+import org.example.data.repository.local_repository.UserLocalRepository;
 import org.example.data.repository.remote_repository.RetrofitProvider;
 import org.example.data.repository.remote_repository.UserRemoteRepository;
 import org.example.view.store.MainPage;
-import org.slf4j.Logger;
-import retrofit2.Response;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,6 +14,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
+@Slf4j
 public class EditUserPage extends JFrame implements ActionListener {
     JTextField textName;
     JPasswordField textPassWord;
@@ -25,14 +23,13 @@ public class EditUserPage extends JFrame implements ActionListener {
     JCheckBox checkBoxAdmin;
     UserDTO myInfo;
     private final UserRemoteRepository userRemoteRepository = RetrofitProvider.INSTANCE.getUserRetrofit();
-    private final Logger logger = org.slf4j.LoggerFactory.getLogger(EditUserPage.class);
     boolean result;
 
     public EditUserPage() {
         try {
             EditUserPage();
         } catch (Exception e) {
-            logger.error("EditUserPage error", e);
+            log.error("EditUserPage error", e);
         }
     }
 
@@ -72,7 +69,7 @@ public class EditUserPage extends JFrame implements ActionListener {
         labelUnderMain.setBounds(382, 100, 500, 100);
         labelUnderMain.setFont(mainFont26);
 
-        textName = new JTextField(UserRepository.INSTANCE.getUser().getName());
+        textName = new JTextField(UserLocalRepository.INSTANCE.getUser().getName());
         textName.setBounds(532, 220, 250, 43);
         textName.setFont(mainFont22);
         textName.setBackground(Color.white);
@@ -205,10 +202,10 @@ public class EditUserPage extends JFrame implements ActionListener {
         String event = e.getActionCommand();
 
         switch (event) {
-            case "setAdmin" -> logger.info("setAdmin");
-            case "BackPage" -> logger.info("BackPage");
-            case "Save" -> logger.info("Save");
-            default -> logger.info("Withdraw");
+            case "setAdmin" -> log.info("setAdmin");
+            case "BackPage" -> log.info("BackPage");
+            case "Save" -> log.info("Save");
+            default -> log.info("Withdraw");
         }
 
 
@@ -253,7 +250,7 @@ public class EditUserPage extends JFrame implements ActionListener {
         }
         if (event.equals("Withdraw")) {
             try {
-                result = userRemoteRepository.deleteUser(UserRepository.INSTANCE.getToken()).execute().isSuccessful();
+                result = userRemoteRepository.deleteUser(UserLocalRepository.INSTANCE.getToken()).execute().isSuccessful();
             } catch (IOException t) {
             }
             if (result) {

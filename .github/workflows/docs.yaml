@@ -1,0 +1,30 @@
+name: Docs CI
+
+on:
+  push:
+    branches: [ "refactor" ]
+
+
+jobs:
+  docs:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: permissions
+        run: chmod +x gradlew
+
+      - name: Build Documentation
+        run: ./gradlew dokkaHtml
+
+      - name: Deploy Documentation to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          BRANCH: docs
+          FOLDER: build/dokka/html

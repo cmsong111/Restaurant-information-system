@@ -1,11 +1,7 @@
 package org.example.view.auth
 
-import org.example.common.mainFont20
-import org.example.common.mainFont40
-import org.example.common.passWordFont
+import org.example.common.*
 import org.example.controller.LoginPageController
-import org.slf4j.Logger
-import org.slf4j.LoggerFactory
 import java.awt.Color
 import java.awt.event.ActionEvent
 import java.awt.event.ActionListener
@@ -15,21 +11,20 @@ import javax.swing.*
  * 로그인 페이지
  */
 class LoginPage : JFrame(), ActionListener {
-    private val logger: Logger = LoggerFactory.getLogger(LoginPage::class.java)
     private val controller = LoginPageController(this)
 
-    var mainlabel1: JLabel
-    var tx_ID: JTextField
-    var tx_PassWord: JPasswordField
-    var LoginButton: JButton
-    var RegisterButton: JButton
+    private var titleLabel: JLabel
+    private var emailTextField: JTextField
+    private var passWordTextField: JPasswordField
+    private var loginButton: JButton
+    private var registerButton: JButton
 
     /**
      * 생성자
      */
     init {
         title = "LoginTest Screen"
-        setSize(1280, 720)
+        setSize(750, 720)
 
         setLocationRelativeTo(null)
         contentPane.layout = null
@@ -44,63 +39,58 @@ class LoginPage : JFrame(), ActionListener {
         linePW.setBounds(200, 430, 300, 2)
 
 
-        val mint = Color(62, 185, 180) //색상 정하기
-        val gray1 = Color(192, 192, 192)
+        // 타이틀 라벨 설정
+        titleLabel = JLabel("오점뭐 (오늘 점심 뭐 먹지)")
+        titleLabel.setBounds(140, 56, 619, 61)
+        titleLabel.font = mainFont40
 
+        // 이메일 입력 필드 설정
+        emailTextField = JTextField("email")
+        emailTextField.setBounds(200, 280, 300, 43)
+        emailTextField.font = mainFont20
+        emailTextField.foreground = gray1
+        emailTextField.border = BorderFactory.createEmptyBorder()
 
-        mainlabel1 = JLabel("오점뭐 (오늘 점심 뭐 먹지)")
-        mainlabel1.setBounds(140, 56, 619, 61)
-        mainlabel1.font = mainFont40
+        // 패스워드 입력 필드 설정
+        passWordTextField = JPasswordField("password")
+        passWordTextField.setBounds(200, 380, 300, 43)
+        passWordTextField.font = passWordFont
+        passWordTextField.foreground = gray1
+        passWordTextField.border = BorderFactory.createEmptyBorder()
 
-        tx_ID = JTextField("email")
-        tx_ID.setBounds(200, 280, 300, 43)
-        tx_ID.font = mainFont20
-        tx_ID.foreground = gray1
+        // 로그인 버튼 설정
+        loginButton = JButton("로그인")
+        loginButton.setBounds(290, 490, 115, 34)
+        loginButton.font = mainFont20
+        loginButton.isBorderPainted = false //버튼 테두리 없에기
+        loginButton.isContentAreaFilled = false
+        loginButton.addActionListener(this)
 
-        tx_PassWord = JPasswordField("password")
-        tx_PassWord.setBounds(200, 380, 300, 43)
-        tx_PassWord.font = passWordFont
-        tx_PassWord.foreground = gray1
+        // 회원가입 버튼 설정
+        registerButton = JButton("회원가입")
+        registerButton.setBounds(285, 540, 130, 34)
+        registerButton.font = mainFont20
+        registerButton.isBorderPainted = false //버튼 테두리 없에기
+        registerButton.addActionListener(this)
+        registerButton.foreground = Color.white
+        registerButton.background = mintColor
 
-        tx_ID.border = BorderFactory.createEmptyBorder()
-        tx_PassWord.border = BorderFactory.createEmptyBorder()
-
-        LoginButton = JButton("로그인")
-        LoginButton.setBounds(290, 490, 115, 34)
-        LoginButton.font = mainFont20
-
-        LoginButton.isBorderPainted = false //버튼 테두리 없에기
-        LoginButton.isContentAreaFilled = false
-        LoginButton.actionCommand = "signIn"
-        LoginButton.addActionListener(this)
-
-        RegisterButton = JButton("회원가입")
-        RegisterButton.setBounds(285, 540, 130, 34)
-        RegisterButton.font = mainFont20
-
-        RegisterButton.isBorderPainted = false //버튼 테두리 없에기
-        RegisterButton.actionCommand = "signUp"
-        RegisterButton.addActionListener(this)
-
-
+        // 메인 패널 설정
         panelMainWhite.background = Color.white
-        RegisterButton.foreground = Color.white
-        RegisterButton.background = mint
+        contentPane.background = mintColor
 
-        contentPane.background = mint
-
-        contentPane.add(mainlabel1)
-        contentPane.add(tx_ID)
-        contentPane.add(tx_PassWord)
+        // Component 추가
+        contentPane.add(titleLabel)
+        contentPane.add(emailTextField)
+        contentPane.add(passWordTextField)
         contentPane.add(lineID)
         contentPane.add(linePW)
-        contentPane.add(LoginButton)
-        contentPane.add(RegisterButton)
-
+        contentPane.add(loginButton)
+        contentPane.add(registerButton)
         contentPane.add(panelMainWhite)
 
-
-        isResizable = false //화면 크기 고정
+        // 화면 설정
+        isResizable = false
         isVisible = true
     }
 
@@ -112,8 +102,8 @@ class LoginPage : JFrame(), ActionListener {
      */
     override fun actionPerformed(actionEvent: ActionEvent) {
         when (actionEvent.source) {
-            LoginButton -> controller.login(tx_ID.text, tx_PassWord.text)
-            RegisterButton -> controller.register()
+            loginButton -> controller.login(emailTextField.text, passWordTextField.text)
+            registerButton -> controller.register()
         }
     }
 }

@@ -74,7 +74,8 @@ public class AdminPage extends JFrame implements ActionListener, ListSelectionLi
         list.setCellRenderer(renderer);
         list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         list.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
-        list.setVisibleRowCount(MainPage.storeList.size());
+        // TODO: Fix
+        //list.setVisibleRowCount(MainPage.storeList.size());
         list.setFixedCellWidth(500); //컴포넌트 너비
         list.setFixedCellHeight(100); //컴포넌트 높이
         list.addListSelectionListener(this);
@@ -193,25 +194,28 @@ public class AdminPage extends JFrame implements ActionListener, ListSelectionLi
     @Override
     public void valueChanged(ListSelectionEvent e) {
         index = list.getSelectedIndex();
-        selectedStore = MainPage.storeList.get(index);
+        // TODO: Fix
+        // selectedStore = MainPage.storeList.get(index);
     }
 
     public void set_storeList() {
-        try {
-            List<StoreHeaderDto> store = httpStore.getMyStore("").execute().body();
-            //반환값이 여러개임
-        } catch (Exception t) {
-        }
-        if (MainPage.storeList.size() == 0) {
-            JOptionPane.showMessageDialog(null, "검색 결과가 없습니다.");
-        }
+        // TODO: Fix
+//        try {
+//            List<StoreHeaderDto> store = httpStore.getMyStore("").execute().body();
+//            //반환값이 여러개임
+//        } catch (Exception t) {
+//        }
+//        if (MainPage.storeList.size() == 0) {
+//            JOptionPane.showMessageDialog(null, "검색 결과가 없습니다.");
+//        }
     }
 
     public class StoreModel extends DefaultListModel { //리스트에 객체추가 , renderer는 StoreComponent
         public StoreModel() {
-            for (StoreDTO store : MainPage.storeList) {
-                addElement(store);
-            }
+            // TODO: Fix
+//            for (StoreDTO store : MainPage.storeList) {
+//                addElement(store);
+//            }
         }
     }
 }
