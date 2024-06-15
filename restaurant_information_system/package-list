@@ -16,6 +16,7 @@ $dokka.location:org.example.common//searchFont30/#/PointingToDeclaration/restau
 $dokka.location:org.example.common//searchIconFont/#/PointingToDeclaration/restaurant_information_system/org.example.common/search-icon-font.html
 $dokka.location:org.example.common/FontConfig///PointingToDeclaration/restaurant_information_system/org.example.common/-font-config/index.html
 $dokka.location:org.example.common/FontConfig/buttonFont/#/PointingToDeclaration/restaurant_information_system/org.example.common/-font-config/button-font.html
+$dokka.location:org.example.common/FontConfig/loadFont/#/PointingToDeclaration/restaurant_information_system/org.example.common/-font-config/load-font.html
 $dokka.location:org.example.common/FontConfig/mainFont18/#/PointingToDeclaration/restaurant_information_system/org.example.common/-font-config/main-font18.html
 $dokka.location:org.example.common/FontConfig/mainFont20/#/PointingToDeclaration/restaurant_information_system/org.example.common/-font-config/main-font20.html
 $dokka.location:org.example.common/FontConfig/mainFont22/#/PointingToDeclaration/restaurant_information_system/org.example.common/-font-config/main-font22.html
