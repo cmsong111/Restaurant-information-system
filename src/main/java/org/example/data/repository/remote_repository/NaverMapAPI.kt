@@ -32,7 +32,7 @@ object NaverMapAPI {
         locationX: Double, locationY: Double
     ): BufferedImage? {
         val client: OkHttpClient = OkHttpClient.Builder().build()
-        var url: HttpUrl = HttpUrl.Builder()
+        val url: HttpUrl = HttpUrl.Builder()
             .scheme("https")
             .host("naveropenapi.apigw.ntruss.com")
             .addPathSegment("map-static")

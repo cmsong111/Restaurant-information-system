@@ -23,7 +23,7 @@ enum class Location(val koreanName: String) {
 
     companion object {
         fun getAllKoreanNames(): Array<String> {
-            return values().map { it.koreanName }.toTypedArray()
+            return entries.map { it.koreanName }.toTypedArray()
         }
     }
 }

@@ -1,5 +1,4 @@
 import org.jetbrains.dokka.gradle.DokkaTask
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     id 'java'
@@ -15,12 +14,12 @@ repositories {
 }
 
 dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+    implementation 'com.google.guava:guava:33.2.1-jre'
+
+    // Test
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'
-
-    // This dependency is used by the application.
-    implementation 'com.google.guava:guava:33.2.1-jre'
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
 
     // RESTful API
     implementation 'com.squareup.retrofit2:retrofit:2.11.0'
@@ -64,7 +63,6 @@ tasks.withType(DokkaTask.class) {
         }
     }
 }
-
 
 
 test {

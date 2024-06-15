@@ -1,4 +1,4 @@
-package org.example.controller
+package org.example.controller.auth
 
 import org.example.common.logger
 import org.example.data.dto.user.UserInfoDto

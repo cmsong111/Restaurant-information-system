@@ -6,7 +6,7 @@ import org.example.common.FontConfig.mainFont30
 import org.example.common.FontConfig.mainFont40
 import org.example.common.logger
 import org.example.common.mintColor
-import org.example.controller.SignUpPageController
+import org.example.controller.auth.SignUpPageController
 import org.example.data.dto.user.UserRequestDto
 import java.awt.Color
 import java.awt.event.ActionEvent

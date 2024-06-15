@@ -6,6 +6,9 @@ import org.example.data.repository.local_repository.UserLocalRepository
 import retrofit2.Call
 import retrofit2.http.*
 
+/**
+ * 리뷰 관련 API를 호출하는 인터페이스
+ */
 interface ReviewRemoteRepository {
 
     /**

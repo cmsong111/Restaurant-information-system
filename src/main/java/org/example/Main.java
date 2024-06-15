@@ -1,6 +1,7 @@
 package org.example;
 
 import lombok.extern.slf4j.Slf4j;
+import org.example.common.FontConfig;
 import org.example.data.repository.local_repository.UserLocalRepository;
 import org.example.data.repository.remote_repository.LocationRemoteRepository;
 import org.example.data.repository.remote_repository.RetrofitProvider;
@@ -12,6 +13,7 @@ import org.slf4j.LoggerFactory;
 public class Main {
     public static void main(String[] args) throws Exception {
         Logger logger = LoggerFactory.getLogger(Main.class);
+        FontConfig.INSTANCE.loadFont();
         LocationRemoteRepository locationRepository = RetrofitProvider.INSTANCE.getLocationRepository();
         UserLocalRepository.INSTANCE.setLocation(locationRepository.getIp().execute().body());
         logger.info("Connect Info : {}", UserLocalRepository.INSTANCE.getLocation());

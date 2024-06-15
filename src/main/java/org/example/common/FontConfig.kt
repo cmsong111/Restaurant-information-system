@@ -3,10 +3,13 @@ package org.example.common
 import java.awt.Font
 import java.awt.GraphicsEnvironment
 
-
+/**
+ * 폰트 설정
+ * 자바 소스에서는 전역변수를 사용할 수 없기 때문에 다음과 같이 object로 선언하여 사용
+ */
 object FontConfig {
 
-    init {
+    fun loadFont() {
         val ge: GraphicsEnvironment = GraphicsEnvironment.getLocalGraphicsEnvironment()
         val font = Font.createFont(Font.TRUETYPE_FONT, javaClass.getResourceAsStream("/font/BMDOHYEON_ttf.ttf"))
         ge.registerFont(font)

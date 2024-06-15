@@ -1,7 +1,7 @@
 package org.example.view.auth
 
 import org.example.common.*
-import org.example.controller.LoginPageController
+import org.example.controller.auth.LoginPageController
 import java.awt.Color
 import java.awt.event.ActionEvent
 import java.awt.event.ActionListener
