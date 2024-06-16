@@ -26,11 +26,15 @@ $dokka.location:org.example.common/FontConfig/mainFont40/#/PointingToDeclaration
 $dokka.location:org.example.common/FontConfig/passWordFont/#/PointingToDeclaration/restaurant_information_system/org.example.common/-font-config/pass-word-font.html
 $dokka.location:org.example.common/FontConfig/searchFont30/#/PointingToDeclaration/restaurant_information_system/org.example.common/-font-config/search-font30.html
 $dokka.location:org.example.common/FontConfig/searchIconFont/#/PointingToDeclaration/restaurant_information_system/org.example.common/-font-config/search-icon-font.html
+$dokka.location:org.example.controller.auth////PointingToDeclaration/restaurant_information_system/org.example.controller.auth/index.html
+$dokka.location:org.example.controller.auth/LoginPageController///PointingToDeclaration/restaurant_information_system/org.example.controller.auth/-login-page-controller/index.html
+$dokka.location:org.example.controller.auth/LoginPageController/LoginPageController/#org.example.view.auth.LoginPage/PointingToDeclaration/restaurant_information_system/org.example.controller.auth/-login-page-controller/-login-page-controller.html
+$dokka.location:org.example.controller.auth/LoginPageController/login/#kotlin.String#kotlin.String/PointingToDeclaration/restaurant_information_system/org.example.controller.auth/-login-page-controller/login.html
+$dokka.location:org.example.controller.auth/LoginPageController/register/#/PointingToDeclaration/restaurant_information_system/org.example.controller.auth/-login-page-controller/register.html
+$dokka.location:org.example.controller.auth/SignUpPageController///PointingToDeclaration/restaurant_information_system/org.example.controller.auth/-sign-up-page-controller/index.html
+$dokka.location:org.example.controller.auth/SignUpPageController/SignUpPageController/#org.example.view.auth.SignUpPage/PointingToDeclaration/restaurant_information_system/org.example.controller.auth/-sign-up-page-controller/-sign-up-page-controller.html
+$dokka.location:org.example.controller.auth/SignUpPageController/signUp/#org.example.data.dto.user.UserRequestDto/PointingToDeclaration/restaurant_information_system/org.example.controller.auth/-sign-up-page-controller/sign-up.html
 $dokka.location:org.example.controller////PointingToDeclaration/restaurant_information_system/org.example.controller/index.html
-$dokka.location:org.example.controller/LoginPageController///PointingToDeclaration/restaurant_information_system/org.example.controller/-login-page-controller/index.html
-$dokka.location:org.example.controller/LoginPageController/LoginPageController/#org.example.view.auth.LoginPage/PointingToDeclaration/restaurant_information_system/org.example.controller/-login-page-controller/-login-page-controller.html
-$dokka.location:org.example.controller/LoginPageController/login/#kotlin.String#kotlin.String/PointingToDeclaration/restaurant_information_system/org.example.controller/-login-page-controller/login.html
-$dokka.location:org.example.controller/LoginPageController/register/#/PointingToDeclaration/restaurant_information_system/org.example.controller/-login-page-controller/register.html
 $dokka.location:org.example.controller/MainPageController///PointingToDeclaration/restaurant_information_system/org.example.controller/-main-page-controller/index.html
 $dokka.location:org.example.controller/MainPageController/MainPageController/#org.example.view.store.MainPage/PointingToDeclaration/restaurant_information_system/org.example.controller/-main-page-controller/-main-page-controller.html
 $dokka.location:org.example.controller/MainPageController/category/#/PointingToDeclaration/restaurant_information_system/org.example.controller/-main-page-controller/category.html
@@ -43,9 +47,6 @@ $dokka.location:org.example.controller/MainPageController/randomStore/#/Pointing
 $dokka.location:org.example.controller/MainPageController/roleModel/#/PointingToDeclaration/restaurant_information_system/org.example.controller/-main-page-controller/role-model.html
 $dokka.location:org.example.controller/MainPageController/searchStore/#/PointingToDeclaration/restaurant_information_system/org.example.controller/-main-page-controller/search-store.html
 $dokka.location:org.example.controller/MainPageController/selectedLocation/#/PointingToDeclaration/restaurant_information_system/org.example.controller/-main-page-controller/selected-location.html
-$dokka.location:org.example.controller/SignUpPageController///PointingToDeclaration/restaurant_information_system/org.example.controller/-sign-up-page-controller/index.html
-$dokka.location:org.example.controller/SignUpPageController/SignUpPageController/#org.example.view.auth.SignUpPage/PointingToDeclaration/restaurant_information_system/org.example.controller/-sign-up-page-controller/-sign-up-page-controller.html
-$dokka.location:org.example.controller/SignUpPageController/signUp/#org.example.data.dto.user.UserRequestDto/PointingToDeclaration/restaurant_information_system/org.example.controller/-sign-up-page-controller/sign-up.html
 $dokka.location:org.example.data.dto.ifconfig////PointingToDeclaration/restaurant_information_system/org.example.data.dto.ifconfig/index.html
 $dokka.location:org.example.data.dto.ifconfig/Ifconfig///PointingToDeclaration/restaurant_information_system/org.example.data.dto.ifconfig/-ifconfig/index.html
 $dokka.location:org.example.data.dto.ifconfig/Ifconfig/Ifconfig/#kotlin.String#kotlin.Long#kotlin.String#kotlin.String#kotlin.Boolean#kotlin.String#kotlin.String#kotlin.String#kotlin.String#kotlin.Double#kotlin.Double#kotlin.String#kotlin.String#kotlin.String#org.example.data.dto.ifconfig.UserAgent/PointingToDeclaration/restaurant_information_system/org.example.data.dto.ifconfig/-ifconfig/-ifconfig.html
@@ -350,6 +351,7 @@ $dokka.location:org.example/Main/main/#java.lang.String[]/PointingToDeclaration/
 org.example
 org.example.common
 org.example.controller
+org.example.controller.auth
 org.example.data.dto
 org.example.data.dto.ifconfig
 org.example.data.dto.menu
